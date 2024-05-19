@@ -7,7 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Options
 option(BUILD_TESTS "Enable compilation of tests" OFF)
-option(BUILD_DOCS "Enable documentation generation" OFF)
 
 # Boost
 set(BOOST_MIN_VERSION "1.78.0")
@@ -20,28 +19,11 @@ find_package(Boost ${BOOST_MIN_VERSION}
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 
-# Doxygen
-if(BUILD_DOCS)
-    find_package(Doxygen
-        REQUIRED
-            dot
-    )
-
-    if(NOT DOXYGEN_FOUND)
-        message(FATAL_ERROR "Cannot find Doxygen or dot")
-    endif()
-
-    doxygen_add_docs(doxygen
-        "kouta"
-        CONFIG_FILE "${CMAKE_SOURCE_DIR}/Doxyfile"
-    )
-endif()
-
 # Google Test
 set(KOUTA_TESTS_ENABLED false)
 
 if(BUILD_TESTS)
-    find_package(GTest REQUIRED)
+    find_package(GTest)
 
     if(NOT GTEST_FOUND)
         message("GTest was not found. Test target won't be compiled")

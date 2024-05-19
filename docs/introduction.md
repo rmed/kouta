@@ -1,8 +1,12 @@
-# Kouta
+# Introduction
 
-A small application framework based on Boost, with components that can be reused accross different projects.
+Kouta is a small **C++20** application framework based on Boost.
 
-**Requires C++20**.
+It is divided in *packages* depending on the type of functionality offered:
+
+- Base package (`kouta::base`): Provides the basic building blocks for the application (event loop access and callbacks)
+- I/O package (`kouta::io`): Provides I/O related functionality
+
 
 ## Building
 
@@ -26,6 +30,7 @@ $ doxygen Doxyfile
 ```
 
 The resulting HTML documentation can be found in `docs/html`.
+
 
 ## Testing
 
