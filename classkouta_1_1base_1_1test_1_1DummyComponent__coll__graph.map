@@ -1,0 +1,8 @@
+<map id="kouta::base::test::DummyComponent" name="kouta::base::test::DummyComponent">
+<area shape="rect" id="node1" title="Dummy component for tests." alt="" coords="341,182,491,223"/>
+<area shape="rect" id="node2" href="$classkouta_1_1base_1_1Component.html" title="Base class for asynchronous components." alt="" coords="13,44,193,71"/>
+<area shape="rect" id="node3" href="$classkouta_1_1base_1_1callback_1_1BaseCallback.html" title=" " alt="" coords="12,95,193,151"/>
+<area shape="rect" id="node4" href="$classkouta_1_1base_1_1callback_1_1BaseCallback.html" title=" " alt="" coords="12,175,193,231"/>
+<area shape="rect" id="node5" href="$classkouta_1_1base_1_1callback_1_1BaseCallback.html" title=" " alt="" coords="5,255,200,326"/>
+<area shape="rect" id="node6" href="$classkouta_1_1base_1_1callback_1_1BaseCallback.html" title=" " alt="" coords="12,350,193,421"/>
+</map>

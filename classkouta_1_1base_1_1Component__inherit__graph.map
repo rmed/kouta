@@ -1,0 +1,8 @@
+<map id="kouta::base::Component" name="kouta::base::Component">
+<area shape="rect" id="node1" title="Base class for asynchronous components." alt="" coords="247,5,427,32"/>
+<area shape="rect" id="node2" href="$classkouta_1_1base_1_1Root.html" title="Root component." alt="" coords="103,87,237,114"/>
+<area shape="rect" id="node5" href="$classkouta_1_1base_1_1test_1_1DummyComponent.html" title="Dummy component for tests." alt="" coords="262,80,411,121"/>
+<area shape="rect" id="node6" href="$classkouta_1_1io_1_1Timer.html" title=" " alt="" coords="436,87,560,114"/>
+<area shape="rect" id="node3" href="$classkouta_1_1base_1_1Worker.html" title="Background component executor." alt="" coords="5,169,156,211"/>
+<area shape="rect" id="node4" href="$classkouta_1_1base_1_1test_1_1base__test_1_1RootMock.html" title="Mock the Root to provide the event loop and receive callbacks." alt="" coords="180,169,339,211"/>
+</map>

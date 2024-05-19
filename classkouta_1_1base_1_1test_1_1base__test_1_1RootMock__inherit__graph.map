@@ -1,0 +1,5 @@
+<map id="kouta::base::test::base_test::RootMock" name="kouta::base::test::base_test::RootMock">
+<area shape="rect" id="node1" title="Mock the Root to provide the event loop and receive callbacks." alt="" coords="16,155,175,196"/>
+<area shape="rect" id="node2" href="$classkouta_1_1base_1_1Root.html" title="Root component." alt="" coords="28,80,163,107"/>
+<area shape="rect" id="node3" href="$classkouta_1_1base_1_1Component.html" title="Base class for asynchronous components." alt="" coords="5,5,185,32"/>
+</map>
