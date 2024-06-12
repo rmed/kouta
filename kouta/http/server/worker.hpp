@@ -13,54 +13,10 @@
 #include <kouta/http/server/config.hpp>
 #include <kouta/http/server/response.hpp>
 #include <kouta/http/server/request.hpp>
+#include <kouta/http/server/router.hpp>
 
 namespace kouta::http::server
 {
-    namespace worker_detail
-    {
-        /// @brief Complete flow used to handle a request.
-        ///
-        /// @tparam THandler                Type of handler function.
-        /// @tparam TPreMiddleware          Type of pre-request middleware functions.
-        /// @tparam TPostMiddleware         Type of post-request middleware functions.
-        template<class THandler, class TPreMiddleware, class TPostMiddleware>
-        struct HandlerFlow
-        {
-            THandler handler;
-            std::list<TPreMiddleware> pre_request;
-            std::list<TPostMiddleware> post_request;
-        };
-
-        /// @brief Handler map.
-        ///
-        /// @details
-        /// The handler map contains a set of HTTP methods for a given route and specifies which handler is in charge of
-        /// handling said method.
-        ///
-        /// Ideally, if a method is not found in the map, a 405 response is returned by the server.
-        ///
-        /// @tparam THandler                Type of handler function.
-        /// @tparam TPreMiddleware          Type of pre-request middleware functions.
-        /// @tparam TPostMiddleware         Type of post-request middleware functions.
-        template<class THandler, class TPreMiddleware, class TPostMiddleware>
-        using HandlerMap = std::map<http::method, HandlerFlow<THandler, TPreMiddleware, TPostMiddleware>>;
-
-        /// @brief Routing map.
-        ///
-        /// @details
-        /// The router maps a specific path to the server to a given handler map. The key used by the router should be
-        /// the relative path (route) to the wanted endpoint, as the URL for a request will be matched using its origin
-        /// form.
-        ///
-        /// Ideally, if a path is not found in the router, a 404 response is returned by the server.
-        ///
-        /// @tparam THandler                Type of handler function.
-        /// @tparam TPreMiddleware          Type of pre-request middleware functions.
-        /// @tparam TPostMiddleware         Type of post-request middleware functions.
-        template<class THandler, class TPreMiddleware, class TPostMiddleware>
-        using Router = std::map<std::string, HandlerMap<THandler, TPreMiddleware, TPostMiddleware>>;
-    }  // namespace worker_detail
-
     template<class TContext>
     class Worker
     {
@@ -71,53 +27,8 @@ namespace kouta::http::server
         /// @brief Function to call internally in order to create a context per request.
         using ContextBuilder = std::function<ContextType()>;
 
-        /// @brief Pre-request middleware function type.
-        ///
-        /// @details
-        /// These functions are intended to perform some pre-processing on the request, such as initializing a
-        /// database connection or extracting certain information to use in the handlers. The @p ctx parameter can be
-        /// modified to provide this information further down the processing chain.
-        ///
-        /// Returning a @ref Response from these functions effectively interrupts the chain, which can be useful in case
-        /// a specific pre-condition has not been met.
-        ///
-        /// @param[in] request      Received request.
-        /// @param[in,out] ctx      Context built during the request handling flow.
-        ///
-        /// @returns std::nullopt to continue with the processing chain, otherwise a @ref Response object to interrupt
-        /// it.
-        using PreMiddleware = std::function<std::optional<Response>(const Request& request, ContextType& ctx)>;
-
-        /// @brief Post-request middleware function type.
-        ///
-        /// @details
-        /// These functions are intended to perform some post-processing on the response, such as setting a content type
-        /// or dropping a database connection. Both the @p response and @p ctx parameters can be modified to provide
-        /// information further down the processing chain.
-        ///
-        /// Returning a @ref Response from these functions effectively interrupts the chain, which can be useful in case
-        /// a specific post-condition has not been met.
-        ///
-        /// @param[in] response     Response returned by the handler.
-        /// @param[in,out] ctx      Context built during the request handling flow.
-        ///
-        /// @returns std::nullopt to continue with the processing chain, otherwise a @ref Response object to interrupt
-        /// it.
-        using PostMiddleware = std::function<std::optional<Response>(Response& response, ContextType& ctx)>;
-
-        /// @brief Request handler type.
-        ///
-        /// @param[in] request      Received request.
-        /// @param[in,out] ctx      Context built during the request handling flow.
-        ///
-        /// @returns response to send, which may be processed further by any post-request middleware.
-        using Handler = std::function<Response(const Request& request, ContextType& ctx)>;
-
-        /// @brief Request handling flow.
-        using HandlerFlow = worker_detail::HandlerFlow<Handler, PreMiddleware, PostMiddleware>;
-
-        /// @brief Server router.
-        using Router = worker_detail::Router<Handler, PreMiddleware, PostMiddleware>;
+        using HandlerType = Handler<ContextType>;
+        using RouterType = Router<ContextType>;
 
         /// @brief Constructor.
         ///
@@ -127,7 +38,7 @@ namespace kouta::http::server
         /// @param[in] config             Configuration reference (owned by the server).
         Worker(
             boost::asio::ip::tcp::socket&& socket,
-            const Router& router,
+            const RouterType& router,
             const ContextBuilder& context_builder,
             const Config& config)
             : m_stream{std::move(socket)}
@@ -208,19 +119,54 @@ namespace kouta::http::server
             m_request.args = m_request.url.params();
 
             // Match route
+            std::optional<typename RouterType::Match> match{m_router.match(m_request)};
 
-            // compare lengths
-            // check starts with :, fill m_request.params
+            if (!match.has_value())
+            {
+                // TODO: send response
+                return;
+            }
 
+            ContextType ctx{m_context_builder()};
 
             // Pre-middleware
+            for (const auto& mware : match->handler.pre_request)
+            {
+                std::optional<Response> response{mware(m_request, ctx)};
+
+                if (response.has_value())
+                {
+                    // TODO: send response
+                    return;
+                }
+            }
 
             // Handler
+            Response response{match->handler.handler(m_request, ctx)};
 
             // Post-middleware
+            for (const auto& mware : match->handler.post_request)
+            {
+                std::optional<Response> post_response{mware(response, ctx)};
+
+                if (post_response.has_value())
+                {
+                    // TODO: send response
+                    return;
+                }
+            }
+
+            // TODO: send response
         }
 
-        void send_response() {}
+        void send_response(Response&& response)
+        {
+            bool keep_alive = response.keep_alive();
+
+            // Write the response
+            boost::beast::async_write(
+                m_stream, std::move(response), std::bind_front(&Worker::handle_write, this, keep_alive));
+        }
 
         /// @brief Handle data received from the connection.
         void handle_read(boost::beast::error_code ec, std::size_t /* bytes_transferred*/)
@@ -241,7 +187,8 @@ namespace kouta::http::server
             process_chain();
         }
 
-        void handle_write(bool keep_alive, boost::beast::error_code ec, std::size_t /* bytes_transferred */) {
+        void handle_write(bool keep_alive, boost::beast::error_code ec, std::size_t /* bytes_transferred */)
+        {
             if (ec)
             {
                 // Failed to write
@@ -259,7 +206,7 @@ namespace kouta::http::server
         }
 
         boost::beast::tcp_stream m_stream;
-        const Router& m_router;
+        const RouterType& m_router;
         const ContextBuilder& m_context_builder;
         const Config& m_config;
         boost::beast::flat_buffer m_buffer;
