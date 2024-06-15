@@ -11,8 +11,8 @@ option(BUILD_TESTS "Enable compilation of tests" OFF)
 # Boost
 set(BOOST_MIN_VERSION "1.78.0")
 
-find_package(Boost ${BOOST_MIN_VERSION}
-    REQUIRED
+find_package(Boost ${BOOST_MIN_VERSION} REQUIRED
+    COMPONENTS
         system
 )
 
@@ -37,6 +37,7 @@ endif()
 include_directories(${PROJECT_SOURCE_DIR})
 
 add_subdirectory("kouta/base")
+add_subdirectory("kouta/http")
 add_subdirectory("kouta/io")
 
 # Kouta tests
@@ -50,6 +51,7 @@ if(KOUTA_TESTS_ENABLED)
             gtest
             gtest_main
             kouta-base-tests
+            kouta-http-tests
             kouta-io-tests
     )
 
