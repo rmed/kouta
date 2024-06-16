@@ -24,7 +24,7 @@ namespace kouta::base
 
         virtual ~Root() = default;
 
-        /// @brief
+        /// @brief Provide the I/O context owned by the Root.
         boost::asio::io_context& context() override;
 
         /// @brief Run the event loop.
