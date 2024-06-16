@@ -21,11 +21,11 @@ namespace kouta::http::server
         /// Returning a @ref Response from these functions effectively interrupts the chain, which can be useful in case
         /// a specific pre-condition has not been met.
         ///
-        /// @param[in] request      Received request.
+        /// @param[in] request          Received request.
+        /// @param[in,out] response     Response for the processing chain.
         ///
-        /// @returns std::nullopt to continue with the processing chain, otherwise a @ref Response object to interrupt
-        /// it.
-        using PreMiddlewareFunc = std::function<std::optional<Response>(const Request& request)>;
+        /// @returns true to continue the processing chain, otherwise false to send the response as-is.
+        using PreMiddlewareFunc = std::function<bool(const Request& request, Response& response)>;
 
         /// @brief Post-request middleware function type.
         ///
@@ -39,10 +39,10 @@ namespace kouta::http::server
         /// a specific post-condition has not been met.
         ///
         /// @param[in] response     Response returned by the handler.
+        /// @param[in,out] response     Response for the processing chain.
         ///
-        /// @returns std::nullopt to continue with the processing chain, otherwise a @ref Response object to interrupt
-        /// it.
-        using PostMiddlewareFunc = std::function<std::optional<Response>(Response& response)>;
+        /// @returns true to continue the processing chain, otherwise false to send the response as-is
+        using PostMiddlewareFunc = std::function<bool(Response& response)>;
 
         /// @brief Request handler type.
         ///
@@ -50,10 +50,11 @@ namespace kouta::http::server
         /// A context pointer can be obtained via the @ref context::get_context() function in order to receive
         /// information from previous steps or to pass information to latter steps.
         ///
-        /// @param[in] request      Received request.
+        /// @param[in] request          Received request.
+        /// @param[in,out] response     Response for the processing chain.
         ///
-        /// @returns response to send, which may be processed further by any post-request middleware.
-        using HandlerFunc = std::function<Response(const Request& request)>;
+        /// @returns true to continue the processing chain, otherwise false to send the response as-is.
+        using HandlerFunc = std::function<bool(const Request& request, Response& response)>;
     }  // namespace handler_detail
 
     /// @brief Complete flow used to handle a request.

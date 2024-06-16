@@ -93,6 +93,25 @@ namespace kouta::http::server
                 std::bind_front(&Worker<ContextType>::handle_read, this->shared_from_this()));
         }
 
+        /// @brief Craft a response with base information set in the configuration.
+        ///
+        /// @returns Response.
+        Response craft_response()
+        {
+            Response response{};
+
+            response.version(m_request.version());
+            response.keep_alive(m_request.keep_alive());
+
+            // Set default fields specified in configuration
+            for (const auto& [field, value] : m_config.base_response_fields)
+            {
+                response.set(field, value);
+            }
+
+            return response;
+        }
+
         /// @brief Request processing chain.
         ///
         /// @details
@@ -105,26 +124,30 @@ namespace kouta::http::server
         Response process_chain()
         {
             auto url{boost::urls::parse_relative_ref(m_request.target())};
+            Response response{craft_response()};
 
             if (!url.has_value())
             {
                 // Invalid URL, return Not Found
-                Response resp{boost::beast::http::status::not_found, m_request.version()};
-                resp.keep_alive(m_request.keep_alive());
-                resp.prepare_payload();
-                return resp;
+                response.result(boost::beast::http::status::not_found);
+                response.prepare_payload();
+                return response;
             }
 
             // Match route
             Router::Match match{m_router.match(url.value(), m_request.method())};
 
-            if (match.result != Router::MatchResult::Ok)
+            if (match.result == Router::MatchResult::NotFound)
             {
-                // TODO: send response
-                Response resp{boost::beast::http::status::not_found, m_request.version()};
-                resp.keep_alive(m_request.keep_alive());
-                resp.prepare_payload();
-                return resp;
+                response.result(boost::beast::http::status::not_found);
+                response.prepare_payload();
+                return response;
+            }
+            else if (match.result == Router::MatchResult::MethodNotAllowed)
+            {
+                response.result(boost::beast::http::status::method_not_allowed);
+                response.prepare_payload();
+                return response;
             }
 
             m_request.set_path_params(match.params);
@@ -135,28 +158,31 @@ namespace kouta::http::server
             // Pre-middleware
             for (const auto& mware : match.flow->pre_request)
             {
-                std::optional<Response> response{mware(m_request)};
-
-                if (response.has_value())
+                if (!mware(m_request, response))
                 {
-                    return response.value();
+                    response.prepare_payload();
+                    return response;
                 }
             }
 
             // Handler
-            Response response{match.flow->handler(m_request)};
+            if (!match.flow->handler(m_request, response))
+            {
+                response.prepare_payload();
+                return response;
+            }
 
             // Post-middleware
             for (const auto& mware : match.flow->post_request)
             {
-                std::optional<Response> post_response{mware(response)};
-
-                if (post_response.has_value())
+                if (!mware(response))
                 {
-                    return post_response.value();
+                    response.prepare_payload();
+                    return response;
                 }
             }
 
+            response.prepare_payload();
             return response;
         }
 
