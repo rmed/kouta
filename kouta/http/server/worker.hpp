@@ -65,8 +65,7 @@ namespace kouta::http::server
         void run()
         {
             boost::asio::dispatch(
-                m_stream.get_executor(),
-                std::bind_front(&Worker<ContextType>::do_read, this->shared_from_this()));
+                m_stream.get_executor(), std::bind_front(&Worker<ContextType>::do_read, this->shared_from_this()));
         }
 
     private:
@@ -155,31 +154,40 @@ namespace kouta::http::server
             // Set context for the handlers
             context::set_context(m_context_builder());
 
-            // Pre-middleware
-            for (const auto& mware : match.flow->pre_request)
+            try
             {
-                if (!mware(m_request, response))
+                // Pre-middleware
+                for (const auto& mware : match.flow->pre_request)
+                {
+                    if (!mware(m_request, response))
+                    {
+                        response.prepare_payload();
+                        return response;
+                    }
+                }
+
+                // Handler
+                if (!match.flow->handler(m_request, response))
                 {
                     response.prepare_payload();
                     return response;
                 }
-            }
 
-            // Handler
-            if (!match.flow->handler(m_request, response))
-            {
-                response.prepare_payload();
-                return response;
-            }
-
-            // Post-middleware
-            for (const auto& mware : match.flow->post_request)
-            {
-                if (!mware(response))
+                // Post-middleware
+                for (const auto& mware : match.flow->post_request)
                 {
-                    response.prepare_payload();
-                    return response;
+                    if (!mware(response))
+                    {
+                        response.prepare_payload();
+                        return response;
+                    }
                 }
+            }
+            catch (...)
+            {
+                // Discard any data already in the response
+                response = craft_response();
+                response.result(boost::beast::http::status::internal_server_error);
             }
 
             response.prepare_payload();
@@ -197,8 +205,7 @@ namespace kouta::http::server
             boost::beast::async_write(
                 m_stream,
                 std::move(response),
-                std::bind_front(
-                    &Worker<ContextType>::handle_write, this->shared_from_this(), keep_alive));
+                std::bind_front(&Worker<ContextType>::handle_write, this->shared_from_this(), keep_alive));
         }
 
         /// @brief Handle data received from the connection.

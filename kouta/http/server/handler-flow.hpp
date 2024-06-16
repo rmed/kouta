@@ -2,7 +2,6 @@
 
 #include <functional>
 #include <vector>
-#include <optional>
 
 #include <kouta/http/server/request.hpp>
 #include <kouta/http/server/response.hpp>
