@@ -2,11 +2,6 @@
 
 namespace kouta::http::server
 {
-    Router::Match Router::match(const Request& request) const
-    {
-        return match(request.url, request.method);
-    }
-
     Router::Match Router::match(const boost::urls::url_view& path, Method method) const
     {
         bool path_found{false};

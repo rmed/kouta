@@ -97,13 +97,6 @@ namespace kouta::http::server
 
         virtual ~Router() = default;
 
-        /// @brief Match against a request.
-        ///
-        /// @param[in] request          Request received.
-        ///
-        /// @returns Match object if found, otherwise std::nullptr.
-        Match match(const Request& request) const;
-
         /// @brief Match against a URL path and a method.
         ///
         /// @param[in] path             Path to match against.

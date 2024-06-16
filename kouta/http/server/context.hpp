@@ -1,6 +1,7 @@
 #pragma once
 
 #include <any>
+#include <functional>
 
 namespace kouta::http::server::context
 {
@@ -17,6 +18,12 @@ namespace kouta::http::server::context
         /// methods should be used to perform the appropriate type conversions.
         thread_local std::any t_context;
     }  // namespace detail
+
+    /// @brief Function used to build a new context.
+    ///
+    /// @tparam TContext        Context type to use.
+    template<class TContext>
+    using ContextBuilder = std::function<TContext()>;
 
     /// @brief Set the context variable.
     ///

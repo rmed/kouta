@@ -10,8 +10,8 @@ namespace kouta::http::server
         /// Maximum buffer size of 1 MB.
         constexpr std::size_t DEFAULT_MAX_BUFFER_SIZE{1 * 1024 * 1024};
 
-        /// Maximum duration of the handling of 30 seconds.
-        constexpr std::chrono::seconds DEFAULT_REQUEST_TIMEOUT{30};
+        /// Maximum duration of the handling of 15 seconds.
+        constexpr std::chrono::seconds DEFAULT_REQUEST_TIMEOUT{15};
     }
 
     /// @brief Server configuration structure.
