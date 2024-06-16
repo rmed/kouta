@@ -5,5 +5,5 @@
 namespace kouta::http
 {
     /// @brief Alias for HTTP method types.
-    using method = boost::beast::http::verb;
+    using Method = boost::beast::http::verb;
 }  // namespace kouta::http

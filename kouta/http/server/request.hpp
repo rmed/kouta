@@ -6,39 +6,44 @@
 #include <boost/beast/http/string_body.hpp>
 #include <boost/url.hpp>
 
+#include <kouta/http/method.hpp>
+
 namespace kouta::http::server
 {
     /// @brief HTTP request wrapper.
     ///
     /// @details
-    /// The request contains the underlying Beast request object, as well as some pre-parsed
-    /// information, such as parameters and query arguments.
-    ///
-    /// @note Most pre-parsed information will be views pointing to the underlying request itself.
-    struct Request
+    /// The request contains the underlying Beast request object, as well as some helper methods to extract certain
+    /// information.
+    class Request : public boost::beast::http::request<boost::beast::http::string_body>
     {
-        /// Raw HTTP request.
-        boost::beast::http::request<boost::beast::http::string_body> req;
+    public:
+        using PathParams = std::map<std::string, std::string>;
 
-        /// Extracted URL.
-        boost::urls::url_view url;
+        // Default constructible.
+        Request() = default;
 
-        /// Requested scheme.
-        std::string_view scheme;
+        // Copyable
+        Request(const Request&) = default;
+        Request& operator=(const Request&) = default;
 
-        /// Requested host.
-        std::string_view host;
+        // Movable
+        Request(Request&&) = default;
+        Request& operator=(Request&&) = default;
 
-        /// Requested path.
-        std::string_view path;
+        virtual ~Request() = default;
 
-        /// Requested path segment.
-        boost::urls::segments_view path_segments;
+        /// @brief Obtain URL parsed parameters.
+        const PathParams& path_params() const;
 
-        /// Query arguments.
-        boost::urls::params_view args;
+        /// @brief Set the parsed URL parameters.
+        ///
+        /// @details
+        /// These come from the router rule matching process.
+        void set_path_params(const PathParams& params);
 
-        /// Route parameters.
-        std::map<std::string, std::string> params;
+    private:
+        PathParams m_path_params;
     };
+
 }  // namespace kouta::http::server

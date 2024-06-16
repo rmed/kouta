@@ -7,6 +7,7 @@
 #include <boost/beast.hpp>
 
 #include <kouta/http/server/config.hpp>
+#include <kouta/http/server/context.hpp>
 #include <kouta/http/server/worker.hpp>
 
 namespace kouta::http::server
@@ -45,28 +46,11 @@ namespace kouta::http::server
     class Server
     {
     public:
-        using WorkerType = Worker<TContext>;
-
-        /// @see Worker::ContextType
-        using ContextType = WorkerType::ContextType;
+        /// @see Type of the context object passed to every handler.
+        using ContextType = TContext;
 
         /// @brief Worker::ContextBuilder
-        using ContextBuilder = WorkerType::ContextBuilder;
-
-        /// @see Worker::PreMiddleware
-        using PreMiddleware = WorkerType::PreMiddleware;
-
-        /// @see Worker::PostMiddleware
-        using PostMiddleware = WorkerType::PostMiddleware;
-
-        /// @see Worker::Handler
-        using Handler = WorkerType::Handler;
-
-        /// @see Worker::HandlerFlow
-        using HandlerFlow = WorkerType::HandlerFlow;
-
-        /// @see Worker::Router
-        using Router = WorkerType::Router;
+        using ContextBuilder = context::ContextBuilder<TContext>;
 
         // Not default-constructible.
         Server() = delete;
@@ -80,9 +64,26 @@ namespace kouta::http::server
         /// @param[in] host             Host address to use.
         /// @param[in] port             Port to use.
         /// @param[in] num_threads      Number of threads to create.
-        Server(const std::string& host, std::uint16_t port, int num_threads)
+        Server(std::string_view host, std::uint16_t port, int num_threads)
             // clang-format off
             : Server{host, port, num_threads, Config{}, [](){ return ContextType{}; }}
+        // clang-format on
+        {
+        }
+
+        /// @brief Constructor without context builder.
+        ///
+        /// @details
+        /// This version of the constructor assumes that the context will either be default constructible, or set later
+        /// on via the @ref set_context_builder() method.
+        ///
+        /// @param[in] host             Host address to use.
+        /// @param[in] port             Port to use.
+        /// @param[in] num_threads      Number of threads to create.
+        /// @param[in] config           Additional server configuration.
+        Server(std::string_view host, std::uint16_t port, int num_threads, const Config& config)
+            // clang-format off
+            : Server{host, port, num_threads, config, [](){ return ContextType{}; }}
         // clang-format on
         {
         }
@@ -94,18 +95,23 @@ namespace kouta::http::server
         /// @param[in] num_threads      Number of threads to create.
         /// @param[in] config           Additional server configuration.
         /// @param[in] context_builder  Function used to create the context for the processing.
-        Server(const std::string& host, std::uint16_t port, int num_threads, const Config& config, const ContextBuilder& context_builder)
+        Server(
+            std::string_view host,
+            std::uint16_t port,
+            int num_threads,
+            const Config& config,
+            const ContextBuilder& context_builder)
             : m_host{host}
             , m_port{port}
-            , m_num_threads{num_threads}
+            , m_num_threads{num_threads > 0 ? num_threads : 1}
             , m_config{config}
             , m_context_builder{context_builder}
             , m_router{}
-            , m_context{num_threads > 0 ? num_threads : 1}
+            , m_context{m_num_threads}
             , m_acceptor{}
             , m_workers{}
         {
-            m_workers.reserve(num_threads - 1);
+            m_workers.reserve(m_num_threads - 1);
         }
 
         // Not copyable
@@ -120,7 +126,7 @@ namespace kouta::http::server
 
         /// @brief Specify the function to use in order to build a request context.
         ///
-        /// @warning This should be modified during runtime.
+        /// @warning This should not sbe modified during runtime.
         ///
         /// @param[in] builder          Function to call to provide a context to the handlers.
         void set_context_builder(const ContextBuilder& builder)
@@ -142,16 +148,9 @@ namespace kouta::http::server
         /// @param[in] route            Relative route to match against.
         /// @param[in] method           Method to handle.
         /// @param[in] flow             Flow to use in order to handle the request.
-        void register_route(const std::string& route, http::method method, const HandlerFlow& flow)
+        void register_route(std::string_view route, http::Method method, const HandlerFlow& flow)
         {
-            if (m_router.contains(route))
-            {
-                m_router[route][method] = flow;
-            }
-            else
-            {
-                m_router[route] = {method, flow};
-            }
+            m_router.add_rule(route, method, flow);
         }
 
         /// @brief Unregister a route in the server.
@@ -164,20 +163,9 @@ namespace kouta::http::server
         /// @warning
         /// The router is shared with the workers via reference, so this method is not thread-safe. It is discouraged to
         /// modify routes during runtime.
-        void unregister_route(const std::string& route, http::method method)
+        void unregister_route(std::string_view route, http::Method method)
         {
-            auto route_it{m_router.find(route)};
-
-            if (route_it != m_router.end())
-            {
-                route_it.erase(method);
-
-                // Remove route from map if there are no methods left
-                if (route_it.empty())
-                {
-                    m_router.erase(route);
-                }
-            }
+            m_router.remove_rule(route, method);
         }
 
         /// @brief Start the server.
@@ -196,7 +184,7 @@ namespace kouta::http::server
             }
 
             // Create workers
-            for (auto i = 0; i < ((m_num_threads > 0 ? m_num_threads : 1) - 1); i++)
+            for (auto i = 0; i < (m_num_threads - 1); i++)
             {
                 m_workers.emplace_back([this]() { m_context.run(); });
             }
@@ -236,6 +224,8 @@ namespace kouta::http::server
         }
 
     private:
+        using WorkerType = Worker<TContext>;
+
         /// @brief Configure the acceptor to start handling requests.
         ///
         /// @returns true if the configuration is correct/valid, otherwise false.
@@ -272,6 +262,8 @@ namespace kouta::http::server
             {
                 return false;
             }
+
+            return true;
         }
 
         /// @brief Begin accepting connections.
@@ -298,7 +290,7 @@ namespace kouta::http::server
             }
 
             // Create the worker and hand over the socket
-            std::make_shared<WorkerType>(std::move(socket), m_router, m_context_builder)->run();
+            std::make_shared<WorkerType>(std::move(socket), m_router, m_config, m_context_builder)->run();
 
             // Accept more connections
             do_accept();

@@ -1,8 +1,7 @@
 #pragma once
 
 #include <functional>
-#include <list>
-#include <map>
+#include <memory>
 #include <optional>
 
 #include <boost/asio.hpp>
@@ -11,6 +10,7 @@
 
 #include <kouta/http/method.hpp>
 #include <kouta/http/server/config.hpp>
+#include <kouta/http/server/context.hpp>
 #include <kouta/http/server/response.hpp>
 #include <kouta/http/server/request.hpp>
 #include <kouta/http/server/router.hpp>
@@ -18,34 +18,31 @@
 namespace kouta::http::server
 {
     template<class TContext>
-    class Worker
+    class Worker : public std::enable_shared_from_this<Worker<TContext>>
     {
     public:
         /// @brief Type of the context object passed to every handler.
         using ContextType = TContext;
 
         /// @brief Function to call internally in order to create a context per request.
-        using ContextBuilder = std::function<ContextType()>;
-
-        using HandlerType = Handler<ContextType>;
-        using RouterType = Router<ContextType>;
+        using ContextBuilder = context::ContextBuilder<ContextType>;
 
         /// @brief Constructor.
         ///
         /// @param[in] socket             Socket that received the connection.
         /// @param[in] router             Router reference (owned by the server).
-        /// @param[in] context_builder    Router reference (owned by the server).
         /// @param[in] config             Configuration reference (owned by the server).
+        /// @param[in] context_builder    Router reference (owned by the server).
         Worker(
             boost::asio::ip::tcp::socket&& socket,
-            const RouterType& router,
-            const ContextBuilder& context_builder,
-            const Config& config)
+            const Router& router,
+            const Config& config,
+            const ContextBuilder& context_builder)
             : m_stream{std::move(socket)}
             , m_router{router}
             , m_context_builder{context_builder}
             , m_config{config}
-            , m_buffer{config.max_buffer_size}
+            , m_buffer{m_config.max_buffer_size}
             , m_request{}
         {
         }
@@ -67,7 +64,9 @@ namespace kouta::http::server
         /// server).
         void run()
         {
-            boost::asio::dispatch(m_stream.get_executor(), std::bind_front(&Worker<ContextType>::do_read, this));
+            boost::asio::dispatch(
+                m_stream.get_executor(),
+                std::bind_front(&Worker<ContextType>::do_read, this->shared_from_this()));
         }
 
     private:
@@ -88,7 +87,10 @@ namespace kouta::http::server
             m_stream.expires_after(m_config.request_timeout);
 
             boost::beast::http::async_read(
-                m_stream, m_buffer, m_request.req, std::bind_front(&Worker<ContextType>::handle_read, this));
+                m_stream,
+                m_buffer,
+                m_request,
+                std::bind_front(&Worker<ContextType>::handle_read, this->shared_from_this()));
         }
 
         /// @brief Request processing chain.
@@ -100,72 +102,77 @@ namespace kouta::http::server
         /// 2. Pre-request middleware functions are invoked
         /// 3. Handler is invoked
         /// 4. Post-request middleware functions are invoked
-        void process_chain()
+        Response process_chain()
         {
-            // Extract information from the request
-            auto url{boost::urls::parse_uri(m_request.req.target())};
+            auto url{boost::urls::parse_relative_ref(m_request.target())};
 
             if (!url.has_value())
             {
                 // Invalid URL, return Not Found
-                return;
+                Response resp{boost::beast::http::status::not_found, m_request.version()};
+                resp.keep_alive(m_request.keep_alive());
+                resp.prepare_payload();
+                return resp;
             }
-
-            m_request.url = url.value();
-            m_request.scheme = m_request.url.scheme();
-            m_request.host = m_request.url.host();
-            m_request.path = m_request.url.path();
-            m_request.path_segments = m_request.url.segments();
-            m_request.args = m_request.url.params();
 
             // Match route
-            std::optional<typename RouterType::Match> match{m_router.match(m_request)};
+            Router::Match match{m_router.match(url.value(), m_request.method())};
 
-            if (!match.has_value())
+            if (match.result != Router::MatchResult::Ok)
             {
                 // TODO: send response
-                return;
+                Response resp{boost::beast::http::status::not_found, m_request.version()};
+                resp.keep_alive(m_request.keep_alive());
+                resp.prepare_payload();
+                return resp;
             }
 
-            ContextType ctx{m_context_builder()};
+            m_request.set_path_params(match.params);
+
+            // Set context for the handlers
+            context::set_context(m_context_builder());
 
             // Pre-middleware
-            for (const auto& mware : match->handler.pre_request)
+            for (const auto& mware : match.flow->pre_request)
             {
-                std::optional<Response> response{mware(m_request, ctx)};
+                std::optional<Response> response{mware(m_request)};
 
                 if (response.has_value())
                 {
-                    // TODO: send response
-                    return;
+                    return response.value();
                 }
             }
 
             // Handler
-            Response response{match->handler.handler(m_request, ctx)};
+            Response response{match.flow->handler(m_request)};
 
             // Post-middleware
-            for (const auto& mware : match->handler.post_request)
+            for (const auto& mware : match.flow->post_request)
             {
-                std::optional<Response> post_response{mware(response, ctx)};
+                std::optional<Response> post_response{mware(response)};
 
                 if (post_response.has_value())
                 {
-                    // TODO: send response
-                    return;
+                    return post_response.value();
                 }
             }
 
-            // TODO: send response
+            return response;
         }
 
-        void send_response(Response&& response)
+        /// @brief Send a response to the connected client.
+        ///
+        /// @param[in] response         Response to send.
+        void send_response(boost::beast::http::message_generator&& response)
         {
-            bool keep_alive = response.keep_alive();
+            bool keep_alive{response.keep_alive()};
 
             // Write the response
             boost::beast::async_write(
-                m_stream, std::move(response), std::bind_front(&Worker::handle_write, this, keep_alive));
+                m_stream,
+                std::move(response),
+                std::bind_front(
+                    &Worker<ContextType>::handle_write, this->shared_from_this(), keep_alive));
         }
 
         /// @brief Handle data received from the connection.
@@ -184,9 +191,10 @@ namespace kouta::http::server
             }
 
             // Process the request
-            process_chain();
+            send_response(process_chain());
         }
 
+        /// @brief Handle data sent over the connection.
         void handle_write(bool keep_alive, boost::beast::error_code ec, std::size_t /* bytes_transferred */)
         {
             if (ec)
@@ -206,7 +214,7 @@ namespace kouta::http::server
         }
 
         boost::beast::tcp_stream m_stream;
-        const RouterType& m_router;
+        const Router& m_router;
         const ContextBuilder& m_context_builder;
         const Config& m_config;
         boost::beast::flat_buffer m_buffer;
