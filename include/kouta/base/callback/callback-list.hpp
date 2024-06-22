@@ -18,18 +18,18 @@ namespace kouta::base::callback
     ///
     /// @tparam TArgs                   Callable arguments.
     template<class... TArgs>
-    class List : public BaseCallback<TArgs...>
+    class CallbackList : public BaseCallback<TArgs...>
     {
     public:
         // Copyable
-        List(const List&) = default;
-        List& operator=(const List&) = default;
+        CallbackList(const CallbackList&) = default;
+        CallbackList& operator=(const CallbackList&) = default;
 
         // Movable
-        List(List&&) = default;
-        List& operator=(List&&) = default;
+        CallbackList(CallbackList&&) = default;
+        CallbackList& operator=(CallbackList&&) = default;
 
-        ~List() override = default;
+        ~CallbackList() override = default;
 
         /// @brief Callback constructor from a set of callbacks
         ///
@@ -38,11 +38,11 @@ namespace kouta::base::callback
         /// stored Callbacks (in order).
         ///
         /// @param[in] callbacks        Set of Callbacks to store.
-        List(std::initializer_list<BaseCallback<TArgs...>> callbacks)
+        CallbackList(std::initializer_list<BaseCallback<TArgs...>> callbacks)
             : BaseCallback<TArgs...>{}
             , m_callbacks{callbacks}
         {
-            this->set_callable(std::bind_front(&List::invoke_callbacks, this));
+            this->set_callable(std::bind_front(&CallbackList::invoke_callbacks, this));
         }
 
     private:

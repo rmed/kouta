@@ -23,7 +23,13 @@ namespace kouta::io
         /// @param[in] parent           Parent component granting access to the event loop.
         /// @param[in] duration         Duration of the timer.
         /// @param[in] on_expired       Function to call when the timer expires.
-        Timer(Component* parent, std::chrono::milliseconds duration, const OnExpired& on_expired);
+        Timer(Component* parent, std::chrono::milliseconds duration, const OnExpired& on_expired)
+            : Component{parent}
+            , m_timer{context()}
+            , m_duration{duration}
+            , m_on_expired(on_expired)
+        {
+        }
 
         // Not copyable
         Timer(const Timer&) = delete;
@@ -42,10 +48,20 @@ namespace kouta::io
         /// timer). The duration used for awaiting the timer is the one already set inside this object.
         ///
         /// @note This is a one-shot waiting operation.
-        void start();
+        void start()
+        {
+            // Timer is stopped in case it was already running
+            stop();
+
+            m_timer.expires_after(m_duration);
+            m_timer.async_wait(std::bind_front(&Timer::handle_expiration, this));
+        }
 
         /// @brief Stop the timer if it was running/being waited for.
-        void stop();
+        void stop()
+        {
+            m_timer.cancel();
+        }
 
         /// @brief Set the duration of the timer in future waiting operations.
         ///
@@ -55,7 +71,10 @@ namespace kouta::io
         /// must be called explicitly if such abehaviour is required.
         ///
         /// @param[in] duration         New duration for the timer.
-        void set_duration(std::chrono::milliseconds duration);
+        void set_duration(std::chrono::milliseconds duration)
+        {
+            m_duration = duration;
+        }
 
     private:
         /// @brief Handle the expiration of the internal timer.
@@ -65,7 +84,13 @@ namespace kouta::io
         /// that said callback will be executed within the context of the event loop as a direct invocation.
         ///
         /// @param[in] ec       Error code of the asynchronous wait operation.
-        void handle_expiration(const boost::system::error_code& ec);
+        void handle_expiration(const boost::system::error_code& ec)
+        {
+            if (ec != boost::asio::error::operation_aborted)
+            {
+                m_on_expired(*this);
+            }
+        }
 
         boost::asio::steady_timer m_timer;
         std::chrono::milliseconds m_duration;

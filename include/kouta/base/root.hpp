@@ -12,7 +12,11 @@ namespace kouta::base
     class Root : public Component
     {
     public:
-        Root();
+        Root()
+            : Component{nullptr}
+            , m_context{}
+        {
+        }
 
         // Not copyable
         Root(const Root&) = delete;
@@ -24,18 +28,31 @@ namespace kouta::base
 
         virtual ~Root() = default;
 
-        /// @brief
-        boost::asio::io_context& context() override;
+        /// @brief Obtain a reference to the underlying I/O context.
+        ///
+        /// @note The I/O context is owned by the root.
+        boost::asio::io_context& context() override
+        {
+            return m_context;
+        }
 
         /// @brief Run the event loop.
         ///
         /// @note This method blocks until the event loop is terminated.
-        virtual void run();
+        virtual void run()
+        {
+            // Have the event loop run forever
+            auto work_guard{boost::asio::make_work_guard(m_context)};
+            m_context.run();
+        }
 
         /// @brief Stop the event loop and exit.
         ///
         /// @note Under normal circumstances, this would only be called when terminating the application.
-        virtual void stop();
+        virtual void stop()
+        {
+            m_context.stop();
+        }
 
     private:
         boost::asio::io_context m_context;

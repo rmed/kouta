@@ -1,13 +1,13 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+#include <kouta/base/branch.hpp>
 #include <kouta/base/callback.hpp>
 #include <kouta/base/root.hpp>
-#include <kouta/base/worker.hpp>
 
-#include <kouta/base/test/dummy-component.hpp>
+#include "dummy-component.hpp"
 
-namespace kouta::base::test::base_test
+namespace kouta::tests::base
 {
     /// @brief Mock the Root to provide the event loop and receive callbacks.
     class RootMock : public Root
@@ -39,9 +39,9 @@ namespace kouta::base::test::base_test
         ::testing::InSequence s;
         RootMock root{};
 
-        callback::Direct<std::uint16_t> cb_a{&root, &RootMock::handler_a};
-        callback::Direct<std::int32_t, const std::string&> cb_b{&root, &RootMock::handler_b};
-        callback::Direct<const std::vector<std::uint8_t>&> cb_c{&root, &RootMock::handler_c};
+        callback::DirectCallback<std::uint16_t> cb_a{&root, &RootMock::handler_a};
+        callback::DirectCallback<std::int32_t, const std::string&> cb_b{&root, &RootMock::handler_b};
+        callback::DirectCallback<const std::vector<std::uint8_t>&> cb_c{&root, &RootMock::handler_c};
 
         std::uint16_t data_a{127};
 
@@ -70,9 +70,9 @@ namespace kouta::base::test::base_test
         ::testing::InSequence s;
         RootMock root{};
 
-        callback::Deferred<std::uint16_t> cb_a{&root, &RootMock::handler_a};
-        callback::Direct<std::int32_t, const std::string&> cb_b{&root, &RootMock::handler_b};
-        callback::Deferred<const std::vector<std::uint8_t>&> cb_c{&root, &RootMock::handler_c};
+        callback::DeferredCallback<std::uint16_t> cb_a{&root, &RootMock::handler_a};
+        callback::DirectCallback<std::int32_t, const std::string&> cb_b{&root, &RootMock::handler_b};
+        callback::DeferredCallback<const std::vector<std::uint8_t>&> cb_c{&root, &RootMock::handler_c};
 
         std::uint16_t data_a{127};
 
@@ -114,16 +114,16 @@ namespace kouta::base::test::base_test
         ::testing::InSequence s;
         RootMock root{};
 
-        callback::List<std::uint16_t> cb_list_direct{
-            callback::Direct{&root, &RootMock::handler_a},
-            callback::Direct{&root, &RootMock::handler_a},
-            callback::Direct{&root, &RootMock::handler_a},
+        callback::CallbackList<std::uint16_t> cb_list_direct{
+            callback::DirectCallback{&root, &RootMock::handler_a},
+            callback::DirectCallback{&root, &RootMock::handler_a},
+            callback::DirectCallback{&root, &RootMock::handler_a},
         };
 
-        callback::List<std::int32_t, const std::string&> cb_list_deferred{
-            callback::Deferred{&root, &RootMock::handler_b},
-            callback::Deferred{&root, &RootMock::handler_b},
-            callback::Deferred{&root, &RootMock::handler_b}};
+        callback::CallbackList<std::int32_t, const std::string&> cb_list_deferred{
+            callback::DeferredCallback{&root, &RootMock::handler_b},
+            callback::DeferredCallback{&root, &RootMock::handler_b},
+            callback::DeferredCallback{&root, &RootMock::handler_b}};
 
         std::uint16_t data_a{127};
 
@@ -207,15 +207,15 @@ namespace kouta::base::test::base_test
 
         DummyComponent comp_a{
             &root,
-            callback::Direct{&root, &RootMock::handler_a},
-            callback::Deferred{&root, &RootMock::handler_b},
-            callback::Deferred{&root, &RootMock::handler_c}};
+            callback::DirectCallback{&root, &RootMock::handler_a},
+            callback::DeferredCallback{&root, &RootMock::handler_b},
+            callback::DeferredCallback{&root, &RootMock::handler_c}};
 
         DummyComponent comp_b{
             &comp_a,
-            callback::Deferred{&root, &RootMock::handler_a},
-            callback::Deferred{&root, &RootMock::handler_b},
-            callback::Deferred{&root, &RootMock::handler_c}};
+            callback::DeferredCallback{&root, &RootMock::handler_a},
+            callback::DeferredCallback{&root, &RootMock::handler_b},
+            callback::DeferredCallback{&root, &RootMock::handler_c}};
 
         std::uint16_t data_a{42};
 
@@ -247,15 +247,15 @@ namespace kouta::base::test::base_test
 
         DummyComponent comp_a{
             &root,
-            callback::Direct{&root, &RootMock::handler_a},
-            callback::Deferred{&root, &RootMock::handler_b},
-            callback::Deferred{&root, &RootMock::handler_c}};
+            callback::DirectCallback{&root, &RootMock::handler_a},
+            callback::DeferredCallback{&root, &RootMock::handler_b},
+            callback::DeferredCallback{&root, &RootMock::handler_c}};
 
         DummyComponent comp_b{
             &comp_a,
-            callback::Deferred{&root, &RootMock::handler_a},
-            callback::Deferred{&root, &RootMock::handler_b},
-            callback::Deferred{&root, &RootMock::handler_c}};
+            callback::DeferredCallback{&root, &RootMock::handler_a},
+            callback::DeferredCallback{&root, &RootMock::handler_b},
+            callback::DeferredCallback{&root, &RootMock::handler_c}};
 
         std::uint16_t data_a_a{42};
         std::int32_t data_a_b1{-512};
@@ -304,17 +304,17 @@ namespace kouta::base::test::base_test
     ///
     /// @details
     /// The test succeeds if all events are dispatched in order.
-    TEST(BaseTest, WorkerComponent)
+    TEST(BaseTest, BranchComponent)
     {
         ::testing::InSequence s;
 
         RootMock root{};
-        Worker<DummyComponent> worker{
+        Branch<DummyComponent> worker{
             &worker,
-            callback::Direct{&root, &RootMock::handler_a},
-            callback::Deferred{&root, &RootMock::handler_b},
-            callback::Deferred{&root, &RootMock::handler_c},
-            callback::Deferred{&root, &RootMock::handler_d}};
+            callback::DirectCallback{&root, &RootMock::handler_a},
+            callback::DeferredCallback{&root, &RootMock::handler_b},
+            callback::DeferredCallback{&root, &RootMock::handler_c},
+            callback::DeferredCallback{&root, &RootMock::handler_d}};
 
         std::uint16_t data_a_a{42};
         std::int32_t data_a_b1{-512};
@@ -350,4 +350,4 @@ namespace kouta::base::test::base_test
         root.run();
         alarm(0);
     }
-}  // namespace kouta::base::test::base_test
+}  // namespace kouta::tests::base

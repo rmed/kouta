@@ -20,7 +20,9 @@ namespace kouta::base
         ///
         /// @param[in] parent           Parent component. Note that the parent provides access to the event loop,
         ///                             hence its lifetime must, at least, surpass that of the child.
-        explicit Component(Component* parent = nullptr);
+        explicit Component(Component* parent = nullptr)
+            : m_parent{parent}
+        {}
 
         // Not copyable
         Component(const Component&) = delete;
@@ -35,7 +37,10 @@ namespace kouta::base
         /// @brief Obtain a reference to the underlying I/O context.
         ///
         /// @note By default, this I/O context comes from the parent component.
-        virtual boost::asio::io_context& context();
+        virtual boost::asio::io_context& context()
+        {
+            return m_parent->context();
+        }
 
         /// @brief Post a method call to the event loop for deferred execution.
         ///

@@ -6,8 +6,10 @@
 
 #include <kouta/io/packer.hpp>
 
-namespace kouta::io::test::packer_test
+namespace kouta::tests::io
 {
+    using namespace kouta::io;
+
     namespace
     {
         void test_packer_be(Packer& packer)
@@ -193,4 +195,4 @@ namespace kouta::io::test::packer_test
 
         ASSERT_TRUE(std::equal(view.begin(), view.end(), packer.data().begin() + 1));
     }
-}  // namespace kouta::io::test::packer_test
+}  // namespace kouta::tests::io

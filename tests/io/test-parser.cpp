@@ -6,8 +6,10 @@
 
 #include <kouta/io/parser.hpp>
 
-namespace kouta::io::test::parser_test
+namespace kouta::tests::io
 {
+    using namespace kouta::io;
+
     /// @brief Test the behaviour of the parser (Big Endian).
     ///
     /// @details
@@ -156,4 +158,4 @@ namespace kouta::io::test::parser_test
 
         ASSERT_THROW(parser.extract_integral<std::uint64_t>(2), std::out_of_range);
     }
-}  // namespace kouta::io::test::parser_test
+}  // namespace kouta::tests::io

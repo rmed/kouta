@@ -23,18 +23,18 @@ namespace kouta::base::callback
     ///
     /// @tparam TArgs                   Callable arguments.
     template<class... TArgs>
-    class Deferred : public BaseCallback<TArgs...>
+    class DeferredCallback : public BaseCallback<TArgs...>
     {
     public:
         // Copyable
-        Deferred(const Deferred&) = default;
-        Deferred& operator=(const Deferred&) = default;
+        DeferredCallback(const DeferredCallback&) = default;
+        DeferredCallback& operator=(const DeferredCallback&) = default;
 
         // Movable
-        Deferred(Deferred&&) = default;
-        Deferred& operator=(Deferred&&) = default;
+        DeferredCallback(DeferredCallback&&) = default;
+        DeferredCallback& operator=(DeferredCallback&&) = default;
 
-        ~Deferred() override = default;
+        ~DeferredCallback() override = default;
 
         /// @brief Callback constructor from a bound method.
         ///
@@ -50,7 +50,7 @@ namespace kouta::base::callback
         /// @param[in] method           Pointer to the method that is going to be called. The arguments of the Callback
         ///                             must match those of this method.
         template<class TClass>
-        Deferred(TClass* object, void (TClass::*method)(TArgs...))
+        DeferredCallback(TClass* object, void (TClass::*method)(TArgs...))
             : BaseCallback<TArgs...>{}
         {
             this->set_callable(
