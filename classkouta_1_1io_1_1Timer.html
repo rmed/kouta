@@ -171,9 +171,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a0aa4cc8732570f7a167ce9417ba0fdb0 inherit pub_methods_classkouta_1_1base_1_1Component"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a943e543e55974ad69057fd98d7b10573 inherit pub_methods_classkouta_1_1base_1_1Component"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1Component.html#a943e543e55974ad69057fd98d7b10573">~Component</a> ()=default</td></tr>
 <tr class="separator:a943e543e55974ad69057fd98d7b10573 inherit pub_methods_classkouta_1_1base_1_1Component"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7372e538c4499be6a5d4855b7c4f97e1 inherit pub_methods_classkouta_1_1base_1_1Component"><td class="memItemLeft" align="right" valign="top">virtual boost::asio::io_context &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1Component.html#a7372e538c4499be6a5d4855b7c4f97e1">context</a> ()</td></tr>
-<tr class="memdesc:a7372e538c4499be6a5d4855b7c4f97e1 inherit pub_methods_classkouta_1_1base_1_1Component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtain a reference to the underlying I/O context.  <a href="classkouta_1_1base_1_1Component.html#a7372e538c4499be6a5d4855b7c4f97e1">More...</a><br /></td></tr>
-<tr class="separator:a7372e538c4499be6a5d4855b7c4f97e1 inherit pub_methods_classkouta_1_1base_1_1Component"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d9aa7f22cb9d9091d7a32c04ca8faef inherit pub_methods_classkouta_1_1base_1_1Component"><td class="memItemLeft" align="right" valign="top">virtual boost::asio::io_context &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1Component.html#a9d9aa7f22cb9d9091d7a32c04ca8faef">context</a> ()</td></tr>
+<tr class="memdesc:a9d9aa7f22cb9d9091d7a32c04ca8faef inherit pub_methods_classkouta_1_1base_1_1Component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtain a reference to the underlying I/O context.  <a href="classkouta_1_1base_1_1Component.html#a9d9aa7f22cb9d9091d7a32c04ca8faef">More...</a><br /></td></tr>
+<tr class="separator:a9d9aa7f22cb9d9091d7a32c04ca8faef inherit pub_methods_classkouta_1_1base_1_1Component"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef017236c14b620cf8f671a812f7b07b inherit pub_methods_classkouta_1_1base_1_1Component"><td class="memTemplParams" colspan="2">template&lt;class TClass , class... TMethodArgs, class... TArgs&gt; </td></tr>
 <tr class="memitem:aef017236c14b620cf8f671a812f7b07b inherit pub_methods_classkouta_1_1base_1_1Component"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1Component.html#aef017236c14b620cf8f671a812f7b07b">post</a> (void(TClass::*method)(TMethodArgs...), TArgs... args)</td></tr>
 <tr class="memdesc:aef017236c14b620cf8f671a812f7b07b inherit pub_methods_classkouta_1_1base_1_1Component"><td class="mdescLeft">&#160;</td><td class="mdescRight">Post a method call to the event loop for deferred execution.  <a href="classkouta_1_1base_1_1Component.html#aef017236c14b620cf8f671a812f7b07b">More...</a><br /></td></tr>
@@ -242,6 +242,9 @@ Private Attributes</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">kouta::io::Timer::Timer </td>
@@ -267,6 +270,11 @@ Private Attributes</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Constructor. </p>
@@ -378,7 +386,7 @@ Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -451,6 +459,9 @@ Private Attributes</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void kouta::io::Timer::set_duration </td>
@@ -460,6 +471,11 @@ Private Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Set the duration of the timer in future waiting operations. </p>
@@ -478,6 +494,9 @@ Private Attributes</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void kouta::io::Timer::start </td>
@@ -486,6 +505,11 @@ Private Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Start the timer and wait for it to complete asynchronously. </p>
@@ -499,6 +523,9 @@ Private Attributes</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void kouta::io::Timer::stop </td>
@@ -507,6 +534,11 @@ Private Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Stop the timer if it was running/being waited for. </p>
@@ -580,9 +612,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following files:<ul>
-<li>kouta/io/<a class="el" href="timer_8hpp.html">timer.hpp</a></li>
-<li>kouta/io/<a class="el" href="timer_8cpp.html">timer.cpp</a></li>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>include/kouta/io/<a class="el" href="timer_8hpp.html">timer.hpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -102,7 +102,7 @@ $(document).ready(function(){initNavTree('md_docs_base_package.html',''); initRe
 Component</h1>
 <p>Implemented in <code><a class="el" href="classkouta_1_1base_1_1Component.html" title="Base class for asynchronous components.">kouta::base::Component</a></code>.</p>
 <p>This is the <b>base type for any asynchronous element that requires access to the event loop</b>. A <code>Component</code> <b>does not own the I/O context</b>, and instead is expected to have a <b>parent</b> from which it can reference said context (hence the aforementioned tree-like architecture).</p>
-<p>These components can be chained as many times as needed, as long as there is one parent at the root of the tree which provides the I/O context (see <code><a class="el" href="classkouta_1_1base_1_1Component.html#a7372e538c4499be6a5d4855b7c4f97e1" title="Obtain a reference to the underlying I/O context.">kouta::base::Component::context()</a></code>).</p>
+<p>These components can be chained as many times as needed, as long as there is one parent at the root of the tree which provides the I/O context (see <code><a class="el" href="classkouta_1_1base_1_1Component.html#a9d9aa7f22cb9d9091d7a32c04ca8faef" title="Obtain a reference to the underlying I/O context.">kouta::base::Component::context()</a></code>).</p>
 <p>Note that all components deriving from a single parent will be executed <b>in the same thread</b>.</p>
 <p>Method calls can be <b>posted to the event loop</b> via the <code><a class="el" href="classkouta_1_1base_1_1Component.html#aef017236c14b620cf8f671a812f7b07b" title="Post a method call to the event loop for deferred execution.">kouta::base::Component::post()</a></code> method. This is the core of the event-based architecture, as it allows to defer method execution in a single thread in an efficient manner.</p>
 <p>A simple component could be:</p>
@@ -130,14 +130,14 @@ Component</h1>
 <div class="line">comp.<a class="code" href="classkouta_1_1base_1_1Component.html#aef017236c14b620cf8f671a812f7b07b">post</a>(&amp;MyComponent::print_message, 42);</div>
 <div class="line">comp.post(&amp;MyComponent::print_message, 546);</div>
 <div class="ttc" id="aclasskouta_1_1base_1_1Component_html"><div class="ttname"><a href="classkouta_1_1base_1_1Component.html">kouta::base::Component</a></div><div class="ttdoc">Base class for asynchronous components.</div><div class="ttdef"><b>Definition:</b> component.hpp:14</div></div>
-<div class="ttc" id="aclasskouta_1_1base_1_1Component_html_aef017236c14b620cf8f671a812f7b07b"><div class="ttname"><a href="classkouta_1_1base_1_1Component.html#aef017236c14b620cf8f671a812f7b07b">kouta::base::Component::post</a></div><div class="ttdeci">void post(void(TClass::*method)(TMethodArgs...), TArgs... args)</div><div class="ttdoc">Post a method call to the event loop for deferred execution.</div><div class="ttdef"><b>Definition:</b> component.hpp:55</div></div>
+<div class="ttc" id="aclasskouta_1_1base_1_1Component_html_aef017236c14b620cf8f671a812f7b07b"><div class="ttname"><a href="classkouta_1_1base_1_1Component.html#aef017236c14b620cf8f671a812f7b07b">kouta::base::Component::post</a></div><div class="ttdeci">void post(void(TClass::*method)(TMethodArgs...), TArgs... args)</div><div class="ttdoc">Post a method call to the event loop for deferred execution.</div><div class="ttdef"><b>Definition:</b> component.hpp:60</div></div>
 <div class="ttc" id="acomponent_8hpp_html"><div class="ttname"><a href="component_8hpp.html">component.hpp</a></div></div>
-<div class="ttc" id="anamespacekouta_html"><div class="ttname"><a href="namespacekouta.html">kouta</a></div><div class="ttdef"><b>Definition:</b> base-callback.hpp:6</div></div>
+<div class="ttc" id="anamespacekouta_html"><div class="ttname"><a href="namespacekouta.html">kouta</a></div><div class="ttdef"><b>Definition:</b> branch.hpp:9</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
 Root</h1>
 <p>Implemented in <code><a class="el" href="classkouta_1_1base_1_1Root.html" title="Root component.">kouta::base::Root</a></code>.</p>
 <p>As opposed to the base <code>Component</code> explained above, the <code>Root</code> <b>owns the I/O context</b> and is supposed to serve as the <b>parent</b> for other components that want to share the same event loop.</p>
-<p>Note that starting the event loop of a <code>Root</code> (<code><a class="el" href="classkouta_1_1base_1_1Root.html#ac00176c7d406897cc5caf0963e41303e" title="Run the event loop.">kouta::base::Root::run()</a></code>) <b>blocks the current thread</b> and will only be unblocked after the event loop is terminated (e.g. via the <code><a class="el" href="classkouta_1_1base_1_1Root.html#afb3621a9cfbf742c4ae5ca7d2c521bb2" title="Stop the event loop and exit.">kouta::base::Root::stop()</a></code> method).</p>
+<p>Note that starting the event loop of a <code>Root</code> (<code><a class="el" href="classkouta_1_1base_1_1Root.html#ad5b26cd9cf7befb15ecfef3b61d7019b" title="Run the event loop.">kouta::base::Root::run()</a></code>) <b>blocks the current thread</b> and will only be unblocked after the event loop is terminated (e.g. via the <code><a class="el" href="classkouta_1_1base_1_1Root.html#a73597cb310947a9e37e8ba8ebe80b912" title="Stop the event loop and exit.">kouta::base::Root::stop()</a></code> method).</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="root_8hpp.html">kouta/base/root.hpp</a>&gt;</span></div>
 <div class="line"> </div>
@@ -164,13 +164,13 @@ Root</h1>
 <div class="line">        , m_comp_2{this}</div>
 <div class="line">    {}</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordtype">void</span> <a class="code" href="classkouta_1_1base_1_1Root.html#ac00176c7d406897cc5caf0963e41303e">run</a>()<span class="keyword"> override</span></div>
+<div class="line">    <span class="keywordtype">void</span> <a class="code" href="classkouta_1_1base_1_1Root.html#ad5b26cd9cf7befb15ecfef3b61d7019b">run</a>()<span class="keyword"> override</span></div>
 <div class="line"><span class="keyword">    </span>{</div>
 <div class="line">        <span class="comment">// Enqueue some events before running</span></div>
 <div class="line">        m_comp_1.post(&amp;MyComponent::print_message, 42);</div>
 <div class="line">        m_comp_2.post(&amp;MyComponent::print_message, 253);</div>
 <div class="line"> </div>
-<div class="line">        <a class="code" href="classkouta_1_1base_1_1Root.html#ac00176c7d406897cc5caf0963e41303e">kouta::base::Root::run</a>();</div>
+<div class="line">        <a class="code" href="classkouta_1_1base_1_1Root.html#ad5b26cd9cf7befb15ecfef3b61d7019b">kouta::base::Root::run</a>();</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">private</span>:</div>
@@ -181,19 +181,19 @@ Root</h1>
 <div class="line"><span class="comment">// ...</span></div>
 <div class="line"> </div>
 <div class="line">MyRoot root{};</div>
-<div class="line"><span class="comment">// Will block unless explicitly stopped!</span></div>
+<div class="line"><span class="comment">// Will block until explicitly stopped!</span></div>
 <div class="line">root.run();</div>
 <div class="ttc" id="aclasskouta_1_1base_1_1Root_html"><div class="ttname"><a href="classkouta_1_1base_1_1Root.html">kouta::base::Root</a></div><div class="ttdoc">Root component.</div><div class="ttdef"><b>Definition:</b> root.hpp:13</div></div>
-<div class="ttc" id="aclasskouta_1_1base_1_1Root_html_ac00176c7d406897cc5caf0963e41303e"><div class="ttname"><a href="classkouta_1_1base_1_1Root.html#ac00176c7d406897cc5caf0963e41303e">kouta::base::Root::run</a></div><div class="ttdeci">virtual void run()</div><div class="ttdoc">Run the event loop.</div><div class="ttdef"><b>Definition:</b> root.cpp:17</div></div>
+<div class="ttc" id="aclasskouta_1_1base_1_1Root_html_ad5b26cd9cf7befb15ecfef3b61d7019b"><div class="ttname"><a href="classkouta_1_1base_1_1Root.html#ad5b26cd9cf7befb15ecfef3b61d7019b">kouta::base::Root::run</a></div><div class="ttdeci">virtual void run()</div><div class="ttdoc">Run the event loop.</div><div class="ttdef"><b>Definition:</b> root.hpp:42</div></div>
 <div class="ttc" id="aroot_8hpp_html"><div class="ttname"><a href="root_8hpp.html">root.hpp</a></div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md7"></a>
-Worker</h1>
-<p>Implemented in <code><a class="el" href="classkouta_1_1base_1_1Worker.html" title="Background component executor.">kouta::base::Worker</a></code>.</p>
+Branch</h1>
+<p>Implemented in <code><a class="el" href="classkouta_1_1base_1_1Branch.html" title="Background component executor.">kouta::base::Branch</a></code>.</p>
 <p>The <em>problem</em> with the <code>Root</code> type is that there is a one-to-one relation between a <code>Root</code> and a thread, considering that the event loop must block in order to handle events. Even though this is probably fine in most cases, there might be situations where another "asynchronous tree" needs to be introduced in the application, for instance to handle communications with an I/O device with high throughput.</p>
-<p>The <code>Worker</code> type was introduced for such cases. It <b>is a <code>Root</code></b> (owns the I/O context), but manages an <code>std::thread</code> internally. As opposed to the <code>Root</code>, starting the event loop via <code><a class="el" href="classkouta_1_1base_1_1Worker.html#aa0e6a7f25c450ec515c54583a4b914f4" title="Run the event loop in the worker thread.">kouta::base::Worker::run()</a></code> <b>will not block</b>, and instead start the event loop in the child thread.</p>
-<p>It is supposed to wrap a <code>Component</code>, allowing external components to post events to the wrapped <code>Component</code>, as well as to the <code>Worker</code> itself.</p>
+<p>The <code>Branch</code> type was introduced for such cases. It <b>is a <code>Root</code></b> (owns the I/O context), but manages an <code>std::thread</code> internally. As opposed to the <code>Root</code>, starting the event loop via <code><a class="el" href="classkouta_1_1base_1_1Branch.html#adbad6cff641bcf6c465a5458290ec035" title="Run the event loop in the worker thread.">kouta::base::Branch::run()</a></code> <b>will not block</b>, and instead start the event loop in the child thread.</p>
+<p>It is supposed to wrap a <code>Component</code>, allowing external components to post events to the wrapped <code>Component</code>, as well as to the <code>Branch</code> itself.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="worker_8hpp.html">kouta/base/worker.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="branch_8hpp.html">kouta/base/branch.hpp</a>&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">class </span>MyComponent : <span class="keyword">public</span> <a class="code" href="classkouta_1_1base_1_1Component.html">kouta::base::Component</a></div>
 <div class="line">{</div>
@@ -215,38 +215,38 @@ Worker</h1>
 <div class="line">        : <a class="code" href="namespacekouta.html">kouta</a>::base::Root{}</div>
 <div class="line">        <span class="comment">// This is the parent for the other components</span></div>
 <div class="line">        , m_comp_1{this}</div>
-<div class="line">        <span class="comment">// The constructor of the worker passes arguments to the wrapped component-</span></div>
+<div class="line">        <span class="comment">// The constructor of the branch passes arguments to the wrapped component-</span></div>
 <div class="line">        <span class="comment">//</span></div>
-<div class="line">        <span class="comment">// The parent must be the worker itself.</span></div>
+<div class="line">        <span class="comment">// The parent must be the branch itself.</span></div>
 <div class="line">        , m_comp_2{&amp;m_comp_2}</div>
 <div class="line">    {}</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordtype">void</span> <a class="code" href="classkouta_1_1base_1_1Root.html#ac00176c7d406897cc5caf0963e41303e">run</a>()<span class="keyword"> override</span></div>
+<div class="line">    <span class="keywordtype">void</span> <a class="code" href="classkouta_1_1base_1_1Root.html#ad5b26cd9cf7befb15ecfef3b61d7019b">run</a>()<span class="keyword"> override</span></div>
 <div class="line"><span class="keyword">    </span>{</div>
 <div class="line">        <span class="comment">// Enqueue some events before running</span></div>
 <div class="line">        m_comp_1.post(&amp;MyComponent::print_message, 42);</div>
 <div class="line">        m_comp_2.post(&amp;MyComponent::print_message, 253);</div>
 <div class="line"> </div>
-<div class="line">        <span class="comment">// Start the worker</span></div>
+<div class="line">        <span class="comment">// Start the branch</span></div>
 <div class="line">        m_comp_2.run();</div>
 <div class="line"> </div>
-<div class="line">        <a class="code" href="classkouta_1_1base_1_1Root.html#ac00176c7d406897cc5caf0963e41303e">kouta::base::Root::run</a>();</div>
+<div class="line">        <a class="code" href="classkouta_1_1base_1_1Root.html#ad5b26cd9cf7befb15ecfef3b61d7019b">kouta::base::Root::run</a>();</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">private</span>:</div>
 <div class="line">    MyComponent m_comp_1;</div>
 <div class="line">    <span class="comment">// Runs in a separate thread</span></div>
-<div class="line">    <a class="code" href="classkouta_1_1base_1_1Worker.html">kouta::base::Worker&lt;MyComponent&gt;</a> m_comp_2;</div>
+<div class="line">    <a class="code" href="classkouta_1_1base_1_1Branch.html">kouta::base::Branch&lt;MyComponent&gt;</a> m_comp_2;</div>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// ...</span></div>
 <div class="line"> </div>
 <div class="line">MyRoot root{};</div>
-<div class="line"><span class="comment">// Will block unless explicitly stopped!</span></div>
-<div class="line">root.<a class="code" href="classkouta_1_1base_1_1Worker.html#aa0e6a7f25c450ec515c54583a4b914f4">run</a>();</div>
-<div class="ttc" id="aclasskouta_1_1base_1_1Worker_html"><div class="ttname"><a href="classkouta_1_1base_1_1Worker.html">kouta::base::Worker</a></div><div class="ttdoc">Background component executor.</div><div class="ttdef"><b>Definition:</b> worker.hpp:25</div></div>
-<div class="ttc" id="aclasskouta_1_1base_1_1Worker_html_aa0e6a7f25c450ec515c54583a4b914f4"><div class="ttname"><a href="classkouta_1_1base_1_1Worker.html#aa0e6a7f25c450ec515c54583a4b914f4">kouta::base::Worker::run</a></div><div class="ttdeci">void run() override</div><div class="ttdoc">Run the event loop in the worker thread.</div><div class="ttdef"><b>Definition:</b> worker.hpp:84</div></div>
-<div class="ttc" id="aworker_8hpp_html"><div class="ttname"><a href="worker_8hpp.html">worker.hpp</a></div></div>
+<div class="line"><span class="comment">// Will block until explicitly stopped!</span></div>
+<div class="line">root.<a class="code" href="classkouta_1_1base_1_1Branch.html#adbad6cff641bcf6c465a5458290ec035">run</a>();</div>
+<div class="ttc" id="abranch_8hpp_html"><div class="ttname"><a href="branch_8hpp.html">branch.hpp</a></div></div>
+<div class="ttc" id="aclasskouta_1_1base_1_1Branch_html"><div class="ttname"><a href="classkouta_1_1base_1_1Branch.html">kouta::base::Branch</a></div><div class="ttdoc">Background component executor.</div><div class="ttdef"><b>Definition:</b> branch.hpp:25</div></div>
+<div class="ttc" id="aclasskouta_1_1base_1_1Branch_html_adbad6cff641bcf6c465a5458290ec035"><div class="ttname"><a href="classkouta_1_1base_1_1Branch.html#adbad6cff641bcf6c465a5458290ec035">kouta::base::Branch::run</a></div><div class="ttdeci">void run() override</div><div class="ttdoc">Run the event loop in the worker thread.</div><div class="ttdef"><b>Definition:</b> branch.hpp:84</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md8"></a>
 Callbacks</h1>
 <p>Implemented in <code><a class="el" href="namespacekouta_1_1base_1_1callback.html">kouta::base::callback</a></code>.</p>
@@ -254,9 +254,9 @@ Callbacks</h1>
 <p>There are different types of callbacks:</p>
 <ul>
 <li><b>Base callback</b> (<code><a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html" title="Safe function pointer wrapper.">kouta::base::callback::BaseCallback</a></code>, aliased as <code><a class="el" href="namespacekouta_1_1base.html#a87ca86690b979574e1347395c3fb24d9" title="Make callback::BaseCallback the default Callback type.">kouta::base::Callback</a></code>): Empty callback type which is supposed to be used as an implementation-agnostic callback. If called as-is, whill throw an exception, helping identify non-defined callbacks.</li>
-<li><b>Direct callback</b> (<code><a class="el" href="classkouta_1_1base_1_1callback_1_1Direct.html" title="Direct Callback implementation.">kouta::base::callback::Direct</a></code>): Can be seen as a direct method call <b>within the same thread</b>. Can be used with any type of object.</li>
-<li><b>Deferred callback</b> (<code><a class="el" href="classkouta_1_1base_1_1callback_1_1Deferred.html" title="Deferred Callback implementation.">kouta::base::callback::Deferred</a></code>): Posts a method call to the event loop of a <code>Component</code>, effectively running it in that component's thread.</li>
-<li><b>Callback list</b> (<code><a class="el" href="classkouta_1_1base_1_1callback_1_1List.html" title="Callback list.">kouta::base::callback::List</a></code>): Container for any of the aforementioned callbacks. When invoked, will in turn invoke the contained callbacks, regardless of their type, allowing for a one-to-many model.</li>
+<li><b>Direct callback</b> (<code><a class="el" href="classkouta_1_1base_1_1callback_1_1DirectCallback.html" title="Direct Callback implementation.">kouta::base::callback::DirectCallback</a></code>): Can be seen as a direct method call <b>within the same thread</b>. Can be used with any type of object.</li>
+<li><b>Deferred callback</b> (<code><a class="el" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html" title="Deferred Callback implementation.">kouta::base::callback::DeferredCallback</a></code>): Posts a method call to the event loop of a <code>Component</code>, effectively running it in that component's thread.</li>
+<li><b>Callback list</b> (<code><a class="el" href="classkouta_1_1base_1_1callback_1_1CallbackList.html" title="Callback list.">kouta::base::callback::CallbackList</a></code>): Container for any of the aforementioned callbacks. When invoked, will in turn invoke the contained callbacks, regardless of their type, allowing for a one-to-many model.</li>
 </ul>
 <p><b>Callbacks cannot return anything</b>.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -284,24 +284,24 @@ Callbacks</h1>
 <div class="line"><a class="code" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html">kouta::base::Callback&lt;int&gt;</a> base{};</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Direct invocation within same thread</span></div>
-<div class="line"><a class="code" href="classkouta_1_1base_1_1callback_1_1Direct.html">kouta::base::callback::Direct&lt;int&gt;</a> direct{&amp;comp, &amp;MyComponent::print_message};</div>
+<div class="line"><a class="code" href="classkouta_1_1base_1_1callback_1_1DirectCallback.html">kouta::base::callback::DirectCallback&lt;int&gt;</a> direct{&amp;comp, &amp;MyComponent::print_message};</div>
 <div class="line">direct(42);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Deferred invocation in the event loop of the component</span></div>
-<div class="line"><a class="code" href="classkouta_1_1base_1_1callback_1_1Deferred.html">kouta::base::callback::Deferred&lt;int&gt;</a> deferred{&amp;comp, &amp;MyComponent::print_message};</div>
+<div class="line"><a class="code" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html">kouta::base::callback::DeferredCallback&lt;int&gt;</a> deferred{&amp;comp, &amp;MyComponent::print_message};</div>
 <div class="line">deferred(43);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// List of different callback types</span></div>
-<div class="line"><a class="code" href="classkouta_1_1base_1_1callback_1_1List.html">kouta::base::callback::List&lt;int&gt;</a> cb_list{</div>
-<div class="line">    <a class="code" href="classkouta_1_1base_1_1callback_1_1Direct.html">kouta::base::callback::Direct</a>{&amp;comp, &amp;Mycomponent::print_message},</div>
-<div class="line">    <a class="code" href="classkouta_1_1base_1_1callback_1_1Deferred.html">kouta::base::callback::Deferred</a>{&amp;comp, &amp;Mycomponent::print_message}</div>
+<div class="line"><a class="code" href="classkouta_1_1base_1_1callback_1_1CallbackList.html">kouta::base::callback::CallbackList&lt;int&gt;</a> cb_list{</div>
+<div class="line">    <a class="code" href="classkouta_1_1base_1_1callback_1_1DirectCallback.html">kouta::base::callback::DirectCallback</a>{&amp;comp, &amp;Mycomponent::print_message},</div>
+<div class="line">    <a class="code" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html">kouta::base::callback::DeferredCallback</a>{&amp;comp, &amp;Mycomponent::print_message}</div>
 <div class="line">};</div>
 <div class="line">cb_list(44);</div>
 <div class="ttc" id="acallback_8hpp_html"><div class="ttname"><a href="callback_8hpp.html">callback.hpp</a></div></div>
 <div class="ttc" id="aclasskouta_1_1base_1_1callback_1_1BaseCallback_html"><div class="ttname"><a href="classkouta_1_1base_1_1callback_1_1BaseCallback.html">kouta::base::callback::BaseCallback&lt; TArgs... &gt;</a></div></div>
-<div class="ttc" id="aclasskouta_1_1base_1_1callback_1_1Deferred_html"><div class="ttname"><a href="classkouta_1_1base_1_1callback_1_1Deferred.html">kouta::base::callback::Deferred</a></div><div class="ttdoc">Deferred Callback implementation.</div><div class="ttdef"><b>Definition:</b> deferred.hpp:27</div></div>
-<div class="ttc" id="aclasskouta_1_1base_1_1callback_1_1Direct_html"><div class="ttname"><a href="classkouta_1_1base_1_1callback_1_1Direct.html">kouta::base::callback::Direct</a></div><div class="ttdoc">Direct Callback implementation.</div><div class="ttdef"><b>Definition:</b> direct.hpp:18</div></div>
-<div class="ttc" id="aclasskouta_1_1base_1_1callback_1_1List_html"><div class="ttname"><a href="classkouta_1_1base_1_1callback_1_1List.html">kouta::base::callback::List</a></div><div class="ttdoc">Callback list.</div><div class="ttdef"><b>Definition:</b> list.hpp:22</div></div>
+<div class="ttc" id="aclasskouta_1_1base_1_1callback_1_1CallbackList_html"><div class="ttname"><a href="classkouta_1_1base_1_1callback_1_1CallbackList.html">kouta::base::callback::CallbackList</a></div><div class="ttdoc">Callback list.</div><div class="ttdef"><b>Definition:</b> callback-list.hpp:22</div></div>
+<div class="ttc" id="aclasskouta_1_1base_1_1callback_1_1DeferredCallback_html"><div class="ttname"><a href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html">kouta::base::callback::DeferredCallback</a></div><div class="ttdoc">Deferred Callback implementation.</div><div class="ttdef"><b>Definition:</b> deferred-callback.hpp:27</div></div>
+<div class="ttc" id="aclasskouta_1_1base_1_1callback_1_1DirectCallback_html"><div class="ttname"><a href="classkouta_1_1base_1_1callback_1_1DirectCallback.html">kouta::base::callback::DirectCallback</a></div><div class="ttdoc">Direct Callback implementation.</div><div class="ttdef"><b>Definition:</b> direct-callback.hpp:18</div></div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

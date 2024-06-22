@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['packer_131',['Packer',['../classkouta_1_1io_1_1Packer.html',1,'kouta::io']]],
-  ['parser_132',['Parser',['../classkouta_1_1io_1_1Parser.html',1,'kouta::io']]]
+  ['root_97',['Root',['../classkouta_1_1base_1_1Root.html',1,'kouta::base']]]
 ];

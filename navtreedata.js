@@ -33,7 +33,7 @@ var NAVTREE =
     [ "Base package", "md_docs_base_package.html", [
       [ "Component", "md_docs_base_package.html#autotoc_md5", null ],
       [ "Root", "md_docs_base_package.html#autotoc_md6", null ],
-      [ "Worker", "md_docs_base_package.html#autotoc_md7", null ],
+      [ "Branch", "md_docs_base_package.html#autotoc_md7", null ],
       [ "Callbacks", "md_docs_base_package.html#autotoc_md8", null ]
     ] ],
     [ "I/O package", "md_docs_io_package.html", [
@@ -45,7 +45,6 @@ var NAVTREE =
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", null ],
-        [ "Functions", "namespacemembers_func.html", null ],
         [ "Typedefs", "namespacemembers_type.html", null ]
       ] ]
     ] ],
@@ -61,19 +60,14 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Files", "files.html", [
-      [ "File List", "files.html", "files_dup" ],
-      [ "File Members", "globals.html", [
-        [ "All", "globals.html", null ],
-        [ "Variables", "globals_vars.html", null ]
-      ] ]
+      [ "File List", "files.html", "files_dup" ]
     ] ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"annotated.html",
-"parser-test_8cpp.html#a1207fdf7828e25e0f2ab2184842c8409"
+"annotated.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

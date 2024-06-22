@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['root_88',['Root',['../classkouta_1_1base_1_1Root.html',1,'kouta::base::Root'],['../classkouta_1_1base_1_1Root.html#a4ace293f92d80944077f764eea932ff2',1,'kouta::base::Root::Root()'],['../classkouta_1_1base_1_1Root.html#a73feb9b380364f8d512474146aa9c2dc',1,'kouta::base::Root::Root(const Root &amp;)=delete'],['../classkouta_1_1base_1_1Root.html#a9975cafefef13c850ed29e5fbea6524a',1,'kouta::base::Root::Root(Root &amp;&amp;)=delete']]],
-  ['root_2ecpp_89',['root.cpp',['../root_8cpp.html',1,'']]],
-  ['root_2ehpp_90',['root.hpp',['../root_8hpp.html',1,'']]],
-  ['rootmock_91',['RootMock',['../classkouta_1_1base_1_1test_1_1base__test_1_1RootMock.html',1,'kouta::base::test::base_test']]],
-  ['run_92',['run',['../classkouta_1_1base_1_1Root.html#ac00176c7d406897cc5caf0963e41303e',1,'kouta::base::Root::run()'],['../classkouta_1_1base_1_1Worker.html#aa0e6a7f25c450ec515c54583a4b914f4',1,'kouta::base::Worker::run() override']]],
-  ['run_5fworker_93',['run_worker',['../classkouta_1_1base_1_1Worker.html#a77750699045380fcee81986edddf280c',1,'kouta::base::Worker']]]
+  ['set_5fcallable_68',['set_callable',['../classkouta_1_1base_1_1callback_1_1BaseCallback.html#a7ac37aba12dd4e132276c0b00ebee989',1,'kouta::base::callback::BaseCallback']]],
+  ['set_5fduration_69',['set_duration',['../classkouta_1_1io_1_1Timer.html#a602d3100d5c63ad083abf758397c477e',1,'kouta::io::Timer']]],
+  ['size_70',['size',['../classkouta_1_1io_1_1Packer.html#a6e73db0dcedfc092729cc86c07ca30c6',1,'kouta::io::Packer::size()'],['../classkouta_1_1io_1_1Parser.html#a8f95962109cf75c3dfd2120e9956b2e6',1,'kouta::io::Parser::size()']]],
+  ['start_71',['start',['../classkouta_1_1io_1_1Timer.html#aff7a90c3446e63993c1ab49413abf1a0',1,'kouta::io::Timer']]],
+  ['stop_72',['stop',['../classkouta_1_1base_1_1Root.html#a73597cb310947a9e37e8ba8ebe80b912',1,'kouta::base::Root::stop()'],['../classkouta_1_1io_1_1Timer.html#a253efdc168c2ff4adf3e2acc7f8aa9c6',1,'kouta::io::Timer::stop()']]]
 ];

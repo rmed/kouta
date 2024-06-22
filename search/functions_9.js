@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['packer_199',['Packer',['../classkouta_1_1io_1_1Packer.html#aa3ad21f61fca33a7c243c5bb2cb8e23c',1,'kouta::io::Packer::Packer()=default'],['../classkouta_1_1io_1_1Packer.html#ab977a586617217532d1ff93088309151',1,'kouta::io::Packer::Packer(std::size_t count)'],['../classkouta_1_1io_1_1Packer.html#a765b6d4f02a96d4d149e53b12ac0f73b',1,'kouta::io::Packer::Packer(const Packer &amp;)=default'],['../classkouta_1_1io_1_1Packer.html#a66f89a59682d5886adc296bb6c3cc391',1,'kouta::io::Packer::Packer(Packer &amp;&amp;)=default']]],
-  ['parser_200',['Parser',['../classkouta_1_1io_1_1Parser.html#a636ebb8a419eefbbd312a2070e062f7f',1,'kouta::io::Parser::Parser()=delete'],['../classkouta_1_1io_1_1Parser.html#a9532d2d5bdfdd119c5d7a7be816d8e66',1,'kouta::io::Parser::Parser(const View &amp;view)'],['../classkouta_1_1io_1_1Parser.html#a56b9057c1a9786af7aeec8c5f2c64e2a',1,'kouta::io::Parser::Parser(const Parser &amp;)=default'],['../classkouta_1_1io_1_1Parser.html#a0d570225d15d6314969fdd5edb22c95c',1,'kouta::io::Parser::Parser(Parser &amp;&amp;)=default']]],
-  ['post_201',['post',['../classkouta_1_1base_1_1Component.html#aef017236c14b620cf8f671a812f7b07b',1,'kouta::base::Component::post()'],['../classkouta_1_1base_1_1Worker.html#a429a9bd1fa5b9711927dc857b92023cc',1,'kouta::base::Worker::post()']]]
+  ['set_5fcallable_147',['set_callable',['../classkouta_1_1base_1_1callback_1_1BaseCallback.html#a7ac37aba12dd4e132276c0b00ebee989',1,'kouta::base::callback::BaseCallback']]],
+  ['set_5fduration_148',['set_duration',['../classkouta_1_1io_1_1Timer.html#a602d3100d5c63ad083abf758397c477e',1,'kouta::io::Timer']]],
+  ['size_149',['size',['../classkouta_1_1io_1_1Packer.html#a6e73db0dcedfc092729cc86c07ca30c6',1,'kouta::io::Packer::size()'],['../classkouta_1_1io_1_1Parser.html#a8f95962109cf75c3dfd2120e9956b2e6',1,'kouta::io::Parser::size()']]],
+  ['start_150',['start',['../classkouta_1_1io_1_1Timer.html#aff7a90c3446e63993c1ab49413abf1a0',1,'kouta::io::Timer']]],
+  ['stop_151',['stop',['../classkouta_1_1base_1_1Root.html#a73597cb310947a9e37e8ba8ebe80b912',1,'kouta::base::Root::stop()'],['../classkouta_1_1io_1_1Timer.html#a253efdc168c2ff4adf3e2acc7f8aa9c6',1,'kouta::io::Timer::stop()']]]
 ];
