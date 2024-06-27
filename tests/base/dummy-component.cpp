@@ -1,6 +1,6 @@
-#include <kouta/base/test/dummy-component.hpp>
+#include "dummy-component.hpp"
 
-namespace kouta::base::test
+namespace kouta::tests::base
 {
     DummyComponent::DummyComponent(
         Component* parent,
@@ -48,4 +48,4 @@ namespace kouta::base::test
         // Provide the ID of the thread this component is running in
         m_callback_d(std::this_thread::get_id());
     }
-}  // namespace kouta::base::test
+}  // namespace kouta::tests::base

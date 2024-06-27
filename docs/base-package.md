@@ -96,23 +96,23 @@ private:
 // ...
 
 MyRoot root{};
-// Will block unless explicitly stopped!
+// Will block until explicitly stopped!
 root.run();
 ```
 
-## Worker
+## Branch
 
-Implemented in `kouta::base::Worker`.
+Implemented in `kouta::base::Branch`.
 
 The *problem* with the `Root` type is that there is a one-to-one relation between a `Root` and a thread, considering that the event loop must block in order to handle events. Even though this is probably fine in most cases, there might be situations where another "asynchronous tree" needs to be introduced in the application, for instance to handle communications with an I/O device with high throughput.
 
-The `Worker` type was introduced for such cases. It **is a `Root`** (owns the I/O context), but manages an `std::thread` internally. As opposed to the `Root`, starting the event loop via `kouta::base::Worker::run()` **will not block**, and instead start the event loop in the child thread.
+The `Branch` type was introduced for such cases. It **is a `Root`** (owns the I/O context), but manages an `std::thread` internally. As opposed to the `Root`, starting the event loop via `kouta::base::Branch::run()` **will not block**, and instead start the event loop in the child thread.
 
-It is supposed to wrap a `Component`, allowing external components to post events to the wrapped `Component`, as well as to the `Worker` itself.
+It is supposed to wrap a `Component`, allowing external components to post events to the wrapped `Component`, as well as to the `Branch` itself.
 
 ```cpp
 #include <iostream>
-#include <kouta/base/worker.hpp>
+#include <kouta/base/branch.hpp>
 
 class MyComponent : public kouta::base::Component
 {
@@ -134,9 +134,9 @@ public:
         : kouta::base::Root{}
         // This is the parent for the other components
         , m_comp_1{this}
-        // The constructor of the worker passes arguments to the wrapped component-
+        // The constructor of the branch passes arguments to the wrapped component-
         //
-        // The parent must be the worker itself.
+        // The parent must be the branch itself.
         , m_comp_2{&m_comp_2}
     {}
 
@@ -146,7 +146,7 @@ public:
         m_comp_1.post(&MyComponent::print_message, 42);
         m_comp_2.post(&MyComponent::print_message, 253);
 
-        // Start the worker
+        // Start the branch
         m_comp_2.run();
 
         kouta::base::Root::run();
@@ -155,13 +155,13 @@ public:
 private:
     MyComponent m_comp_1;
     // Runs in a separate thread
-    kouta::base::Worker<MyComponent> m_comp_2;
+    kouta::base::Branch<MyComponent> m_comp_2;
 };
 
 // ...
 
 MyRoot root{};
-// Will block unless explicitly stopped!
+// Will block until explicitly stopped!
 root.run();
 ```
 
@@ -174,9 +174,9 @@ Callbacks are wrappers around `std::function` that allow safely registering a me
 There are different types of callbacks:
 
 - **Base callback** (`kouta::base::callback::BaseCallback`, aliased as `kouta::base::Callback`): Empty callback type which is supposed to be used as an implementation-agnostic callback. If called as-is, whill throw an exception, helping identify non-defined callbacks.
-- **Direct callback** (`kouta::base::callback::Direct`): Can be seen as a direct method call **within the same thread**. Can be used with any type of object.
-- **Deferred callback** (`kouta::base::callback::Deferred`): Posts a method call to the event loop of a `Component`, effectively running it in that component's thread.
-- **Callback list** (`kouta::base::callback::List`): Container for any of the aforementioned callbacks. When invoked, will in turn invoke the contained callbacks, regardless of their type, allowing for a one-to-many model.
+- **Direct callback** (`kouta::base::callback::DirectCallback`): Can be seen as a direct method call **within the same thread**. Can be used with any type of object.
+- **Deferred callback** (`kouta::base::callback::DeferredCallback`): Posts a method call to the event loop of a `Component`, effectively running it in that component's thread.
+- **Callback list** (`kouta::base::callback::CallbackList`): Container for any of the aforementioned callbacks. When invoked, will in turn invoke the contained callbacks, regardless of their type, allowing for a one-to-many model.
 
 **Callbacks cannot return anything**.
 
@@ -206,17 +206,17 @@ public:
 kouta::base::Callback<int> base{};
 
 // Direct invocation within same thread
-kouta::base::callback::Direct<int> direct{&comp, &MyComponent::print_message};
+kouta::base::callback::DirectCallback<int> direct{&comp, &MyComponent::print_message};
 direct(42);
 
 // Deferred invocation in the event loop of the component
-kouta::base::callback::Deferred<int> deferred{&comp, &MyComponent::print_message};
+kouta::base::callback::DeferredCallback<int> deferred{&comp, &MyComponent::print_message};
 deferred(43);
 
 // List of different callback types
-kouta::base::callback::List<int> cb_list{
-    kouta::base::callback::Direct{&comp, &Mycomponent::print_message},
-    kouta::base::callback::Deferred{&comp, &Mycomponent::print_message}
+kouta::base::callback::CallbackList<int> cb_list{
+    kouta::base::callback::DirectCallback{&comp, &Mycomponent::print_message},
+    kouta::base::callback::DeferredCallback{&comp, &Mycomponent::print_message}
 };
 cb_list(44);
 ```

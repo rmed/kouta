@@ -10,32 +10,32 @@ namespace kouta::base
     /// @brief Background component executor.
     ///
     /// @details
-    /// A Worker wraps a @ref Component based object so that the event loop it is attached to is executed in a
+    /// A Branch wraps a @ref Component based object so that the event loop it is attached to is executed in a
     /// separate thread. This implies that any children that have the wrapped Component as a parent will also run in
     /// the worker thread.
     ///
-    /// By default, the Worker does nothing, and its event loop must be explicitly started by calling the @ref run()
+    /// By default, the Branch does nothing, and its event loop must be explicitly started by calling the @ref run()
     /// method. As opposed to the original method defined in @ref Root, the one specified here will launch the thread
     /// (and the event loop) and return immediately.
     ///
     /// @tparam TWrapped            Wrapped @ref Component type.
     template<class TWrapped>
         requires std::is_base_of_v<Component, TWrapped>
-    class Worker : public Root
+    class Branch : public Root
     {
     public:
         using WrappedComponent = TWrapped;
 
         // Not default-constructible.
-        Worker() = delete;
+        Branch() = delete;
 
-        /// @brief Worker component constructor.
+        /// @brief Branch component constructor.
         ///
         /// @tparam TArgs           Types of the arguments to provide the wrapped component.
         ///
         /// @param[in] args         Arguments to provide the wrapped component.
         template<class... TArgs>
-        Worker(TArgs... args)
+        Branch(TArgs... args)
             : Root{}
             , m_worker{}
             , m_component{args...}
@@ -43,19 +43,19 @@ namespace kouta::base
         }
 
         // Not copyable
-        Worker(const Worker&) = delete;
-        Worker& operator=(const Worker&) = delete;
+        Branch(const Branch&) = delete;
+        Branch& operator=(const Branch&) = delete;
 
         // Not movable
-        Worker(Root&&) = delete;
-        Worker& operator=(Worker&&) = delete;
+        Branch(Root&&) = delete;
+        Branch& operator=(Branch&&) = delete;
 
-        /// @brief Worker destructor.
+        /// @brief Branch destructor.
         ///
         /// @details
         /// The destructor takes care of the cleanup of the worker thread, by stopping its event loop and waiting
         /// for the thread to terminate before joining it.
-        virtual ~Worker()
+        virtual ~Branch()
         {
             if (m_worker.joinable())
             {
@@ -86,7 +86,7 @@ namespace kouta::base
             // Can only run the thread once
             if (!m_worker.joinable())
             {
-                m_worker = std::thread{&Worker<WrappedComponent>::run_worker, this};
+                m_worker = std::thread{&Branch<WrappedComponent>::run_worker, this};
             }
         }
 

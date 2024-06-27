@@ -33,7 +33,10 @@ namespace kouta::io
         /// @brief Constructor.
         ///
         /// @param[in] view           View from which to construct the parser.
-        explicit Parser(const View& view);
+        explicit Parser(const View& view)
+            : m_view{view}
+        {
+        }
 
         // Copyable
         Parser(const Parser&) = default;
@@ -46,12 +49,18 @@ namespace kouta::io
         virtual ~Parser() = default;
 
         /// @brief Obtain a reference to the internal data view.
-        const View& view() const;
+        const View& view() const
+        {
+            return m_view;
+        }
 
         /// @brief Obtain the size of the internal data view.
         ///
         /// @note This also corresponds to the number of bytes.
-        std::size_t size() const;
+        std::size_t size() const
+        {
+            return m_view.size_bytes();
+        }
 
         /// @brief Extract an integral value from the view.
         ///
@@ -127,7 +136,14 @@ namespace kouta::io
         /// @returns String extracted from the view.
         ///
         /// @throws std::out_of_range when there are not enough bytes in the data view.
-        virtual std::string extract_string(std::size_t offset, std::size_t count) const;
+        virtual std::string extract_string(std::size_t offset, std::size_t count) const
+        {
+            check_bounds(offset, count);
+
+            auto src_it{m_view.begin() + offset};
+
+            return std::string{src_it, src_it + count};
+        }
 
     private:
         /// @brief Check that a specific range is within bounds.
@@ -136,7 +152,13 @@ namespace kouta::io
         /// @param[in] count            Number of bytes in the range.
         ///
         /// @throws std::out_of_range when there are not enough bytes in the data view.
-        void check_bounds(std::size_t offset, std::size_t count) const;
+        void check_bounds(std::size_t offset, std::size_t count) const
+        {
+            if ((offset + count) > size())
+            {
+                throw std::out_of_range("not enough bytes to extract");
+            }
+        }
 
         View m_view;
     };

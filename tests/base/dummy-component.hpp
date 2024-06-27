@@ -7,8 +7,10 @@
 #include <kouta/base/callback.hpp>
 #include <kouta/base/component.hpp>
 
-namespace kouta::base::test
+namespace kouta::tests::base
 {
+    using namespace kouta::base;
+
     /// @brief Dummy component for tests.
     class DummyComponent : public Component
     {
@@ -52,4 +54,4 @@ namespace kouta::base::test
         Callback<const std::vector<std::uint8_t>&> m_callback_c;
         Callback<std::thread::id> m_callback_d;
     };
-}  // namespace kouta::base::test
+}  // namespace kouta::tests::base

@@ -1,9 +1,9 @@
 #pragma once
 
 #include <kouta/base/callback/base-callback.hpp>
-#include <kouta/base/callback/direct.hpp>
-#include <kouta/base/callback/deferred.hpp>
-#include <kouta/base/callback/list.hpp>
+#include <kouta/base/callback/direct-callback.hpp>
+#include <kouta/base/callback/deferred-callback.hpp>
+#include <kouta/base/callback/callback-list.hpp>
 
 namespace kouta::base
 {

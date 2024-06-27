@@ -3,8 +3,10 @@
 
 #include <kouta/io/timer.hpp>
 
-namespace kouta::io::test::timer_test
+namespace kouta::tests::io
 {
+    using namespace kouta::io;
+
     namespace
     {
         /// @brief Mock the Root to provide the event loop and receive callbacks.
@@ -21,7 +23,8 @@ namespace kouta::io::test::timer_test
             explicit RootMockTimed(std::chrono::milliseconds timeout)
                 : base::Root{}
                 , m_test_timeout{this, timeout, std::bind_front(&RootMockTimed::handle_test_timeout, this)}
-            {}
+            {
+            }
 
             MOCK_METHOD(void, handler_timeout, (Timer &), ());
 
@@ -34,14 +37,14 @@ namespace kouta::io::test::timer_test
 
         private:
             /// @brief Stop the test after a while
-            void handle_test_timeout(Timer&)
+            void handle_test_timeout(Timer &)
             {
                 stop();
             }
 
             Timer m_test_timeout;
         };
-    }
+    }  // namespace
 
     /// @brief Test the nominal behaviour of the timer.
     ///
@@ -57,13 +60,15 @@ namespace kouta::io::test::timer_test
         auto now{std::chrono::system_clock::now()};
 
         EXPECT_CALL(root, handler_timeout)
-            .WillOnce([&timeout, &now, &root]() {
-                auto after_timeout{std::chrono::system_clock::now()};
+            .WillOnce(
+                [&timeout, &now, &root]()
+                {
+                    auto after_timeout{std::chrono::system_clock::now()};
 
-                ASSERT_TRUE((now + timeout) <= after_timeout);
+                    ASSERT_TRUE((now + timeout) <= after_timeout);
 
-                root.stop();
-            });
+                    root.stop();
+                });
 
         timer.start();
 
@@ -85,8 +90,7 @@ namespace kouta::io::test::timer_test
 
         auto now{std::chrono::system_clock::now()};
 
-        EXPECT_CALL(root, handler_timeout)
-            .Times(0);
+        EXPECT_CALL(root, handler_timeout).Times(0);
 
         alarm(2);
         root.run();
@@ -106,8 +110,7 @@ namespace kouta::io::test::timer_test
 
         auto now{std::chrono::system_clock::now()};
 
-        EXPECT_CALL(root, handler_timeout)
-            .Times(0);
+        EXPECT_CALL(root, handler_timeout).Times(0);
 
         timer.start();
         timer.stop();
@@ -130,8 +133,7 @@ namespace kouta::io::test::timer_test
 
         auto now{std::chrono::system_clock::now()};
 
-        EXPECT_CALL(root, handler_timeout)
-            .Times(1);
+        EXPECT_CALL(root, handler_timeout).Times(1);
 
         timer.start();
 
@@ -154,13 +156,17 @@ namespace kouta::io::test::timer_test
         auto now{std::chrono::system_clock::now()};
 
         EXPECT_CALL(root, handler_timeout)
-            .WillOnce([&timer]() {
-                // Rearm
-                timer.start();
-            })
-            .WillOnce([&root]() {
-                root.stop();
-            });
+            .WillOnce(
+                [&timer]()
+                {
+                    // Rearm
+                    timer.start();
+                })
+            .WillOnce(
+                [&root]()
+                {
+                    root.stop();
+                });
 
         timer.start();
 
@@ -184,22 +190,26 @@ namespace kouta::io::test::timer_test
         auto now{std::chrono::system_clock::now()};
 
         EXPECT_CALL(root, handler_timeout)
-            .WillOnce([&timer, &now, &timeout, &timeout2]() {
-                auto after_timeout{std::chrono::system_clock::now()};
+            .WillOnce(
+                [&timer, &now, &timeout, &timeout2]()
+                {
+                    auto after_timeout{std::chrono::system_clock::now()};
 
-                ASSERT_TRUE((now + timeout) <= after_timeout);
+                    ASSERT_TRUE((now + timeout) <= after_timeout);
 
-                // Rearm
-                timer.set_duration(std::chrono::milliseconds{timeout2});
-                timer.start();
-            })
-            .WillOnce([&root, &now, &timeout, &timeout2]() {
-                auto after_timeout{std::chrono::system_clock::now()};
+                    // Rearm
+                    timer.set_duration(std::chrono::milliseconds{timeout2});
+                    timer.start();
+                })
+            .WillOnce(
+                [&root, &now, &timeout, &timeout2]()
+                {
+                    auto after_timeout{std::chrono::system_clock::now()};
 
-                ASSERT_TRUE((now + timeout + timeout2) <= after_timeout);
+                    ASSERT_TRUE((now + timeout + timeout2) <= after_timeout);
 
-                root.stop();
-            });
+                    root.stop();
+                });
 
         timer.start();
 
@@ -207,4 +217,4 @@ namespace kouta::io::test::timer_test
         root.run();
         alarm(0);
     }
-}  // namespace kouta::io::test::timer_test
+}  // namespace kouta::tests::io

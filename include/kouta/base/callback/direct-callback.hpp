@@ -14,18 +14,18 @@ namespace kouta::base::callback
     ///
     /// @tparam TArgs                   Callable arguments.
     template<class... TArgs>
-    class Direct : public BaseCallback<TArgs...>
+    class DirectCallback : public BaseCallback<TArgs...>
     {
     public:
         // Copyable
-        Direct(const Direct&) = default;
-        Direct& operator=(const Direct&) = default;
+        DirectCallback(const DirectCallback&) = default;
+        DirectCallback& operator=(const DirectCallback&) = default;
 
         // Movable
-        Direct(Direct&&) = default;
-        Direct& operator=(Direct&&) = default;
+        DirectCallback(DirectCallback&&) = default;
+        DirectCallback& operator=(DirectCallback&&) = default;
 
-        ~Direct() override = default;
+        ~DirectCallback() override = default;
 
         /// @brief Callback constructor from a bound method.
         ///
@@ -39,7 +39,7 @@ namespace kouta::base::callback
         /// @param[in] method           Pointer to the method that is going to be called. The arguments of the Callback
         ///                             must match those of this method.
         template<class TClass>
-        Direct(TClass* object, void (TClass::*method)(TArgs...))
+        DirectCallback(TClass* object, void (TClass::*method)(TArgs...))
             : BaseCallback<TArgs...>{}
         {
             this->set_callable(std::bind_front(method, object));
