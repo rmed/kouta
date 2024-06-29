@@ -71,10 +71,17 @@ namespace kouta::tests::base
         RootMock root{};
 
         callback::DeferredCallback<std::uint16_t> cb_a{&root, &RootMock::handler_a};
+        callback::DeferredCallback<std::uint16_t> cb_a_2{
+            &root,
+            [&root](std::uint16_t value)
+            {
+                root.handler_a(value);
+            }};
         callback::DirectCallback<std::int32_t, const std::string&> cb_b{&root, &RootMock::handler_b};
         callback::DeferredCallback<const std::vector<std::uint8_t>&> cb_c{&root, &RootMock::handler_c};
 
         std::uint16_t data_a{127};
+        std::uint16_t data_a_2{564};
 
         std::int32_t data_b_a{42};
         std::string data_b_b{"this is a test"};
@@ -86,7 +93,9 @@ namespace kouta::tests::base
 
         EXPECT_CALL(root, handler_c(data_c_copy)).Times(1);
 
-        EXPECT_CALL(root, handler_a(data_a))
+        EXPECT_CALL(root, handler_a(data_a)).Times(1);
+
+        EXPECT_CALL(root, handler_a(data_a_2))
             .WillOnce(
                 [&root]
                 {
@@ -99,6 +108,7 @@ namespace kouta::tests::base
 
         cb_a(data_a);
         cb_b(data_b_a, data_b_b);
+        cb_a_2(data_a_2);
 
         alarm(1);
         root.run();
@@ -123,7 +133,12 @@ namespace kouta::tests::base
         callback::CallbackList<std::int32_t, const std::string&> cb_list_deferred{
             callback::DeferredCallback{&root, &RootMock::handler_b},
             callback::DeferredCallback{&root, &RootMock::handler_b},
-            callback::DeferredCallback{&root, &RootMock::handler_b}};
+            callback::DeferredCallback<std::int32_t, const std::string&>{
+                &root,
+                [&root](std::int32_t value_a, const std::string& value_b)
+                {
+                    root.handler_b(value_a, value_b);
+                }}};
 
         std::uint16_t data_a{127};
 

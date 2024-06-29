@@ -2,8 +2,6 @@
 
 #include <boost/asio.hpp>
 
-#include <kouta/base/callback.hpp>
-
 namespace kouta::base
 {
     /// @brief Base class for asynchronous components.
@@ -22,7 +20,8 @@ namespace kouta::base
         ///                             hence its lifetime must, at least, surpass that of the child.
         explicit Component(Component* parent = nullptr)
             : m_parent{parent}
-        {}
+        {
+        }
 
         // Not copyable
         Component(const Component&) = delete;
@@ -50,12 +49,12 @@ namespace kouta::base
         ///
         /// @warning Arguments are **copied** before being passed to the event loop.
         ///
-        /// @tparam TClass              Child class whose method is going to be executed.
+        /// @tparam TClass              Child class whose method is going to be invoked.
         /// @tparam TMethodArgs         Types of the arguments that the method accepts.
         /// @tparam TArgs               Types of the arguments provided to the invocation.
         ///
-        /// @param[in] method           Method to execute. Its signature must match `void(TArgs...)`
-        /// @param[in] args             Arguments to execute the method with.
+        /// @param[in] method           Method to invoke. Its signature must match `void(TArgs...)`
+        /// @param[in] args             Arguments to invoke the method with.
         template<class TClass, class... TMethodArgs, class... TArgs>
         void post(void (TClass::*method)(TMethodArgs...), TArgs... args)
         {
@@ -64,6 +63,30 @@ namespace kouta::base
                 [this, method, args...]()
                 {
                     (static_cast<TClass*>(this)->*method)(std::move(args)...);
+                });
+        }
+
+        /// @brief Post a function call to the event loop for deferred execution.
+        ///
+        /// @details
+        /// This allows other components, even those residing in another thread/event loop, to post a functor to this
+        /// specific component, for example a lambda function.
+        ///
+        /// @warning Arguments are **copied** before being passed to the event loop.
+        ///
+        /// @tparam TFuncArgs           Types of the arguments that the function accepts.
+        /// @tparam TArgs               Types of the arguments provided to the invocation.
+        ///
+        /// @param[in] functor          Functor to invoke invoked. Its signature must match `void(TArgs...)`
+        /// @param[in] args             Arguments to invoke the functor with.
+        template<class... TFuncArgs, class... TArgs>
+        void post(const std::function<void(TFuncArgs...)>& functor, TArgs... args)
+        {
+            boost::asio::post(
+                context().get_executor(),
+                [functor, args...]()
+                {
+                    functor(std::move(args)...);
                 });
         }
 

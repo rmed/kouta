@@ -13,9 +13,9 @@ namespace kouta::base::callback
     ///
     /// Because calling a deferred Callback posts an event to the destination's thread, **arguments passed to the
     /// callback must be copied during the call**, meaning that the following types of arguments should not be used
-    /// (or used with much care to prevent invalid memory access):
+    /// (or used with much care to prevent invalid memory access or race conditions):
     ///
-    /// - Pointers
+    /// - Raw pointers
     /// - Non-copyable objects
     /// - Objects referencing, but not owning, dynamic memory (e.g. @ref std::span)
     ///
@@ -26,6 +26,9 @@ namespace kouta::base::callback
     class DeferredCallback : public BaseCallback<TArgs...>
     {
     public:
+        /// @brief The type of the callable the Callback points to.
+        using Callable = BaseCallback<TArgs...>::Callable;
+
         // Copyable
         DeferredCallback(const DeferredCallback&) = default;
         DeferredCallback& operator=(const DeferredCallback&) = default;
@@ -57,6 +60,31 @@ namespace kouta::base::callback
                 [object, method](TArgs... args)
                 {
                     object->template post<TClass, TArgs...>(method, args...);
+                });
+        }
+
+        /// @brief Callback constructor from a callable.
+        ///
+        /// @details
+        /// This constructor initializes the intenal callable to the one specified in @p callable , so that it is
+        /// invoked from within the context of the provided @p object , which must implement a `post()` method to which
+        /// the invokation can be passed to defer execution.
+        ///
+        /// The developer must guarantee the lifetime of the @p object to rpevent invalid memory access.
+        ///
+        /// @tparam TClass              Object type.
+        ///
+        /// @param[in] object           Pointer to the object whose method is going to be called.
+        /// @param[in] callable         Callable to store. For instance, this could be a lambda or anything convertible
+        ///                             to `std::function`.
+        template<class TClass>
+        DeferredCallback(TClass* object, const DeferredCallback::Callable& callable)
+            : BaseCallback<TArgs...>{}
+        {
+            this->set_callable(
+                [object, callable](TArgs... args)
+                {
+                    object->template post<TArgs...>(callable, args...);
                 });
         }
     };

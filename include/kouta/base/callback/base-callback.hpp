@@ -17,6 +17,7 @@ namespace kouta::base::callback
     class BaseCallback
     {
     public:
+        /// @brief The type of the callable the Callback points to.
         using Callable = std::function<void(TArgs...)>;
 
         /// @brief Default constructor.
