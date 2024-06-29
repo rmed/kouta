@@ -258,7 +258,7 @@ Callbacks</h1>
 <ul>
 <li><b>Base callback</b> (<code><a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html" title="Safe function pointer wrapper.">kouta::base::callback::BaseCallback</a></code>, aliased as <code><a class="el" href="namespacekouta_1_1base.html#a87ca86690b979574e1347395c3fb24d9" title="Make callback::BaseCallback the default Callback type.">kouta::base::Callback</a></code>): Empty callback type which is supposed to be used as an implementation-agnostic callback. If called as-is, whill throw an exception, helping identify non-defined callbacks.</li>
 <li><b>Direct callback</b> (<code><a class="el" href="classkouta_1_1base_1_1callback_1_1DirectCallback.html" title="Direct Callback implementation.">kouta::base::callback::DirectCallback</a></code>): Can be seen as a direct method call <b>within the same thread</b>. Can be used with any type of object.</li>
-<li><b>Deferred callback</b> (<code><a class="el" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html" title="Deferred Callback implementation.">kouta::base::callback::DeferredCallback</a></code>): Posts a method call to the event loop of a <code>Component</code>, effectively running it in that component's thread.</li>
+<li><b>Deferred callback</b> (<code><a class="el" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html" title="Deferred Callback implementation.">kouta::base::callback::DeferredCallback</a></code>): Posts a method/functor call to the event loop of a <code>Component</code>, effectively running it in that component's thread.</li>
 <li><b>Callback list</b> (<code><a class="el" href="classkouta_1_1base_1_1callback_1_1CallbackList.html" title="Callback list.">kouta::base::callback::CallbackList</a></code>): Container for any of the aforementioned callbacks. When invoked, will in turn invoke the contained callbacks, regardless of their type, allowing for a one-to-many model.</li>
 </ul>
 <p><b>Callbacks cannot return anything</b>.</p>
@@ -293,6 +293,7 @@ Callbacks</h1>
 <div class="line"><span class="comment">// Deferred invocation in the event loop of the component</span></div>
 <div class="line"><a class="code" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html">kouta::base::callback::DeferredCallback&lt;int&gt;</a> deferred{&amp;comp, &amp;MyComponent::print_message};</div>
 <div class="line">deferred(43);</div>
+<div class="line"><a class="code" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html">kouta::base::callback::DeferredCallback&lt;int&gt;</a> deferred2{&amp;comp, [](<span class="keywordtype">int</span> value) { std::cout &lt;&lt; <span class="stringliteral">&quot;Lambda message &quot;</span> &lt;&lt; value &lt;&lt; std::endl; }}</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// List of different callback types</span></div>
 <div class="line"><a class="code" href="classkouta_1_1base_1_1callback_1_1CallbackList.html">kouta::base::callback::CallbackList&lt;int&gt;</a> cb_list{</div>
