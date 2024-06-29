@@ -32,7 +32,7 @@
 #         base
 # )
 function(kouta_add_library)
-    cmake_parse_arguments(ARGS "" "TARGET" "HEADERS;SOURCES;INTERNAL;LIBS" ${ARGN})
+    cmake_parse_arguments(ARGS "ENABLE_HEADER_ONLY" "TARGET" "HEADERS;SOURCES;INTERNAL;LIBS" ${ARGN})
 
     set(_lib_target "kouta-${ARGS_TARGET}")
     set(_header_target "${_lib_target}-header")
@@ -68,19 +68,22 @@ function(kouta_add_library)
     add_library("kouta::${ARGS_TARGET}" ALIAS ${_lib_target})
 
     # Header-only library
-    add_library(${_header_target}
-        INTERFACE
-            ${ARGS_HEADERS}
-    )
+    if(ARGS_ENABLE_HEADER_ONLY)
+        message(STATUS "${ARGS_TARGET} ${ARGS_ENABLE_HEADER_ONLY}")
+        add_library(${_header_target}
+            INTERFACE
+                ${ARGS_HEADERS}
+        )
 
-    if(ARGS_INTERNAL)
-        target_link_libraries(${_header_target} INTERFACE "kouta-${ARGS_INTERNAL}-header")
+        if(ARGS_INTERNAL)
+            target_link_libraries(${_header_target} INTERFACE "kouta-${ARGS_INTERNAL}-header")
+        endif()
+
+        # External libs
+        if(ARGS_LIBS)
+            target_link_libraries(${_header_target} INTERFACE ${ARGS_LIBS})
+        endif()
+
+        add_library("kouta::${ARGS_TARGET}Header" ALIAS ${_header_target})
     endif()
-
-    # External libs
-    if(ARGS_LIBS)
-        target_link_libraries(${_header_target} INTERFACE ${ARGS_LIBS})
-    endif()
-
-    add_library("kouta::${ARGS_TARGET}Header" ALIAS ${_header_target})
 endfunction()

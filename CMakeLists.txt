@@ -23,11 +23,14 @@ find_package(Boost ${BOOST_MIN_VERSION} REQUIRED
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 
-# Kouta
+# kouta
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
+# kouta::base
 kouta_add_library(
     TARGET base
+    ENABLE_HEADER_ONLY
+
     HEADERS
         "base/callback/base-callback.hpp"
         "base/callback/callback-list.hpp"
@@ -45,8 +48,44 @@ kouta_add_library(
         Boost::system
 )
 
+# kouta::http
+find_package(Boost ${BOOST_MIN_VERSION}
+    COMPONENTS
+        url
+)
+
+if(Boost_url_FOUND)
+    include_directories(${Boost_url_INCLUDE_DIRS})
+    link_directories(${Boost_url_LIBRARY_DIRS})
+
+    kouta_add_library(
+        TARGET http
+
+        HEADERS
+            "http/server/config.hpp"
+            "http/server/context.hpp"
+            "http/server/handler-flow.hpp"
+            "http/server/request.hpp"
+            "http/server/response.hpp"
+            "http/server/router.hpp"
+            "http/server/server.hpp"
+            "http/server/worker.hpp"
+
+        SOURCES
+            "http/request.cpp"
+            "http/router.cpp"
+
+        LIBS
+            Boost::system
+            Boost::url
+    )
+endif()
+
+# kouta::io
 kouta_add_library(
     TARGET io
+    ENABLE_HEADER_ONLY
+
     HEADERS
         "io/packer.hpp"
         "io/parser.hpp"

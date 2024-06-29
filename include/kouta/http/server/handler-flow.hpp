@@ -8,7 +8,7 @@
 
 namespace kouta::http::server
 {
-    namespace handler_detail
+    namespace handler_flow_detail
     {
         /// @brief Pre-request middleware function type.
         ///
@@ -54,16 +54,16 @@ namespace kouta::http::server
         ///
         /// @returns true to continue the processing chain, otherwise false to send the response as-is.
         using HandlerFunc = std::function<bool(const Request& request, Response& response)>;
-    }  // namespace handler_detail
+    }  // namespace handler_flow_detail
 
     /// @brief Complete flow used to handle a request.
     struct HandlerFlow
     {
         /// Request handler.
-        handler_detail::HandlerFunc handler;
+        handler_flow_detail::HandlerFunc handler;
         /// Functions to call before the handler.
-        std::vector<handler_detail::PreMiddlewareFunc> pre_request;
+        std::vector<handler_flow_detail::PreMiddlewareFunc> pre_request;
         /// Functions to call after the handler.
-        std::vector<handler_detail::PostMiddlewareFunc> post_request;
+        std::vector<handler_flow_detail::PostMiddlewareFunc> post_request;
     };
 }  // namespace kouta::http::server
