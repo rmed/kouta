@@ -104,7 +104,7 @@ Component</h1>
 <p>This is the <b>base type for any asynchronous element that requires access to the event loop</b>. A <code>Component</code> <b>does not own the I/O context</b>, and instead is expected to have a <b>parent</b> from which it can reference said context (hence the aforementioned tree-like architecture).</p>
 <p>These components can be chained as many times as needed, as long as there is one parent at the root of the tree which provides the I/O context (see <code><a class="el" href="classkouta_1_1base_1_1Component.html#a9d9aa7f22cb9d9091d7a32c04ca8faef" title="Obtain a reference to the underlying I/O context.">kouta::base::Component::context()</a></code>).</p>
 <p>Note that all components deriving from a single parent will be executed <b>in the same thread</b>.</p>
-<p>Method calls can be <b>posted to the event loop</b> via the <code><a class="el" href="classkouta_1_1base_1_1Component.html#aef017236c14b620cf8f671a812f7b07b" title="Post a method call to the event loop for deferred execution.">kouta::base::Component::post()</a></code> method. This is the core of the event-based architecture, as it allows to defer method execution in a single thread in an efficient manner.</p>
+<p>Method calls can be <b>posted to the event loop</b> via the <code><a class="el" href="classkouta_1_1base_1_1Component.html#aef017236c14b620cf8f671a812f7b07b" title="Post a method call to the event loop for deferred execution.">kouta::base::Component::post()</a></code> method. This is the core of the event-based architecture, as it allows to defer method execution in a single thread in an efficient manner. In addition, it is also possible to <b>post calls to lambdas and free functions</b>.</p>
 <p>A simple component could be:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="component_8hpp.html">kouta/base/component.hpp</a>&gt;</span></div>
@@ -129,6 +129,9 @@ Component</h1>
 <div class="line"><span class="comment">// Deferred method call</span></div>
 <div class="line">comp.<a class="code" href="classkouta_1_1base_1_1Component.html#aef017236c14b620cf8f671a812f7b07b">post</a>(&amp;MyComponent::print_message, 42);</div>
 <div class="line">comp.post(&amp;MyComponent::print_message, 546);</div>
+<div class="line">comp.post([]() {</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;This is deferred&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">});</div>
 <div class="ttc" id="aclasskouta_1_1base_1_1Component_html"><div class="ttname"><a href="classkouta_1_1base_1_1Component.html">kouta::base::Component</a></div><div class="ttdoc">Base class for asynchronous components.</div><div class="ttdef"><b>Definition:</b> component.hpp:12</div></div>
 <div class="ttc" id="aclasskouta_1_1base_1_1Component_html_aef017236c14b620cf8f671a812f7b07b"><div class="ttname"><a href="classkouta_1_1base_1_1Component.html#aef017236c14b620cf8f671a812f7b07b">kouta::base::Component::post</a></div><div class="ttdeci">void post(void(TClass::*method)(TMethodArgs...), TArgs... args)</div><div class="ttdoc">Post a method call to the event loop for deferred execution.</div><div class="ttdef"><b>Definition:</b> component.hpp:59</div></div>
 <div class="ttc" id="acomponent_8hpp_html"><div class="ttname"><a href="component_8hpp.html">component.hpp</a></div></div>
