@@ -178,7 +178,7 @@ There are different types of callbacks:
 
 - **Base callback** (`kouta::base::callback::BaseCallback`, aliased as `kouta::base::Callback`): Empty callback type which is supposed to be used as an implementation-agnostic callback. If called as-is, whill throw an exception, helping identify non-defined callbacks.
 - **Direct callback** (`kouta::base::callback::DirectCallback`): Can be seen as a direct method call **within the same thread**. Can be used with any type of object.
-- **Deferred callback** (`kouta::base::callback::DeferredCallback`): Posts a method call to the event loop of a `Component`, effectively running it in that component's thread.
+- **Deferred callback** (`kouta::base::callback::DeferredCallback`): Posts a method/functor call to the event loop of a `Component`, effectively running it in that component's thread.
 - **Callback list** (`kouta::base::callback::CallbackList`): Container for any of the aforementioned callbacks. When invoked, will in turn invoke the contained callbacks, regardless of their type, allowing for a one-to-many model.
 
 **Callbacks cannot return anything**.
@@ -215,6 +215,7 @@ direct(42);
 // Deferred invocation in the event loop of the component
 kouta::base::callback::DeferredCallback<int> deferred{&comp, &MyComponent::print_message};
 deferred(43);
+kouta::base::callback::DeferredCallback<int> deferred2{&comp, [](int value) { std::cout << "Lambda message " << value << std::endl; }}
 
 // List of different callback types
 kouta::base::callback::CallbackList<int> cb_list{
