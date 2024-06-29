@@ -14,7 +14,7 @@ These components can be chained as many times as needed, as long as there is one
 
 Note that all components deriving from a single parent will be executed **in the same thread**.
 
-Method calls can be **posted to the event loop** via the `kouta::base::Component::post()` method. This is the core of the event-based architecture, as it allows to defer method execution in a single thread in an efficient manner.
+Method calls can be **posted to the event loop** via the `kouta::base::Component::post()` method. This is the core of the event-based architecture, as it allows to defer method execution in a single thread in an efficient manner. In addition, it is also possible to **post calls to lambdas and free functions**.
 
 A simple component could be:
 
@@ -42,6 +42,9 @@ public:
 // Deferred method call
 comp.post(&MyComponent::print_message, 42);
 comp.post(&MyComponent::print_message, 546);
+comp.post([]() {
+    std::cout << "This is deferred" << std::endl;
+});
 ```
 
 ## Root

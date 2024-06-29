@@ -69,15 +69,15 @@ namespace kouta::base
         /// @brief Post a function call to the event loop for deferred execution.
         ///
         /// @details
-        /// This allows other components, even those residing in another thread/event loop, to post a functor to this
-        /// specific component, for example a lambda function.
+        /// This allows other components, even those residing in another thread/event loop, to post a function to this
+        /// specific component.
         ///
         /// @warning Arguments are **copied** before being passed to the event loop.
         ///
         /// @tparam TFuncArgs           Types of the arguments that the function accepts.
         /// @tparam TArgs               Types of the arguments provided to the invocation.
         ///
-        /// @param[in] functor          Functor to invoke invoked. Its signature must match `void(TArgs...)`
+        /// @param[in] functor          Functor to invoke. Its signature must match `void(TArgs...)`
         /// @param[in] args             Arguments to invoke the functor with.
         template<class... TFuncArgs, class... TArgs>
         void post(const std::function<void(TFuncArgs...)>& functor, TArgs... args)
@@ -88,6 +88,21 @@ namespace kouta::base
                 {
                     functor(std::move(args)...);
                 });
+        }
+
+        /// @brief Post a functor call to the event loop for deferred execution.
+        ///
+        /// @details
+        /// This allows other components, even those residing in another thread/event loop, to post a functor to this
+        /// specific component, for example a lambda.
+        ///
+        /// @tparam TFunctor            Functor type.
+        ///
+        /// @param[in] functor          Functor to invoke.s
+        template<class TFunctor>
+        void post(TFunctor&& functor)
+        {
+            boost::asio::post(context().get_executor(), functor);
         }
 
     private:

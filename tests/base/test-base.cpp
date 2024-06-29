@@ -180,7 +180,11 @@ namespace kouta::tests::base
 
         root.post(&RootMock::handler_a, std::uint16_t{42});
         root.post(&RootMock::handler_b, -512, "This is a test");
-        root.post(&RootMock::handler_c, std::vector<std::uint8_t>{12, 34});
+        root.post(
+            [&root]()
+            {
+                root.handler_c(std::vector<std::uint8_t>{12, 34});
+            });
     }
 
     /// @brief Test the behaviour of the event loop when running.
