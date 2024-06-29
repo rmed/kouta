@@ -1,19 +1,19 @@
 <map id="include/kouta/io/timer.hpp" name="include/kouta/io/timer.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="85,5,275,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,80,72,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="147,632,234,659"/>
-<area shape="rect" id="node4" title=" " alt="" coords="147,80,354,107"/>
-<area shape="rect" id="node5" href="$base_8hpp.html" title=" " alt="" coords="378,80,499,107"/>
-<area shape="rect" id="node6" href="$branch_8hpp.html" title=" " alt="" coords="177,155,346,181"/>
-<area shape="rect" id="node8" href="$component_8hpp.html" title=" " alt="" coords="262,304,461,331"/>
-<area shape="rect" id="node10" href="$callback_8hpp.html" title=" " alt="" coords="401,379,580,405"/>
-<area shape="rect" id="node17" href="$root_8hpp.html" title=" " alt="" coords="286,229,437,256"/>
-<area shape="rect" id="node7" title=" " alt="" coords="147,229,211,256"/>
-<area shape="rect" id="node9" title=" " alt="" coords="260,379,377,405"/>
-<area shape="rect" id="node11" href="$base-callback_8hpp.html" title=" " alt="" coords="231,543,382,584"/>
-<area shape="rect" id="node12" href="$direct-callback_8hpp.html" title=" " alt="" coords="231,453,382,495"/>
-<area shape="rect" id="node13" href="$deferred-callback_8hpp.html" title=" " alt="" coords="407,453,575,495"/>
-<area shape="rect" id="node14" href="$callback-list_8hpp.html" title=" " alt="" coords="599,453,750,495"/>
-<area shape="rect" id="node15" title=" " alt="" coords="563,550,674,577"/>
-<area shape="rect" id="node16" title=" " alt="" coords="698,550,761,577"/>
+<area shape="rect" id="node1" title=" " alt="" coords="331,5,521,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="181,80,247,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="767,408,853,435"/>
+<area shape="rect" id="node4" title=" " alt="" coords="417,80,624,107"/>
+<area shape="rect" id="node5" href="$base_8hpp.html" title=" " alt="" coords="272,80,393,107"/>
+<area shape="rect" id="node6" href="$branch_8hpp.html" title=" " alt="" coords="124,155,293,181"/>
+<area shape="rect" id="node8" href="$component_8hpp.html" title=" " alt="" coords="95,326,293,353"/>
+<area shape="rect" id="node10" href="$root_8hpp.html" title=" " alt="" coords="5,237,156,263"/>
+<area shape="rect" id="node11" href="$callback_8hpp.html" title=" " alt="" coords="541,155,719,181"/>
+<area shape="rect" id="node7" title=" " alt="" coords="231,237,295,263"/>
+<area shape="rect" id="node9" title=" " alt="" coords="135,408,253,435"/>
+<area shape="rect" id="node12" href="$base-callback_8hpp.html" title=" " alt="" coords="568,319,719,360"/>
+<area shape="rect" id="node13" href="$direct-callback_8hpp.html" title=" " alt="" coords="371,229,521,271"/>
+<area shape="rect" id="node14" href="$deferred-callback_8hpp.html" title=" " alt="" coords="546,229,714,271"/>
+<area shape="rect" id="node15" href="$callback-list_8hpp.html" title=" " alt="" coords="789,229,940,271"/>
+<area shape="rect" id="node16" title=" " alt="" coords="743,326,853,353"/>
+<area shape="rect" id="node17" title=" " alt="" coords="877,326,940,353"/>
 </map>

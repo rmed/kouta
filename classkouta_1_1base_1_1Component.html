@@ -149,6 +149,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aef017236c14b620cf8f671a812f7b07b"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1Component.html#aef017236c14b620cf8f671a812f7b07b">post</a> (void(TClass::*method)(TMethodArgs...), TArgs... args)</td></tr>
 <tr class="memdesc:aef017236c14b620cf8f671a812f7b07b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Post a method call to the event loop for deferred execution.  <a href="classkouta_1_1base_1_1Component.html#aef017236c14b620cf8f671a812f7b07b">More...</a><br /></td></tr>
 <tr class="separator:aef017236c14b620cf8f671a812f7b07b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88db2c8836935e2eecd7c65243647e8a"><td class="memTemplParams" colspan="2">template&lt;class... TFuncArgs, class... TArgs&gt; </td></tr>
+<tr class="memitem:a88db2c8836935e2eecd7c65243647e8a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1Component.html#a88db2c8836935e2eecd7c65243647e8a">post</a> (const std::function&lt; void(TFuncArgs...)&gt; &amp;functor, TArgs... args)</td></tr>
+<tr class="memdesc:a88db2c8836935e2eecd7c65243647e8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Post a function call to the event loop for deferred execution.  <a href="classkouta_1_1base_1_1Component.html#a88db2c8836935e2eecd7c65243647e8a">More...</a><br /></td></tr>
+<tr class="separator:a88db2c8836935e2eecd7c65243647e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -378,8 +382,64 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a88db2c8836935e2eecd7c65243647e8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88db2c8836935e2eecd7c65243647e8a">&#9670;&nbsp;</a></span>post() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class... TFuncArgs, class... TArgs&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void kouta::base::Component::post </td>
+          <td>(</td>
+          <td class="paramtype">const std::function&lt; void(TFuncArgs...)&gt; &amp;&#160;</td>
+          <td class="paramname"><em>functor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TArgs...&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Post a function call to the event loop for deferred execution. </p>
+<p>This allows other components, even those residing in another thread/event loop, to post a functor to this specific component, for example a lambda function.</p>
+<dl class="section warning"><dt>Warning</dt><dd>Arguments are <b>copied</b> before being passed to the event loop.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TFuncArgs</td><td>Types of the arguments that the function accepts. </td></tr>
+    <tr><td class="paramname">TArgs</td><td>Types of the arguments provided to the invocation.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">functor</td><td>Functor to invoke invoked. Its signature must match <code>void(TArgs...)</code> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>Arguments to invoke the functor with. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="aef017236c14b620cf8f671a812f7b07b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef017236c14b620cf8f671a812f7b07b">&#9670;&nbsp;</a></span>post()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aef017236c14b620cf8f671a812f7b07b">&#9670;&nbsp;</a></span>post() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -419,7 +479,7 @@ template&lt;class TClass , class... TMethodArgs, class... TArgs&gt; </div>
 <dl class="section warning"><dt>Warning</dt><dd>Arguments are <b>copied</b> before being passed to the event loop.</dd></dl>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TClass</td><td>Child class whose method is going to be executed. </td></tr>
+    <tr><td class="paramname">TClass</td><td>Child class whose method is going to be invoked. </td></tr>
     <tr><td class="paramname">TMethodArgs</td><td>Types of the arguments that the method accepts. </td></tr>
     <tr><td class="paramname">TArgs</td><td>Types of the arguments provided to the invocation.</td></tr>
   </table>
@@ -427,8 +487,8 @@ template&lt;class TClass , class... TMethodArgs, class... TArgs&gt; </div>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">method</td><td>Method to execute. Its signature must match <code>void(TArgs...)</code> </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>Arguments to execute the method with. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">method</td><td>Method to invoke. Its signature must match <code>void(TArgs...)</code> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>Arguments to invoke the method with. </td></tr>
   </table>
   </dd>
 </dl>

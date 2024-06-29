@@ -2,12 +2,9 @@
 <area shape="rect" id="node1" title=" " alt="" coords="207,5,410,47"/>
 <area shape="rect" id="node2" href="$callback-list_8hpp.html" title=" " alt="" coords="5,95,196,136"/>
 <area shape="rect" id="node3" href="$callback_8hpp.html" title=" " alt="" coords="237,184,381,225"/>
-<area shape="rect" id="node10" href="$deferred-callback_8hpp.html" title=" " alt="" coords="271,95,498,136"/>
-<area shape="rect" id="node11" href="$direct-callback_8hpp.html" title=" " alt="" coords="522,95,730,136"/>
-<area shape="rect" id="node4" href="$component_8hpp.html" title=" " alt="" coords="182,273,326,315"/>
-<area shape="rect" id="node6" href="$base_8hpp.html" title=" " alt="" coords="139,541,311,568"/>
-<area shape="rect" id="node5" href="$branch_8hpp.html" title=" " alt="" coords="207,452,351,493"/>
-<area shape="rect" id="node9" href="$root_8hpp.html" title=" " alt="" coords="157,363,301,404"/>
-<area shape="rect" id="node7" href="$timer_8hpp.html" title=" " alt="" coords="129,616,320,643"/>
-<area shape="rect" id="node8" href="$io_8hpp.html" title=" " alt="" coords="148,691,301,717"/>
+<area shape="rect" id="node7" href="$deferred-callback_8hpp.html" title=" " alt="" coords="271,95,498,136"/>
+<area shape="rect" id="node8" href="$direct-callback_8hpp.html" title=" " alt="" coords="522,95,730,136"/>
+<area shape="rect" id="node4" href="$base_8hpp.html" title=" " alt="" coords="223,273,395,300"/>
+<area shape="rect" id="node5" href="$timer_8hpp.html" title=" " alt="" coords="213,348,404,375"/>
+<area shape="rect" id="node6" href="$io_8hpp.html" title=" " alt="" coords="232,423,385,449"/>
 </map>

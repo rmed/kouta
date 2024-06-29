@@ -1,13 +1,5 @@
 <map id="include/kouta/base/root.hpp" name="include/kouta/base/root.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="77,5,221,47"/>
-<area shape="rect" id="node2" href="$component_8hpp.html" title=" " alt="" coords="50,95,249,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,169,123,196"/>
-<area shape="rect" id="node4" href="$callback_8hpp.html" title=" " alt="" coords="147,169,325,196"/>
-<area shape="rect" id="node5" href="$base-callback_8hpp.html" title=" " alt="" coords="175,333,326,375"/>
-<area shape="rect" id="node7" href="$direct-callback_8hpp.html" title=" " alt="" coords="69,244,219,285"/>
-<area shape="rect" id="node8" href="$deferred-callback_8hpp.html" title=" " alt="" coords="244,244,412,285"/>
-<area shape="rect" id="node9" href="$callback-list_8hpp.html" title=" " alt="" coords="437,244,587,285"/>
-<area shape="rect" id="node6" title=" " alt="" coords="207,423,294,449"/>
-<area shape="rect" id="node10" title=" " alt="" coords="401,341,511,367"/>
-<area shape="rect" id="node11" title=" " alt="" coords="535,341,598,367"/>
+<area shape="rect" id="node1" title=" " alt="" coords="33,5,177,47"/>
+<area shape="rect" id="node2" href="$component_8hpp.html" title=" " alt="" coords="5,95,204,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="46,169,163,196"/>
 </map>

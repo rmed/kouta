@@ -93,6 +93,7 @@ $(document).ready(function(){initNavTree('classkouta_1_1base_1_1callback_1_1Defe
 
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classkouta_1_1base_1_1callback_1_1DeferredCallback-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -123,6 +124,16 @@ Collaboration diagram for kouta::base::callback::DeferredCallback&lt; TArgs &gt;
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a7bf113255f60827a70c3ce05845a48c2"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html#a7bf113255f60827a70c3ce05845a48c2">Callable</a> = <a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html">BaseCallback</a>&lt; TArgs... &gt;::<a class="el" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html#a7bf113255f60827a70c3ce05845a48c2">Callable</a></td></tr>
+<tr class="memdesc:a7bf113255f60827a70c3ce05845a48c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of the callable the Callback points to.  <a href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html#a7bf113255f60827a70c3ce05845a48c2">More...</a><br /></td></tr>
+<tr class="separator:a7bf113255f60827a70c3ce05845a48c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_types_classkouta_1_1base_1_1callback_1_1BaseCallback"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classkouta_1_1base_1_1callback_1_1BaseCallback')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html">kouta::base::callback::BaseCallback&lt; TArgs... &gt;</a></td></tr>
+<tr class="memitem:acd6fd92be0620c2fe73817bd50881cae inherit pub_types_classkouta_1_1base_1_1callback_1_1BaseCallback"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html#acd6fd92be0620c2fe73817bd50881cae">Callable</a> = std::function&lt; void(TArgs...)&gt;</td></tr>
+<tr class="memdesc:acd6fd92be0620c2fe73817bd50881cae inherit pub_types_classkouta_1_1base_1_1callback_1_1BaseCallback"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of the callable the Callback points to.  <a href="classkouta_1_1base_1_1callback_1_1BaseCallback.html#acd6fd92be0620c2fe73817bd50881cae">More...</a><br /></td></tr>
+<tr class="separator:acd6fd92be0620c2fe73817bd50881cae inherit pub_types_classkouta_1_1base_1_1callback_1_1BaseCallback"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a853e6bcee00e1d67cb5d2a564d3afed3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html#a853e6bcee00e1d67cb5d2a564d3afed3">DeferredCallback</a> (const <a class="el" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html">DeferredCallback</a> &amp;)=default</td></tr>
@@ -139,6 +150,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a47cfcc87453453c10f73fccfbf4e77c3"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html#a47cfcc87453453c10f73fccfbf4e77c3">DeferredCallback</a> (TClass *object, void(TClass::*method)(TArgs...))</td></tr>
 <tr class="memdesc:a47cfcc87453453c10f73fccfbf4e77c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback constructor from a bound method.  <a href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html#a47cfcc87453453c10f73fccfbf4e77c3">More...</a><br /></td></tr>
 <tr class="separator:a47cfcc87453453c10f73fccfbf4e77c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a225ca2bbe77c59162dbd67afa9a220fb"><td class="memTemplParams" colspan="2">template&lt;class TClass &gt; </td></tr>
+<tr class="memitem:a225ca2bbe77c59162dbd67afa9a220fb"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html#a225ca2bbe77c59162dbd67afa9a220fb">DeferredCallback</a> (TClass *object, const <a class="el" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html#a7bf113255f60827a70c3ce05845a48c2">DeferredCallback::Callable</a> &amp;callable)</td></tr>
+<tr class="memdesc:a225ca2bbe77c59162dbd67afa9a220fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback constructor from a callable.  <a href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html#a225ca2bbe77c59162dbd67afa9a220fb">More...</a><br /></td></tr>
+<tr class="separator:a225ca2bbe77c59162dbd67afa9a220fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classkouta_1_1base_1_1callback_1_1BaseCallback"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classkouta_1_1base_1_1callback_1_1BaseCallback')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html">kouta::base::callback::BaseCallback&lt; TArgs... &gt;</a></td></tr>
 <tr class="memitem:abc537187ebea9a89f87116ba31d84d5f inherit pub_methods_classkouta_1_1base_1_1callback_1_1BaseCallback"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html#abc537187ebea9a89f87116ba31d84d5f">BaseCallback</a> ()=default</td></tr>
 <tr class="memdesc:abc537187ebea9a89f87116ba31d84d5f inherit pub_methods_classkouta_1_1base_1_1callback_1_1BaseCallback"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="classkouta_1_1base_1_1callback_1_1BaseCallback.html#abc537187ebea9a89f87116ba31d84d5f">More...</a><br /></td></tr>
@@ -159,9 +174,6 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pub_types_classkouta_1_1base_1_1callback_1_1BaseCallback"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classkouta_1_1base_1_1callback_1_1BaseCallback')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html">kouta::base::callback::BaseCallback&lt; TArgs... &gt;</a></td></tr>
-<tr class="memitem:acd6fd92be0620c2fe73817bd50881cae inherit pub_types_classkouta_1_1base_1_1callback_1_1BaseCallback"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html#acd6fd92be0620c2fe73817bd50881cae">Callable</a> = std::function&lt; void(TArgs...)&gt;</td></tr>
-<tr class="separator:acd6fd92be0620c2fe73817bd50881cae inherit pub_types_classkouta_1_1base_1_1callback_1_1BaseCallback"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classkouta_1_1base_1_1callback_1_1BaseCallback"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classkouta_1_1base_1_1callback_1_1BaseCallback')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html">kouta::base::callback::BaseCallback&lt; TArgs... &gt;</a></td></tr>
 <tr class="memitem:a7ac37aba12dd4e132276c0b00ebee989 inherit pro_methods_classkouta_1_1base_1_1callback_1_1BaseCallback"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html#a7ac37aba12dd4e132276c0b00ebee989">set_callable</a> (const <a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html#acd6fd92be0620c2fe73817bd50881cae">Callable</a> &amp;callable)</td></tr>
 <tr class="memdesc:a7ac37aba12dd4e132276c0b00ebee989 inherit pro_methods_classkouta_1_1base_1_1callback_1_1BaseCallback"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the callable.  <a href="classkouta_1_1base_1_1callback_1_1BaseCallback.html#a7ac37aba12dd4e132276c0b00ebee989">More...</a><br /></td></tr>
@@ -173,9 +185,9 @@ class kouta::base::callback::DeferredCallback&lt; TArgs &gt;</h3>
 
 <p>Deferred Callback implementation. </p>
 <p>A deferred Callback wraps a callable that is invoked within the destination object's thread, assuming that said object implements a <code>post()</code> method which allows the Callback to deferr the call to its event loop. This is the case for the <a class="el" href="classkouta_1_1base_1_1Component.html">Component</a> based architecture of this library.</p>
-<p>Because calling a deferred Callback posts an event to the destination's thread, <b>arguments passed to the callback must be copied during the call</b>, meaning that the following types of arguments should not be used (or used with much care to prevent invalid memory access):</p>
+<p>Because calling a deferred Callback posts an event to the destination's thread, <b>arguments passed to the callback must be copied during the call</b>, meaning that the following types of arguments should not be used (or used with much care to prevent invalid memory access or race conditions):</p>
 <ul>
-<li>Pointers</li>
+<li>Raw pointers</li>
 <li>Non-copyable objects</li>
 <li>Objects referencing, but not owning, dynamic memory (e.g. std::span)</li>
 </ul>
@@ -186,9 +198,28 @@ class kouta::base::callback::DeferredCallback&lt; TArgs &gt;</h3>
   </table>
   </dd>
 </dl>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a7bf113255f60827a70c3ce05845a48c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7bf113255f60827a70c3ce05845a48c2">&#9670;&nbsp;</a></span>Callable</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class... TArgs&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html">kouta::base::callback::DeferredCallback</a>&lt; TArgs &gt;::<a class="el" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html#a7bf113255f60827a70c3ce05845a48c2">Callable</a> =  <a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html">BaseCallback</a>&lt;TArgs...&gt;::<a class="el" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html#a7bf113255f60827a70c3ce05845a48c2">Callable</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The type of the callable the Callback points to. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a853e6bcee00e1d67cb5d2a564d3afed3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a853e6bcee00e1d67cb5d2a564d3afed3">&#9670;&nbsp;</a></span>DeferredCallback() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a853e6bcee00e1d67cb5d2a564d3afed3">&#9670;&nbsp;</a></span>DeferredCallback() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -216,7 +247,7 @@ template&lt;class... TArgs&gt; </div>
 </div>
 </div>
 <a id="a83c8791130e9fff036acba049d0adef7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83c8791130e9fff036acba049d0adef7">&#9670;&nbsp;</a></span>DeferredCallback() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a83c8791130e9fff036acba049d0adef7">&#9670;&nbsp;</a></span>DeferredCallback() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -271,7 +302,7 @@ template&lt;class... TArgs&gt; </div>
 </div>
 </div>
 <a id="a47cfcc87453453c10f73fccfbf4e77c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a47cfcc87453453c10f73fccfbf4e77c3">&#9670;&nbsp;</a></span>DeferredCallback() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a47cfcc87453453c10f73fccfbf4e77c3">&#9670;&nbsp;</a></span>DeferredCallback() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -321,6 +352,63 @@ template&lt;class TClass &gt; </div>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">object</td><td>Pointer to the object whose method is going to be called. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">method</td><td>Pointer to the method that is going to be called. The arguments of the Callback must match those of this method. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a225ca2bbe77c59162dbd67afa9a220fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a225ca2bbe77c59162dbd67afa9a220fb">&#9670;&nbsp;</a></span>DeferredCallback() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class... TArgs&gt; </div>
+<div class="memtemplate">
+template&lt;class TClass &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html">kouta::base::callback::DeferredCallback</a>&lt; TArgs &gt;::<a class="el" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html">DeferredCallback</a> </td>
+          <td>(</td>
+          <td class="paramtype">TClass *&#160;</td>
+          <td class="paramname"><em>object</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html">DeferredCallback</a>&lt; TArgs &gt;::<a class="el" href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html#a7bf113255f60827a70c3ce05845a48c2">Callable</a> &amp;&#160;</td>
+          <td class="paramname"><em>callable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Callback constructor from a callable. </p>
+<p>This constructor initializes the intenal callable to the one specified in <code>callable</code> , so that it is invoked from within the context of the provided <code>object</code> , which must implement a <code>post()</code> method to which the invokation can be passed to defer execution.</p>
+<p>The developer must guarantee the lifetime of the <code>object</code> to rpevent invalid memory access.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TClass</td><td>Object type.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">object</td><td>Pointer to the object whose method is going to be called. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">callable</td><td>Callable to store. For instance, this could be a lambda or anything convertible to <code>std::function</code>. </td></tr>
   </table>
   </dd>
 </dl>
