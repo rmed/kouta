@@ -2,6 +2,10 @@
 
 namespace kouta::tests::base
 {
+    DummyComponent::DummyComponent(Component* parent)
+        : Component{parent}
+    {}
+
     DummyComponent::DummyComponent(
         Component* parent,
         const Callback<std::uint16_t>& callback_a,
@@ -25,6 +29,12 @@ namespace kouta::tests::base
         , m_callback_b{callback_b}
         , m_callback_c{callback_c}
         , m_callback_d{callback_d}
+    {
+    }
+
+    DummyComponent::DummyComponent(Component* parent, const Callback<Component*> callback_on_delete)
+        : Component{parent}
+        , m_callback_on_delete{callback_on_delete}
     {
     }
 
