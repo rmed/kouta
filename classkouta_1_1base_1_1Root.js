@@ -1,6 +1,7 @@
 var classkouta_1_1base_1_1Root =
 [
     [ "Root", "classkouta_1_1base_1_1Root.html#a4ace293f92d80944077f764eea932ff2", null ],
+    [ "Root", "classkouta_1_1base_1_1Root.html#ae216c3a17c8c64bea2599a4c24dd1a92", null ],
     [ "Root", "classkouta_1_1base_1_1Root.html#a73feb9b380364f8d512474146aa9c2dc", null ],
     [ "Root", "classkouta_1_1base_1_1Root.html#a9975cafefef13c850ed29e5fbea6524a", null ],
     [ "~Root", "classkouta_1_1base_1_1Root.html#acacb06359d7cf97f459d5904fbbfaead", null ],

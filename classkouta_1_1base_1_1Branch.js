@@ -2,7 +2,7 @@ var classkouta_1_1base_1_1Branch =
 [
     [ "WrappedComponent", "classkouta_1_1base_1_1Branch.html#a4e1b052c3afdfc91f30e9e7fbc3236a9", null ],
     [ "Branch", "classkouta_1_1base_1_1Branch.html#aaaa4d1ff8cae184b37af3b40519b4a8f", null ],
-    [ "Branch", "classkouta_1_1base_1_1Branch.html#a5b331987619e28e9316ce8d83642b555", null ],
+    [ "Branch", "classkouta_1_1base_1_1Branch.html#a99a31e0d4b121b2db5611339bf380313", null ],
     [ "Branch", "classkouta_1_1base_1_1Branch.html#a71a04cba613aaffc81d6632ccd1528ea", null ],
     [ "Branch", "classkouta_1_1base_1_1Branch.html#abe341de9b8a1b892b60c45aa7b62ea80", null ],
     [ "~Branch", "classkouta_1_1base_1_1Branch.html#a81a0404bd65930f5ca1c85c892d95508", null ],

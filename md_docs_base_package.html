@@ -102,6 +102,9 @@ $(document).ready(function(){initNavTree('md_docs_base_package.html',''); initRe
 Component</h1>
 <p>Implemented in <code><a class="el" href="classkouta_1_1base_1_1Component.html" title="Base class for asynchronous components.">kouta::base::Component</a></code>.</p>
 <p>This is the <b>base type for any asynchronous element that requires access to the event loop</b>. A <code>Component</code> <b>does not own the I/O context</b>, and instead is expected to have a <b>parent</b> from which it can reference said context (hence the aforementioned tree-like architecture).</p>
+<p>Apart from providing access to the event loop, the <b>parent</b> also <b>keeps track of its children</b>. This allows for components to be allocated in the <b>heap</b> via the <code>new</code> keyword if desired so that, when a <code>Component</code> is deleted, it will automatically attempt to <code>delete</code> its children and remove itself from its parent.</p>
+<p>In the case of objects allocated in the <b>stack</b>, each object will be deleted in reverse creation order, which should prevent any issues with calling <code>delete</code> on non-heap objects due to objects removing themselves from the parent's children list.</p>
+<p><b>Note</b>: take extra care when mixing stack and heap allocations, as this may cause invalid deletions.</p>
 <p>These components can be chained as many times as needed, as long as there is one parent at the root of the tree which provides the I/O context (see <code><a class="el" href="classkouta_1_1base_1_1Component.html#a9d9aa7f22cb9d9091d7a32c04ca8faef" title="Obtain a reference to the underlying I/O context.">kouta::base::Component::context()</a></code>).</p>
 <p>Note that all components deriving from a single parent will be executed <b>in the same thread</b>.</p>
 <p>Method calls can be <b>posted to the event loop</b> via the <code><a class="el" href="classkouta_1_1base_1_1Component.html#aef017236c14b620cf8f671a812f7b07b" title="Post a method call to the event loop for deferred execution.">kouta::base::Component::post()</a></code> method. This is the core of the event-based architecture, as it allows to defer method execution in a single thread in an efficient manner. In addition, it is also possible to <b>post calls to lambdas and free functions</b>.</p>
@@ -132,14 +135,15 @@ Component</h1>
 <div class="line">comp.post([]() {</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;This is deferred&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">});</div>
-<div class="ttc" id="aclasskouta_1_1base_1_1Component_html"><div class="ttname"><a href="classkouta_1_1base_1_1Component.html">kouta::base::Component</a></div><div class="ttdoc">Base class for asynchronous components.</div><div class="ttdef"><b>Definition:</b> component.hpp:12</div></div>
-<div class="ttc" id="aclasskouta_1_1base_1_1Component_html_aef017236c14b620cf8f671a812f7b07b"><div class="ttname"><a href="classkouta_1_1base_1_1Component.html#aef017236c14b620cf8f671a812f7b07b">kouta::base::Component::post</a></div><div class="ttdeci">void post(void(TClass::*method)(TMethodArgs...), TArgs... args)</div><div class="ttdoc">Post a method call to the event loop for deferred execution.</div><div class="ttdef"><b>Definition:</b> component.hpp:59</div></div>
+<div class="ttc" id="aclasskouta_1_1base_1_1Component_html"><div class="ttname"><a href="classkouta_1_1base_1_1Component.html">kouta::base::Component</a></div><div class="ttdoc">Base class for asynchronous components.</div><div class="ttdef"><b>Definition:</b> component.hpp:16</div></div>
+<div class="ttc" id="aclasskouta_1_1base_1_1Component_html_aef017236c14b620cf8f671a812f7b07b"><div class="ttname"><a href="classkouta_1_1base_1_1Component.html#aef017236c14b620cf8f671a812f7b07b">kouta::base::Component::post</a></div><div class="ttdeci">void post(void(TClass::*method)(TMethodArgs...), TArgs... args)</div><div class="ttdoc">Post a method call to the event loop for deferred execution.</div><div class="ttdef"><b>Definition:</b> component.hpp:115</div></div>
 <div class="ttc" id="acomponent_8hpp_html"><div class="ttname"><a href="component_8hpp.html">component.hpp</a></div></div>
 <div class="ttc" id="anamespacekouta_html"><div class="ttname"><a href="namespacekouta.html">kouta</a></div><div class="ttdef"><b>Definition:</b> branch.hpp:9</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
 Root</h1>
 <p>Implemented in <code><a class="el" href="classkouta_1_1base_1_1Root.html" title="Root component.">kouta::base::Root</a></code>.</p>
 <p>As opposed to the base <code>Component</code> explained above, the <code>Root</code> <b>owns the I/O context</b> and is supposed to serve as the <b>parent</b> for other components that want to share the same event loop.</p>
+<p>While a <b>parent</b> can be provided to the root, it is only used when dealing with heap-allocated objects in order to guarantee that the <code>Root</code> is deleted with its parent.</p>
 <p>Note that starting the event loop of a <code>Root</code> (<code><a class="el" href="classkouta_1_1base_1_1Root.html#ad5b26cd9cf7befb15ecfef3b61d7019b" title="Run the event loop.">kouta::base::Root::run()</a></code>) <b>blocks the current thread</b> and will only be unblocked after the event loop is terminated (e.g. via the <code><a class="el" href="classkouta_1_1base_1_1Root.html#a73597cb310947a9e37e8ba8ebe80b912" title="Stop the event loop and exit.">kouta::base::Root::stop()</a></code> method).</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="root_8hpp.html">kouta/base/root.hpp</a>&gt;</span></div>
@@ -187,14 +191,15 @@ Root</h1>
 <div class="line"><span class="comment">// Will block until explicitly stopped!</span></div>
 <div class="line">root.run();</div>
 <div class="ttc" id="aclasskouta_1_1base_1_1Root_html"><div class="ttname"><a href="classkouta_1_1base_1_1Root.html">kouta::base::Root</a></div><div class="ttdoc">Root component.</div><div class="ttdef"><b>Definition:</b> root.hpp:13</div></div>
-<div class="ttc" id="aclasskouta_1_1base_1_1Root_html_ad5b26cd9cf7befb15ecfef3b61d7019b"><div class="ttname"><a href="classkouta_1_1base_1_1Root.html#ad5b26cd9cf7befb15ecfef3b61d7019b">kouta::base::Root::run</a></div><div class="ttdeci">virtual void run()</div><div class="ttdoc">Run the event loop.</div><div class="ttdef"><b>Definition:</b> root.hpp:42</div></div>
+<div class="ttc" id="aclasskouta_1_1base_1_1Root_html_ad5b26cd9cf7befb15ecfef3b61d7019b"><div class="ttname"><a href="classkouta_1_1base_1_1Root.html#ad5b26cd9cf7befb15ecfef3b61d7019b">kouta::base::Root::run</a></div><div class="ttdeci">virtual void run()</div><div class="ttdoc">Run the event loop.</div><div class="ttdef"><b>Definition:</b> root.hpp:58</div></div>
 <div class="ttc" id="aroot_8hpp_html"><div class="ttname"><a href="root_8hpp.html">root.hpp</a></div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md7"></a>
 Branch</h1>
 <p>Implemented in <code><a class="el" href="classkouta_1_1base_1_1Branch.html" title="Background component executor.">kouta::base::Branch</a></code>.</p>
 <p>The <em>problem</em> with the <code>Root</code> type is that there is a one-to-one relation between a <code>Root</code> and a thread, considering that the event loop must block in order to handle events. Even though this is probably fine in most cases, there might be situations where another "asynchronous tree" needs to be introduced in the application, for instance to handle communications with an I/O device with high throughput.</p>
 <p>The <code>Branch</code> type was introduced for such cases. It <b>is a <code>Root</code></b> (owns the I/O context), but manages an <code>std::thread</code> internally. As opposed to the <code>Root</code>, starting the event loop via <code><a class="el" href="classkouta_1_1base_1_1Branch.html#adbad6cff641bcf6c465a5458290ec035" title="Run the event loop in the worker thread.">kouta::base::Branch::run()</a></code> <b>will not block</b>, and instead start the event loop in the child thread.</p>
-<p>It is supposed to wrap a <code>Component</code>, allowing external components to post events to the wrapped <code>Component</code>, as well as to the <code>Branch</code> itself.</p>
+<p>It is supposed to wrap a <code>Component</code>, allowing external components to post events to the wrapped <code>Component</code>, as well as to the <code>Branch</code> itself. In addition, the <code>Branch</code> assumes that the wrapped <code>Component</code> expects a pointer to a parent as its first argument (which will be set to the <code>Branch</code> itself).</p>
+<p>The <b>parent</b> provided to the <code>Branch</code> is only used when dealing with heap-allocated objects in order to guarantee that the <code>Root</code> is deleted with its parent.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="branch_8hpp.html">kouta/base/branch.hpp</a>&gt;</span></div>
 <div class="line"> </div>
@@ -248,8 +253,8 @@ Branch</h1>
 <div class="line"><span class="comment">// Will block until explicitly stopped!</span></div>
 <div class="line">root.<a class="code" href="classkouta_1_1base_1_1Branch.html#adbad6cff641bcf6c465a5458290ec035">run</a>();</div>
 <div class="ttc" id="abranch_8hpp_html"><div class="ttname"><a href="branch_8hpp.html">branch.hpp</a></div></div>
-<div class="ttc" id="aclasskouta_1_1base_1_1Branch_html"><div class="ttname"><a href="classkouta_1_1base_1_1Branch.html">kouta::base::Branch</a></div><div class="ttdoc">Background component executor.</div><div class="ttdef"><b>Definition:</b> branch.hpp:25</div></div>
-<div class="ttc" id="aclasskouta_1_1base_1_1Branch_html_adbad6cff641bcf6c465a5458290ec035"><div class="ttname"><a href="classkouta_1_1base_1_1Branch.html#adbad6cff641bcf6c465a5458290ec035">kouta::base::Branch::run</a></div><div class="ttdeci">void run() override</div><div class="ttdoc">Run the event loop in the worker thread.</div><div class="ttdef"><b>Definition:</b> branch.hpp:84</div></div>
+<div class="ttc" id="aclasskouta_1_1base_1_1Branch_html"><div class="ttname"><a href="classkouta_1_1base_1_1Branch.html">kouta::base::Branch</a></div><div class="ttdoc">Background component executor.</div><div class="ttdef"><b>Definition:</b> branch.hpp:26</div></div>
+<div class="ttc" id="aclasskouta_1_1base_1_1Branch_html_adbad6cff641bcf6c465a5458290ec035"><div class="ttname"><a href="classkouta_1_1base_1_1Branch.html#adbad6cff641bcf6c465a5458290ec035">kouta::base::Branch::run</a></div><div class="ttdeci">void run() override</div><div class="ttdoc">Run the event loop in the worker thread.</div><div class="ttdef"><b>Definition:</b> branch.hpp:91</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md8"></a>
 Callbacks</h1>
 <p>Implemented in <code><a class="el" href="namespacekouta_1_1base_1_1callback.html">kouta::base::callback</a></code>.</p>

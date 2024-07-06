@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['set_5fcallable_68',['set_callable',['../classkouta_1_1base_1_1callback_1_1BaseCallback.html#a7ac37aba12dd4e132276c0b00ebee989',1,'kouta::base::callback::BaseCallback']]],
-  ['set_5fduration_69',['set_duration',['../classkouta_1_1io_1_1Timer.html#a602d3100d5c63ad083abf758397c477e',1,'kouta::io::Timer']]],
-  ['size_70',['size',['../classkouta_1_1io_1_1Packer.html#a6e73db0dcedfc092729cc86c07ca30c6',1,'kouta::io::Packer::size()'],['../classkouta_1_1io_1_1Parser.html#a8f95962109cf75c3dfd2120e9956b2e6',1,'kouta::io::Parser::size()']]],
-  ['start_71',['start',['../classkouta_1_1io_1_1Timer.html#aff7a90c3446e63993c1ab49413abf1a0',1,'kouta::io::Timer']]],
-  ['stop_72',['stop',['../classkouta_1_1base_1_1Root.html#a73597cb310947a9e37e8ba8ebe80b912',1,'kouta::base::Root::stop()'],['../classkouta_1_1io_1_1Timer.html#a253efdc168c2ff4adf3e2acc7f8aa9c6',1,'kouta::io::Timer::stop()']]]
+  ['remove_5fchild_66',['remove_child',['../classkouta_1_1base_1_1Component.html#a48be1c471d5636bc25259d077b32ad6d',1,'kouta::base::Component']]],
+  ['root_67',['Root',['../classkouta_1_1base_1_1Root.html',1,'kouta::base::Root'],['../classkouta_1_1base_1_1Root.html#a4ace293f92d80944077f764eea932ff2',1,'kouta::base::Root::Root()'],['../classkouta_1_1base_1_1Root.html#ae216c3a17c8c64bea2599a4c24dd1a92',1,'kouta::base::Root::Root(Component *parent)'],['../classkouta_1_1base_1_1Root.html#a73feb9b380364f8d512474146aa9c2dc',1,'kouta::base::Root::Root(const Root &amp;)=delete'],['../classkouta_1_1base_1_1Root.html#a9975cafefef13c850ed29e5fbea6524a',1,'kouta::base::Root::Root(Root &amp;&amp;)=delete']]],
+  ['root_2ehpp_68',['root.hpp',['../root_8hpp.html',1,'']]],
+  ['run_69',['run',['../classkouta_1_1base_1_1Branch.html#adbad6cff641bcf6c465a5458290ec035',1,'kouta::base::Branch::run()'],['../classkouta_1_1base_1_1Root.html#ad5b26cd9cf7befb15ecfef3b61d7019b',1,'kouta::base::Root::run()']]],
+  ['run_5fworker_70',['run_worker',['../classkouta_1_1base_1_1Branch.html#a47aeca959111b8ad722d80ea14c69aa7',1,'kouta::base::Branch']]]
 ];
