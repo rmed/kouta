@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include <boost/asio.hpp>
 
 namespace kouta::base
@@ -8,6 +10,8 @@ namespace kouta::base
     ///
     /// @details
     /// A component provies access to the underlying event loop which, by default, belongs to the parent component.
+    /// Moreover, specifying a parent will add the component to its children list and make sure that the component is
+    /// deleted when the parent is destroyed (if the component was allocated on the heap).
     class Component
     {
     public:
@@ -16,11 +20,14 @@ namespace kouta::base
 
         /// @brief Constructor.
         ///
-        /// @param[in] parent           Parent component. Note that the parent provides access to the event loop,
-        ///                             hence its lifetime must, at least, surpass that of the child.
-        explicit Component(Component* parent = nullptr)
+        /// @param[in] parent           Parent component. The lifetime of the parent must surpass that of the child.
+        explicit Component(Component* parent)
             : m_parent{parent}
         {
+            if (m_parent)
+            {
+                m_parent->add_child(this);
+            }
         }
 
         // Not copyable
@@ -31,7 +38,32 @@ namespace kouta::base
         Component(Component&&) = delete;
         Component& operator=(Component&&) = delete;
 
-        virtual ~Component() = default;
+        /// @brief Component destructor.
+        ///
+        /// @details
+        /// The component will go through its list of children and delete them one at a time. This is only useful if the
+        /// components were allocated in the heap, as stack-allocated ones will probably have been deleted automatically
+        /// prior to calling this destructor.
+        ///
+        /// In addition, once a component has deleted its children, it will remove itself from its parent.
+        ///
+        /// @note Child deletion happens in reverse order.
+        virtual ~Component()
+        {
+            // Delete children
+            while (!m_children.empty())
+            {
+                // When deleted, children will remove themselves from this list
+                auto* component{m_children.back()};
+                delete component;
+            }
+
+            // Delete from parent
+            if (m_parent)
+            {
+                m_parent->remove_child(this);
+            }
+        }
 
         /// @brief Obtain a reference to the underlying I/O context.
         ///
@@ -39,6 +71,30 @@ namespace kouta::base
         virtual boost::asio::io_context& context()
         {
             return m_parent->context();
+        }
+
+        /// @brief Add a child component to the list.
+        ///
+        /// @details
+        /// This is used to keep track of objects to delete when the component has been allocated in the heap.
+        ///
+        /// @note Normally, this will only be called from the Constructor of the component.
+        ///
+        /// @param[in] component            Pointer to the component to add.
+        void add_child(Component* component)
+        {
+            m_children.emplace_back(component);
+        }
+
+        /// @brief Remove a child component from the list.
+        ///
+        /// @details
+        /// When a child is removed, the parent component will not attempt to delete it itself. Note that when a
+        /// component allocated in the stack is destroyed, it will remove itself from the list and prevent
+        /// double-free issues.
+        void remove_child(Component* component)
+        {
+            std::erase(m_children, component);
         }
 
         /// @brief Post a method call to the event loop for deferred execution.
@@ -107,5 +163,6 @@ namespace kouta::base
 
     private:
         Component* m_parent;
+        std::vector<Component*> m_children;
     };
 }  // namespace kouta::base

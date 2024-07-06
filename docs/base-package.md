@@ -10,6 +10,12 @@ Implemented in `kouta::base::Component`.
 
 This is the **base type for any asynchronous element that requires access to the event loop**. A `Component` **does not own the I/O context**, and instead is expected to have a **parent** from which it can reference said context (hence the aforementioned tree-like architecture).
 
+Apart from providing access to the event loop, the **parent** also **keeps track of its children**. This allows for components to be allocated in the **heap** via the `new` keyword if desired so that, when a `Component` is deleted, it will automatically attempt to `delete` its children and remove itself from its parent.
+
+In the case of objects allocated in the **stack**, each object will be deleted in reverse creation order, which should prevent any issues with calling `delete` on non-heap objects due to objects removing themselves from the parent's children list.
+
+**Note**: take extra care when mixing stack and heap allocations, as this may cause invalid deletions.
+
 These components can be chained as many times as needed, as long as there is one parent at the root of the tree which provides the I/O context (see `kouta::base::Component::context()`).
 
 Note that all components deriving from a single parent will be executed **in the same thread**.
@@ -52,6 +58,8 @@ comp.post([]() {
 Implemented in `kouta::base::Root`.
 
 As opposed to the base `Component` explained above, the `Root` **owns the I/O context** and is supposed to serve as the **parent** for other components that want to share the same event loop.
+
+While a **parent** can be provided to the root, it is only used when dealing with heap-allocated objects in order to guarantee that the `Root` is deleted with its parent.
 
 Note that starting the event loop of a `Root` (`kouta::base::Root::run()`) **blocks the current thread** and will only be unblocked after the event loop is terminated (e.g. via the `kouta::base::Root::stop()` method).
 
@@ -111,7 +119,10 @@ The *problem* with the `Root` type is that there is a one-to-one relation betwee
 
 The `Branch` type was introduced for such cases. It **is a `Root`** (owns the I/O context), but manages an `std::thread` internally. As opposed to the `Root`, starting the event loop via `kouta::base::Branch::run()` **will not block**, and instead start the event loop in the child thread.
 
-It is supposed to wrap a `Component`, allowing external components to post events to the wrapped `Component`, as well as to the `Branch` itself.
+It is supposed to wrap a `Component`, allowing external components to post events to the wrapped `Component`, as well as to the `Branch` itself. In addition, the `Branch` assumes that the wrapped `Component` expects a pointer to a parent as its first argument (which will be set to the `Branch` itself).
+
+The **parent** provided to the `Branch` is only used when dealing with heap-allocated objects in order to guarantee that the `Root` is deleted with its parent.
+
 
 ```cpp
 #include <iostream>

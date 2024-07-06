@@ -18,7 +18,8 @@ namespace kouta::base
     /// method. As opposed to the original method defined in @ref Root, the one specified here will launch the thread
     /// (and the event loop) and return immediately.
     ///
-    /// @tparam TWrapped            Wrapped @ref Component type.
+    /// @tparam TWrapped            Wrapped @ref Component type. IT is assumed that the first argument of the component
+    ///                             will be a pointer to a parent component (which will be set to this Branch).
     template<class TWrapped>
         requires std::is_base_of_v<Component, TWrapped>
     class Branch : public Root
@@ -31,14 +32,20 @@ namespace kouta::base
 
         /// @brief Branch component constructor.
         ///
-        /// @tparam TArgs           Types of the arguments to provide the wrapped component.
+        /// @details
+        /// This constructor will register the Branch object with the parent **only to manage the memory deallocation**
+        /// in case the object was allocated on the heap. Regardless of having a parent, the Branch owns its event loop.
         ///
-        /// @param[in] args         Arguments to provide the wrapped component.
+        /// @tparam TArgs               Types of the arguments to provide the wrapped component.
+        ///
+        /// @param[in] parent           Parent component. The lifetime of the parent must surpass that of the
+        ///                             child.
+        /// @param[in] args             Arguments to provide the wrapped component.
         template<class... TArgs>
-        Branch(TArgs... args)
-            : Root{}
+        Branch(Component* parent, TArgs... args)
+            : Root{parent}
             , m_worker{}
-            , m_component{args...}
+            , m_component{this, args...}  // Assuming first argument is the parent component
         {
         }
 
@@ -109,7 +116,7 @@ namespace kouta::base
             m_component.post(method, args...);
         }
 
-        /// @brief Inherit @ref Root::post() to allow posting events to the worker itself.
+        /// @brief Inherit @ref Root::post() to allow posting events to the branch itself.
         ///
         /// @note This may be used to post a call to the @ref stop() method.
         using Root::post;

@@ -17,6 +17,8 @@ namespace kouta::tests::base
     public:
         DummyComponent() = delete;
 
+        explicit DummyComponent(Component* parent);
+
         DummyComponent(
             Component* parent,
             const Callback<std::uint16_t>& callback_a,
@@ -30,6 +32,8 @@ namespace kouta::tests::base
             const Callback<const std::vector<std::uint8_t>&>& callback_c,
             const Callback<std::thread::id>& callback_d);
 
+        DummyComponent(Component* parent, const Callback<Component*> callback_on_delete);
+
         // Not copyable
         DummyComponent(const DummyComponent&) = delete;
         DummyComponent& operator=(const DummyComponent&) = delete;
@@ -38,7 +42,14 @@ namespace kouta::tests::base
         DummyComponent(DummyComponent&&) = delete;
         DummyComponent& operator=(DummyComponent&&) = delete;
 
-        ~DummyComponent() override = default;
+        ~DummyComponent() override
+        {
+            // Notify that the object was deleted
+            if (m_callback_on_delete)
+            {
+                m_callback_on_delete.value()(this);
+            }
+        }
 
         /// @brief Callback invokers.
         /// @{
@@ -53,5 +64,6 @@ namespace kouta::tests::base
         Callback<std::int32_t, const std::string&> m_callback_b;
         Callback<const std::vector<std::uint8_t>&> m_callback_c;
         Callback<std::thread::id> m_callback_d;
+        std::optional<Callback<Component*>> m_callback_on_delete;
     };
 }  // namespace kouta::tests::base
