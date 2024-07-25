@@ -12,11 +12,13 @@ if(KOUTA_BUILD_TESTS)
             "io/test-packer.cpp"
             "io/test-parser.cpp"
             "io/test-timer.cpp"
+            "utils/test-enum-set.cpp"
         )
 
         set(_test_libs
             "kouta-base"
             "kouta-io"
+            "kouta-utils"
         )
         set(_header_libs _test_libs)
         list(TRANSFORM _header_libs APPEND "-header")
