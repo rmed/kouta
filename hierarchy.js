@@ -6,6 +6,9 @@ var hierarchy =
       [ "kouta::base::callback::DeferredCallback< TArgs >", "classkouta_1_1base_1_1callback_1_1DeferredCallback.html", null ],
       [ "kouta::base::callback::DirectCallback< TArgs >", "classkouta_1_1base_1_1callback_1_1DirectCallback.html", null ]
     ] ],
+    [ "std::bitset< Bits >", null, [
+      [ "kouta::utils::EnumSet< TEnum >", "classkouta_1_1utils_1_1EnumSet.html", null ]
+    ] ],
     [ "kouta::base::Component", "classkouta_1_1base_1_1Component.html", [
       [ "kouta::base::Root", "classkouta_1_1base_1_1Root.html", [
         [ "kouta::base::Branch< TWrapped >", "classkouta_1_1base_1_1Branch.html", null ]

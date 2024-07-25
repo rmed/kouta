@@ -61,13 +61,14 @@ var NAVTREE =
     ] ],
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ]
-    ] ]
+    ] ],
+    [ "Examples", "examples.html", "examples" ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"annotated.html"
+"_2home_2runner_2work_2kouta_2kouta_2include_2kouta_2utils_2enum-set_8hpp-example.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

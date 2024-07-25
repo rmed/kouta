@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['wrappedcomponent_80',['WrappedComponent',['../classkouta_1_1base_1_1Branch.html#a4e1b052c3afdfc91f30e9e7fbc3236a9',1,'kouta::base::Branch']]]
+  ['view_87',['View',['../classkouta_1_1io_1_1Parser.html#af540b4cd8431c20a1babca2b14895f35',1,'kouta::io::Parser']]],
+  ['view_88',['view',['../classkouta_1_1io_1_1Parser.html#ad1fb786e0bfe732eaaa266fd73e88ff7',1,'kouta::io::Parser']]]
 ];

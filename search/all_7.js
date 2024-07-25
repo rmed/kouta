@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['base_41',['base',['../namespacekouta_1_1base.html',1,'kouta']]],
-  ['callback_42',['callback',['../namespacekouta_1_1base_1_1callback.html',1,'kouta::base']]],
-  ['io_43',['io',['../namespacekouta_1_1io.html',1,'kouta']]],
-  ['kouta_44',['kouta',['../namespacekouta.html',1,'']]]
+  ['base_44',['base',['../namespacekouta_1_1base.html',1,'kouta']]],
+  ['callback_45',['callback',['../namespacekouta_1_1base_1_1callback.html',1,'kouta::base']]],
+  ['io_46',['io',['../namespacekouta_1_1io.html',1,'kouta']]],
+  ['kouta_47',['kouta',['../namespacekouta.html',1,'']]],
+  ['utils_48',['utils',['../namespacekouta_1_1utils.html',1,'kouta']]]
 ];

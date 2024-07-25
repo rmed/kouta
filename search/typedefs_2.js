@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['view_186',['View',['../classkouta_1_1io_1_1Parser.html#af540b4cd8431c20a1babca2b14895f35',1,'kouta::io::Parser']]]
+  ['enumtype_202',['EnumType',['../classkouta_1_1utils_1_1EnumSet.html#ade582f2b9090c8947650414eb9407f59',1,'kouta::utils::EnumSet']]]
 ];
