@@ -12,8 +12,24 @@ namespace kouta::base
     class Root : public Component
     {
     public:
+        /// @brief Default constructor.
+        ///
+        /// @details
+        /// This constructor assumes that the Root object will not have a parent (e.g. it is the main object of the
+        /// tree), meaning that it will not attempt to register itself with the parent, nor remove itself from its list
+        /// when being destroyed.
         Root()
-            : Component{nullptr}
+            : Root{nullptr}
+        {
+        }
+
+        /// @brief Construct from a parent.
+        ///
+        /// @details
+        /// This constructor will register the Root object with the parent **only to manage the memory deallocation** in
+        /// case the object was allocated on the heap. Regardless of having a parent, the Root owns its event loop.
+        explicit Root(Component* parent)
+            : Component{parent}
             , m_context{}
         {
         }

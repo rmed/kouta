@@ -98,5 +98,14 @@ kouta_add_library(
         "base"
 )
 
+kouta_add_library(
+    TARGET utils
+    HEADERS
+        "utils/enum-set.hpp"
+
+    SOURCES
+        "utils.cpp"
+)
+
 # Tests
 add_subdirectory("tests")

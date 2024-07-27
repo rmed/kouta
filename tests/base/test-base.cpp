@@ -17,6 +17,7 @@ namespace kouta::tests::base
         MOCK_METHOD(void, handler_b, (std::int32_t value_a, const std::string& value_b), ());
         MOCK_METHOD(void, handler_c, (const std::vector<std::uint8_t>& value), ());
         MOCK_METHOD(void, handler_d, (std::thread::id), ());
+        MOCK_METHOD(void, handler_delete, (Component*), ());
     };
 
     /// @brief Test the behaviour of the empty callback.
@@ -71,10 +72,17 @@ namespace kouta::tests::base
         RootMock root{};
 
         callback::DeferredCallback<std::uint16_t> cb_a{&root, &RootMock::handler_a};
+        callback::DeferredCallback<std::uint16_t> cb_a_2{
+            &root,
+            [&root](std::uint16_t value)
+            {
+                root.handler_a(value);
+            }};
         callback::DirectCallback<std::int32_t, const std::string&> cb_b{&root, &RootMock::handler_b};
         callback::DeferredCallback<const std::vector<std::uint8_t>&> cb_c{&root, &RootMock::handler_c};
 
         std::uint16_t data_a{127};
+        std::uint16_t data_a_2{564};
 
         std::int32_t data_b_a{42};
         std::string data_b_b{"this is a test"};
@@ -86,7 +94,9 @@ namespace kouta::tests::base
 
         EXPECT_CALL(root, handler_c(data_c_copy)).Times(1);
 
-        EXPECT_CALL(root, handler_a(data_a))
+        EXPECT_CALL(root, handler_a(data_a)).Times(1);
+
+        EXPECT_CALL(root, handler_a(data_a_2))
             .WillOnce(
                 [&root]
                 {
@@ -99,6 +109,7 @@ namespace kouta::tests::base
 
         cb_a(data_a);
         cb_b(data_b_a, data_b_b);
+        cb_a_2(data_a_2);
 
         alarm(1);
         root.run();
@@ -123,7 +134,12 @@ namespace kouta::tests::base
         callback::CallbackList<std::int32_t, const std::string&> cb_list_deferred{
             callback::DeferredCallback{&root, &RootMock::handler_b},
             callback::DeferredCallback{&root, &RootMock::handler_b},
-            callback::DeferredCallback{&root, &RootMock::handler_b}};
+            callback::DeferredCallback<std::int32_t, const std::string&>{
+                &root,
+                [&root](std::int32_t value_a, const std::string& value_b)
+                {
+                    root.handler_b(value_a, value_b);
+                }}};
 
         std::uint16_t data_a{127};
 
@@ -165,7 +181,11 @@ namespace kouta::tests::base
 
         root.post(&RootMock::handler_a, std::uint16_t{42});
         root.post(&RootMock::handler_b, -512, "This is a test");
-        root.post(&RootMock::handler_c, std::vector<std::uint8_t>{12, 34});
+        root.post(
+            [&root]()
+            {
+                root.handler_c(std::vector<std::uint8_t>{12, 34});
+            });
     }
 
     /// @brief Test the behaviour of the event loop when running.
@@ -310,7 +330,7 @@ namespace kouta::tests::base
 
         RootMock root{};
         Branch<DummyComponent> worker{
-            &worker,
+            &root,
             callback::DirectCallback{&root, &RootMock::handler_a},
             callback::DeferredCallback{&root, &RootMock::handler_b},
             callback::DeferredCallback{&root, &RootMock::handler_c},
@@ -349,5 +369,82 @@ namespace kouta::tests::base
         worker.run();
         root.run();
         alarm(0);
+    }
+
+    /// @brief Test the behaviour of a component tree when allocated in the heap.
+    ///
+    /// @details
+    /// The test succeeds if all components are deallocated.
+    TEST(BaseTest, HeapAllocation)
+    {
+        RootMock root{};
+
+        auto* dummy_base = new DummyComponent{&root, callback::DeferredCallback{&root, &RootMock::handler_delete}};
+
+        // Layer 1
+        auto* comp_a = new DummyComponent{dummy_base, callback::DeferredCallback{&root, &RootMock::handler_delete}};
+        auto* comp_b = new DummyComponent{dummy_base, callback::DeferredCallback{&root, &RootMock::handler_delete}};
+        auto* comp_c = new DummyComponent{dummy_base, callback::DeferredCallback{&root, &RootMock::handler_delete}};
+
+        // Layer 2
+        auto* comp_a1 = new DummyComponent{comp_a, callback::DeferredCallback{&root, &RootMock::handler_delete}};
+        auto* comp_a2 = new DummyComponent{comp_a, callback::DeferredCallback{&root, &RootMock::handler_delete}};
+        auto* comp_c1 = new DummyComponent{comp_c, callback::DeferredCallback{&root, &RootMock::handler_delete}};
+
+        // Layer 3
+        auto* comp_a1_1 = new DummyComponent{comp_a1, callback::DeferredCallback{&root, &RootMock::handler_delete}};
+        auto* comp_a1_2 = new DummyComponent{comp_a1, callback::DeferredCallback{&root, &RootMock::handler_delete}};
+
+        // Deletion will be in reverse creation order, but we don't really care
+        EXPECT_CALL(root, handler_delete(dummy_base))
+            .WillOnce(
+                [&root]()
+                {
+                    root.post(&RootMock::stop);
+                });
+
+        EXPECT_CALL(root, handler_delete(comp_a)).Times(1);
+        EXPECT_CALL(root, handler_delete(comp_a2)).Times(1);
+        EXPECT_CALL(root, handler_delete(comp_a1)).Times(1);
+        EXPECT_CALL(root, handler_delete(comp_a1_2)).Times(1);
+        EXPECT_CALL(root, handler_delete(comp_a1_1)).Times(1);
+
+        EXPECT_CALL(root, handler_delete(comp_b)).Times(1);
+
+        EXPECT_CALL(root, handler_delete(comp_c)).Times(1);
+        EXPECT_CALL(root, handler_delete(comp_c1)).Times(1);
+
+        delete dummy_base;
+
+        root.run();
+    }
+
+    /// @brief Test the behaviour of a component tree when allocated in the stack.
+    ///
+    /// @details
+    /// The test succeeds if no exception is thrown due to free().
+    TEST(BaseTest, StackAllocation)
+    {
+        RootMock root{};
+
+        DummyComponent dummy_base{&root};
+
+        // Layer 1
+        DummyComponent comp_a{&dummy_base};
+        DummyComponent comp_b{&dummy_base};
+        DummyComponent comp_c{&dummy_base};
+
+        // Layer 2
+        DummyComponent comp_a1{&comp_a};
+        DummyComponent comp_a2{&comp_a};
+        DummyComponent comp_c1{&comp_c};
+
+        // Layer 3
+        DummyComponent comp_a1_1{&comp_a1};
+        DummyComponent comp_a1_2{&comp_a1};
+
+        auto* comp_c1_1{&comp_c1};
+
+        // Everything is deleted in reverse order, so there shouldn't be any exceptions at this point
     }
 }  // namespace kouta::tests::base
