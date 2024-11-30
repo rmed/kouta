@@ -55,6 +55,11 @@ function(kouta_add_library)
         )
     endif()
 
+    target_include_directories(${_lib_target}
+        INTERFACE
+        "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>"
+    )
+
     # Internal links
     if(ARGS_INTERNAL)
         target_link_libraries(${_lib_target} PUBLIC "kouta-${ARGS_INTERNAL}")
@@ -71,6 +76,11 @@ function(kouta_add_library)
     add_library(${_header_target}
         INTERFACE
             ${ARGS_HEADERS}
+    )
+
+    target_include_directories(${_header_target}
+        INTERFACE
+        "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>"
     )
 
     if(ARGS_INTERNAL)
