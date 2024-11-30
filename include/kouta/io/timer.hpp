@@ -23,7 +23,7 @@ namespace kouta::io
         /// @param[in] parent           Parent component granting access to the event loop.
         /// @param[in] duration         Duration of the timer.
         /// @param[in] on_expired       Function to call when the timer expires.
-        Timer(Component* parent, std::chrono::milliseconds duration, const OnExpired& on_expired)
+        Timer(Component* parent, std::chrono::milliseconds duration, OnExpired&& on_expired)
             : Component{parent}
             , m_timer{context()}
             , m_duration{duration}

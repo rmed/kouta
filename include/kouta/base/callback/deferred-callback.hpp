@@ -56,11 +56,8 @@ namespace kouta::base::callback
         DeferredCallback(TClass* object, void (TClass::*method)(TArgs...))
             : BaseCallback<TArgs...>{}
         {
-            this->set_callable(
-                [object, method](TArgs... args)
-                {
-                    object->template post<TClass, TArgs...>(method, args...);
-                });
+            this->set_callable([object, method](TArgs... args)
+                               { object->template post<TClass, TArgs...>(method, args...); });
         }
 
         /// @brief Callback constructor from a callable.
@@ -78,14 +75,11 @@ namespace kouta::base::callback
         /// @param[in] callable         Callable to store. For instance, this could be a lambda or anything convertible
         ///                             to `std::function`.
         template<class TClass>
-        DeferredCallback(TClass* object, const DeferredCallback::Callable& callable)
+        DeferredCallback(TClass* object, DeferredCallback::Callable&& callable)
             : BaseCallback<TArgs...>{}
         {
-            this->set_callable(
-                [object, callable](TArgs... args)
-                {
-                    object->template post<TArgs...>(callable, args...);
-                });
+            this->set_callable([object, callable](TArgs... args)
+                               { object->template post<TArgs...>(callable, args...); });
         }
     };
 }  // namespace kouta::base::callback

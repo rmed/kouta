@@ -63,7 +63,7 @@ namespace kouta::utils
         /// @brief Constructor from a set of values.
         ///
         /// @param[in] values           Values to set.
-        EnumSet(const std::initializer_list<TEnum>& values)
+        EnumSet(std::initializer_list<TEnum> values)
             : BaseType{}
         {
             for (auto v : values)

@@ -54,7 +54,7 @@ namespace kouta::base::callback
         /// interface with event loops by posting events
         ///
         /// @param[in] callable          Callable to use internally.
-        void set_callable(const Callable& callable)
+        void set_callable(Callable&& callable)
         {
             m_callable = callable;
         }
