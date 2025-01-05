@@ -1,0 +1,30 @@
+#cmakedefine KOUTA_STANDALONE_ASIO
+
+#ifdef KOUTA_STANDALONE_ASIO
+// Use standalone asio
+#include <asio.hpp>
+
+namespace kouta::base
+{
+    /// @brief Namespace that aliases the Boost or standalone asio namespace.
+    namespace asio
+    {
+        using namespace ::asio;
+    }
+}  // namespace kouta::base
+#else
+// Use Boost.Asio
+#include <boost/asio.hpp>
+
+namespace kouta::base
+{
+    /// @brief Namespace that aliases the Boost or standalone asio namespace.
+    namespace asio
+    {
+        using namespace ::boost::asio;
+
+        using error_code = ::boost::system::error_code;
+        using system_error = ::boost::system::system_error;
+    }  // namespace asio
+}  // namespace kouta::base
+#endif

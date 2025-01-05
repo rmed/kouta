@@ -9,9 +9,9 @@ if(KOUTA_BUILD_TESTS)
         set(_test_sources
             "base/dummy-component.cpp"
             "base/test-base.cpp"
+            "base/test-timer.cpp"
             "io/test-packer.cpp"
             "io/test-parser.cpp"
-            "io/test-timer.cpp"
             "utils/test-enum-set.cpp"
         )
 

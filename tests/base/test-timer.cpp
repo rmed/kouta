@@ -1,16 +1,17 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <kouta/io/timer.hpp>
+#include <kouta/base/root.hpp>
+#include <kouta/base/timer.hpp>
 
-namespace kouta::tests::io
+namespace kouta::tests::base
 {
-    using namespace kouta::io;
+    using namespace kouta::base;
 
     namespace
     {
         /// @brief Mock the Root to provide the event loop and receive callbacks.
-        class RootMock : public base::Root
+        class RootMock : public Root
         {
         public:
             MOCK_METHOD(void, handler_timeout, (Timer &), ());
@@ -50,7 +51,7 @@ namespace kouta::tests::io
     ///
     /// @details
     /// The test succeeds if all values are correctly added to the packer.
-    TEST(IoTest, TimerElapsed)
+    TEST(BaseTest, TimerElapsed)
     {
         RootMock root{};
         std::chrono::milliseconds timeout{200};
@@ -81,7 +82,7 @@ namespace kouta::tests::io
     ///
     /// @details
     /// The test succeeds if the timer never ticks.
-    TEST(IoTest, TimerNotStarted)
+    TEST(BaseTest, TimerNotStarted)
     {
         RootMockTimed root{std::chrono::milliseconds{500}};
         std::chrono::milliseconds timeout{100};
@@ -101,7 +102,7 @@ namespace kouta::tests::io
     ///
     /// @details
     /// The test succeeds if the timer never ticks.
-    TEST(IoTest, TimerStopped)
+    TEST(BaseTest, TimerStopped)
     {
         RootMockTimed root{std::chrono::milliseconds{500}};
         std::chrono::milliseconds timeout{100};
@@ -124,7 +125,7 @@ namespace kouta::tests::io
     ///
     /// @details
     /// The test succeeds if the timer ticks once.
-    TEST(IoTest, TimerElapsedOnce)
+    TEST(BaseTest, TimerElapsedOnce)
     {
         RootMockTimed root{std::chrono::milliseconds{500}};
         std::chrono::milliseconds timeout{100};
@@ -146,7 +147,7 @@ namespace kouta::tests::io
     ///
     /// @details
     /// The test succeeds if the timer ticks twice.
-    TEST(IoTest, TimerRearmed)
+    TEST(BaseTest, TimerRearmed)
     {
         RootMockTimed root{std::chrono::milliseconds{500}};
         std::chrono::milliseconds timeout{100};
@@ -179,7 +180,7 @@ namespace kouta::tests::io
     ///
     /// @details
     /// The test succeeds if the timer ticks twice.
-    TEST(IoTest, TimerRearmedDifferentDuration)
+    TEST(BaseTest, TimerRearmedDifferentDuration)
     {
         RootMockTimed root{std::chrono::milliseconds{1000}};
         std::chrono::milliseconds timeout{100};
@@ -217,4 +218,4 @@ namespace kouta::tests::io
         root.run();
         alarm(0);
     }
-}  // namespace kouta::tests::io
+}  // namespace kouta::tests::base

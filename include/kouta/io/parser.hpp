@@ -6,7 +6,6 @@
 #include <stdexcept>
 #include <string>
 
-#include <boost/asio/buffer.hpp>
 #include <boost/endian.hpp>
 
 namespace kouta::io

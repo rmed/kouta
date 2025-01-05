@@ -127,7 +127,7 @@ namespace kouta::base
         /// @note This method blocks until the event loop is terminated.
         void run_worker()
         {
-            auto work_guard{boost::asio::make_work_guard(context())};
+            auto work_guard{asio::make_work_guard(context())};
             context().run();
         }
 

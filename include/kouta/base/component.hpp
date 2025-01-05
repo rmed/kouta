@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include <boost/asio.hpp>
+#include <kouta/base/asio.hpp>
 
 namespace kouta::base
 {
@@ -68,7 +68,7 @@ namespace kouta::base
         /// @brief Obtain a reference to the underlying I/O context.
         ///
         /// @note By default, this I/O context comes from the parent component.
-        virtual boost::asio::io_context& context()
+        virtual asio::io_context& context()
         {
             return m_parent->context();
         }
@@ -114,7 +114,7 @@ namespace kouta::base
         template<class TClass, class... TMethodArgs, class... TArgs>
         void post(void (TClass::*method)(TMethodArgs...), TArgs... args)
         {
-            boost::asio::post(
+            asio::post(
                 context().get_executor(),
                 [this, method, args...]()
                 {
@@ -138,7 +138,7 @@ namespace kouta::base
         template<class... TFuncArgs, class... TArgs>
         void post(const std::function<void(TFuncArgs...)>& functor, TArgs... args)
         {
-            boost::asio::post(
+            asio::post(
                 context().get_executor(),
                 [functor, args...]()
                 {
@@ -158,7 +158,7 @@ namespace kouta::base
         template<class TFunctor>
         void post(TFunctor&& functor)
         {
-            boost::asio::post(context().get_executor(), functor);
+            asio::post(context().get_executor(), functor);
         }
 
     private:

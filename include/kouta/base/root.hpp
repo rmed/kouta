@@ -47,7 +47,7 @@ namespace kouta::base
         /// @brief Obtain a reference to the underlying I/O context.
         ///
         /// @note The I/O context is owned by the root.
-        boost::asio::io_context& context() override
+        asio::io_context& context() override
         {
             return m_context;
         }
@@ -58,7 +58,7 @@ namespace kouta::base
         virtual void run()
         {
             // Have the event loop run forever
-            auto work_guard{boost::asio::make_work_guard(m_context)};
+            auto work_guard{asio::make_work_guard(m_context)};
             m_context.run();
         }
 
@@ -71,6 +71,6 @@ namespace kouta::base
         }
 
     private:
-        boost::asio::io_context m_context;
+        asio::io_context m_context;
     };
 }  // namespace kouta::base

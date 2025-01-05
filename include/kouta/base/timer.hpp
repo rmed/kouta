@@ -3,13 +3,11 @@
 #include <chrono>
 #include <functional>
 
-#include <boost/asio/steady_timer.hpp>
+#include <kouta/base/component.hpp>
 
-#include <kouta/base.hpp>
-
-namespace kouta::io
+namespace kouta::base
 {
-    class Timer : public base::Component
+    class Timer : public Component
     {
     public:
         /// Signature of the function to be called when the timer expires or is cancelled.
@@ -84,16 +82,16 @@ namespace kouta::io
         /// that said callback will be executed within the context of the event loop as a direct invocation.
         ///
         /// @param[in] ec       Error code of the asynchronous wait operation.
-        void handle_expiration(const boost::system::error_code& ec)
+        void handle_expiration(const asio::error_code& ec)
         {
-            if (ec != boost::asio::error::operation_aborted)
+            if (ec != asio::error::operation_aborted)
             {
                 m_on_expired(*this);
             }
         }
 
-        boost::asio::steady_timer m_timer;
+        asio::steady_timer m_timer;
         std::chrono::milliseconds m_duration;
         OnExpired m_on_expired;
     };
-}  // namespace kouta::io
+}  // namespace kouta::base

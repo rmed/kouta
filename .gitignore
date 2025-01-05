@@ -35,3 +35,6 @@
 .cache/
 build/
 docs/html/
+
+# Kouta-specific
+include/kouta/base/asio.hpp

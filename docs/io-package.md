@@ -2,42 +2,6 @@
 
 The I/O package provides building blocks for I/O-related functionalities.
 
-## Timer
-
-Implemented in `kouta::io::Timer`.
-
-The `Timer` allows performing actions after a certain amount of time. Its duration can be modified at any point, and can also be stopped before it elapses (for instance to cancel a timeout in a request).
-
-Once the `Timer` elapses, it **is within the context of its parent component**, so it is up to the developer to make sure that proper synchronization occurs if calling something outside of that context.
-
-```cpp
-#include <iostream>
-#include <kouta/io/timer.hpp>
-
-class MyComponent : public kouta::base::Component
-{
-public:
-    explicit MyComponent(kouta::base::Component* parent)
-        : kouta::base::Component{parent}
-        , m_timer{this, std::chrono::milliseconds{200}, std::bind_front(this, &MyComponent::handle_timeout)}
-    {
-        m_timer.start();
-    }
-
-    void handle_timeout(Timer& timer)
-    {
-        std::cout << "Timer expired " << std::endl;
-
-        // Modify duration and restart
-        timer.set_duration(std::chrono::milliseconds{500});
-        timer.start();
-    }
-
-private:
-    kouta::io::Timer m_timer;
-};
-```
-
 ## Parser
 
 Implemented in `kouta::io::Parser`.

@@ -1,6 +1,6 @@
 # Kouta
 
-A small application framework based on Boost, with components that can be reused accross different projects.
+A small asynchronous application framework based on Boost/Asio, with components that can be reused accross different projects.
 
 **Requires C++20**.
 
@@ -10,6 +10,7 @@ Kouta requires the following libraries:
 
 - [CMake](https://cmake.org/) >= `3.27`
 - [Boost](https://www.boost.org/) >= `1.78.0`
+- [Asio](https://think-async.com/Asio)>= `1.22.0` (if standalone Asio is used via the `KOUTA_STANDALONE_ASIO` option).
 
 ```
 $ mkdir build && cd build
@@ -18,6 +19,8 @@ $ cmake --build .
 ```
 
 The library can be built statically or as a shared library (configurable via the `KOUTA_BUILD_SHARED`). In addition, there are targets exposing a **header-only** interface, which may be identified by the suffix `-header`.
+
+
 
 ## Documentation
 

@@ -8,7 +8,6 @@
 #include <string>
 #include <vector>
 
-#include <boost/asio/buffer.hpp>
 #include <boost/endian.hpp>
 
 namespace kouta::io

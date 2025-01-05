@@ -2,7 +2,7 @@
 
 The base package provides the basic building blocks for an asynchronous/event-based application and, more often than not, will be used by the rest of the packages.
 
-The backbone is the event loop provided by `boost::asio`. Kouta builds on top of that to provide a **tree-like** architecture with the following elements.
+The backbone is the event loop provided by `kouta::base::asio`, which aliases either `asio::` or `boost::asio` depending on whether the `KOUTA_STANDALONE_ASIO` option is set in CMake.. Kouta builds on top of that to provide a **tree-like** architecture with the following elements.
 
 ## Component
 
@@ -234,4 +234,40 @@ kouta::base::callback::CallbackList<int> cb_list{
     kouta::base::callback::DeferredCallback{&comp, &Mycomponent::print_message}
 };
 cb_list(44);
+```
+
+## Timer
+
+Implemented in `kouta::base::Timer`.
+
+The `Timer` allows performing actions after a certain amount of time. Its duration can be modified at any point, and can also be stopped before it elapses (for instance to cancel a timeout in a request).
+
+Once the `Timer` elapses, it **is within the context of its parent component**, so it is up to the developer to make sure that proper synchronization occurs if calling something outside of that context.
+
+```cpp
+#include <iostream>
+#include <kouta/base/timer.hpp>
+
+class MyComponent : public kouta::base::Component
+{
+public:
+    explicit MyComponent(kouta::base::Component* parent)
+        : kouta::base::Component{parent}
+        , m_timer{this, std::chrono::milliseconds{200}, std::bind_front(this, &MyComponent::handle_timeout)}
+    {
+        m_timer.start();
+    }
+
+    void handle_timeout(Timer& timer)
+    {
+        std::cout << "Timer expired " << std::endl;
+
+        // Modify duration and restart
+        timer.set_duration(std::chrono::milliseconds{500});
+        timer.start();
+    }
+
+private:
+    kouta::base::Timer m_timer;
+};
 ```
