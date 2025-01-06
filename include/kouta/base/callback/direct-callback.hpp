@@ -51,7 +51,7 @@ namespace kouta::base::callback
         /// @brief Callback constructor from a callable.
         ///
         /// @details
-        /// This constructor initializes the intenal callable to the one specified in @p callable , so that it is
+        /// This constructor initializes the internal callable to the one specified in @p callable , so that it is
         /// invoked from within the current context (i.e. as a regular function).
         ///
         /// @tparam TClass              Object type.

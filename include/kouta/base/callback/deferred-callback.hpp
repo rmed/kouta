@@ -66,7 +66,7 @@ namespace kouta::base::callback
         /// @brief Callback constructor from a callable.
         ///
         /// @details
-        /// This constructor initializes the intenal callable to the one specified in @p callable , so that it is
+        /// This constructor initializes the internal callable to the one specified in @p callable , so that it is
         /// invoked from within the context of the provided @p object , which must implement a `post()` method to which
         /// the invokation can be passed to defer execution.
         ///
