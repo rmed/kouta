@@ -95,7 +95,6 @@ $(document).ready(function(){initNavTree('classkouta_1_1base_1_1callback_1_1Base
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classkouta_1_1base_1_1callback_1_1BaseCallback-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -135,6 +134,10 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
+<tr><td colspan="2"><div class="groupHeader"></div></td></tr>
+<tr class="memitem:a7ac37aba12dd4e132276c0b00ebee989"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html#a7ac37aba12dd4e132276c0b00ebee989">set_callable</a> (const <a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html#acd6fd92be0620c2fe73817bd50881cae">Callable</a> &amp;callable)</td></tr>
+<tr class="memdesc:a7ac37aba12dd4e132276c0b00ebee989"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the callable.  <a href="classkouta_1_1base_1_1callback_1_1BaseCallback.html#a7ac37aba12dd4e132276c0b00ebee989">More...</a><br /></td></tr>
+<tr class="separator:a7ac37aba12dd4e132276c0b00ebee989"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e35c322b3395518a8f9694dc1b42529"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html#a7e35c322b3395518a8f9694dc1b42529">set_callable</a> (<a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html#acd6fd92be0620c2fe73817bd50881cae">Callable</a> &amp;&amp;callable)</td></tr>
 <tr class="memdesc:a7e35c322b3395518a8f9694dc1b42529"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the callable.  <a href="classkouta_1_1base_1_1callback_1_1BaseCallback.html#a7e35c322b3395518a8f9694dc1b42529">More...</a><br /></td></tr>
 <tr class="separator:a7e35c322b3395518a8f9694dc1b42529"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -384,7 +387,7 @@ template&lt;class... TArgs&gt; </div>
 </div>
 </div>
 <a id="a7e35c322b3395518a8f9694dc1b42529"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e35c322b3395518a8f9694dc1b42529">&#9670;&nbsp;</a></span>set_callable()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e35c322b3395518a8f9694dc1b42529">&#9670;&nbsp;</a></span>set_callable() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -398,6 +401,43 @@ template&lt;class... TArgs&gt; </div>
           <td class="memname">void <a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html">kouta::base::callback::BaseCallback</a>&lt; TArgs &gt;::set_callable </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html#acd6fd92be0620c2fe73817bd50881cae">Callable</a> &amp;&amp;&#160;</td>
+          <td class="paramname"><em>callable</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the callable. </p>
+<p>This method exists to allow inheriting from the Callback to add custom constructors that may, for instance, interface with event loops by posting events</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">callable</td><td>Callable to use internally. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7ac37aba12dd4e132276c0b00ebee989"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ac37aba12dd4e132276c0b00ebee989">&#9670;&nbsp;</a></span>set_callable() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class... TArgs&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html">kouta::base::callback::BaseCallback</a>&lt; TArgs &gt;::set_callable </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classkouta_1_1base_1_1callback_1_1BaseCallback.html#acd6fd92be0620c2fe73817bd50881cae">Callable</a> &amp;&#160;</td>
           <td class="paramname"><em>callable</em></td><td>)</td>
           <td></td>
         </tr>

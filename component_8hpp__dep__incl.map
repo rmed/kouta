@@ -1,8 +1,7 @@
 <map id="include/kouta/base/component.hpp" name="include/kouta/base/component.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,149,47"/>
-<area shape="rect" id="node2" href="$branch_8hpp.html" title=" " alt="" coords="35,184,179,225"/>
-<area shape="rect" id="node3" href="$base_8hpp.html" title=" " alt="" coords="21,273,193,300"/>
-<area shape="rect" id="node6" href="$root_8hpp.html" title=" " alt="" coords="115,95,259,136"/>
-<area shape="rect" id="node4" href="$timer_8hpp.html" title=" " alt="" coords="11,348,202,375"/>
-<area shape="rect" id="node5" href="$io_8hpp.html" title=" " alt="" coords="30,423,183,449"/>
+<area shape="rect" id="node1" title=" " alt="" coords="111,5,255,47"/>
+<area shape="rect" id="node2" href="$branch_8hpp.html" title=" " alt="" coords="5,184,149,225"/>
+<area shape="rect" id="node3" href="$base_8hpp.html" title=" " alt="" coords="126,273,298,300"/>
+<area shape="rect" id="node4" href="$root_8hpp.html" title=" " alt="" coords="56,95,200,136"/>
+<area shape="rect" id="node5" href="$timer_8hpp.html" title=" " alt="" coords="275,184,419,225"/>
 </map>

@@ -96,7 +96,7 @@ $(document).ready(function(){initNavTree('md_docs_introduction.html',''); initRe
 <div class="title">Introduction </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Kouta is a small <b>C++20</b> application framework based on Boost.</p>
+<div class="textblock"><p>Kouta is a small <b>C++20</b> application framework.</p>
 <p>It is divided in <em>packages</em> depending on the type of functionality offered:</p>
 <ul>
 <li>Base package (<code><a class="el" href="namespacekouta_1_1base.html">kouta::base</a></code>): Provides the basic building blocks for the application (event loop access and callbacks)</li>
@@ -108,6 +108,7 @@ Building</h1>
 <ul>
 <li><a href="https://cmake.org/">CMake</a> &gt;= <code>3.27</code></li>
 <li><a href="https://www.boost.org/">Boost</a> &gt;= <code>1.78.0</code></li>
+<li><a href="https://think-async.com/Asio">Asio</a>&gt;= <code>1.22.0</code> (if standalone Asio is used via the <code>KOUTA_STANDALONE_ASIO</code> option)</li>
 </ul>
 <div class="fragment"><div class="line">$ mkdir build &amp;&amp; cd build</div>
 <div class="line">$ cmake ..</div>
@@ -119,7 +120,7 @@ Documentation</h1>
 </div><!-- fragment --><p>The resulting HTML documentation can be found in <code>docs/html</code>.</p>
 <h1><a class="anchor" id="autotoc_md3"></a>
 Testing</h1>
-<p>Tests are implemented using <a href="https://github.com/google/googletest">GoogleTest</a> and can be compiled after enabling the <code>BUILD_TESTS</code> option in CMake:</p>
+<p>Tests are implemented using <a href="https://github.com/google/googletest">GoogleTest</a> and can be compiled after enabling the <code>KOUTA_BUILD_TESTS</code> option in CMake:</p>
 <div class="fragment"><div class="line">$ cmake --build build --target kouta-tests</div>
 </div><!-- fragment --><p>The above command will result in the binary <code>build/kouta-tests</code>, which can be executed to run all the test cases. </p>
 </div></div><!-- contents -->

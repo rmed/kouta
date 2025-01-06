@@ -34,10 +34,10 @@ var NAVTREE =
       [ "Component", "md_docs_base_package.html#autotoc_md5", null ],
       [ "Root", "md_docs_base_package.html#autotoc_md6", null ],
       [ "Branch", "md_docs_base_package.html#autotoc_md7", null ],
-      [ "Callbacks", "md_docs_base_package.html#autotoc_md8", null ]
+      [ "Callbacks", "md_docs_base_package.html#autotoc_md8", null ],
+      [ "Timer", "md_docs_base_package.html#autotoc_md9", null ]
     ] ],
     [ "I/O package", "md_docs_io_package.html", [
-      [ "Timer", "md_docs_io_package.html#autotoc_md10", null ],
       [ "Parser", "md_docs_io_package.html#autotoc_md11", null ],
       [ "Packer", "md_docs_io_package.html#autotoc_md12", null ]
     ] ],

@@ -13,7 +13,7 @@ var hierarchy =
       [ "kouta::base::Root", "classkouta_1_1base_1_1Root.html", [
         [ "kouta::base::Branch< TWrapped >", "classkouta_1_1base_1_1Branch.html", null ]
       ] ],
-      [ "kouta::io::Timer", "classkouta_1_1io_1_1Timer.html", null ]
+      [ "kouta::base::Timer", "classkouta_1_1base_1_1Timer.html", null ]
     ] ],
     [ "kouta::io::Packer", "classkouta_1_1io_1_1Packer.html", null ],
     [ "kouta::io::Parser", "classkouta_1_1io_1_1Parser.html", null ]

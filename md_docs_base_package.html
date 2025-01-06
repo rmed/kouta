@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('md_docs_base_package.html',''); initRe
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>The base package provides the basic building blocks for an asynchronous/event-based application and, more often than not, will be used by the rest of the packages.</p>
-<p>The backbone is the event loop provided by <code>boost::asio</code>. Kouta builds on top of that to provide a <b>tree-like</b> architecture with the following elements.</p>
+<p>The backbone is the event loop provided by <code>kouta::base::asio</code>, which aliases either <code>asio::</code> or <code>boost::asio</code> depending on whether the <code>KOUTA_STANDALONE_ASIO</code> option is set in CMake.. Kouta builds on top of that to provide a <b>tree-like</b> architecture with the following elements.</p>
 <h1><a class="anchor" id="autotoc_md5"></a>
 Component</h1>
 <p>Implemented in <code><a class="el" href="classkouta_1_1base_1_1Component.html" title="Base class for asynchronous components.">kouta::base::Component</a></code>.</p>
@@ -105,7 +105,7 @@ Component</h1>
 <p>Apart from providing access to the event loop, the <b>parent</b> also <b>keeps track of its children</b>. This allows for components to be allocated in the <b>heap</b> via the <code>new</code> keyword if desired so that, when a <code>Component</code> is deleted, it will automatically attempt to <code>delete</code> its children and remove itself from its parent.</p>
 <p>In the case of objects allocated in the <b>stack</b>, each object will be deleted in reverse creation order, which should prevent any issues with calling <code>delete</code> on non-heap objects due to objects removing themselves from the parent's children list.</p>
 <p><b>Note</b>: take extra care when mixing stack and heap allocations, as this may cause invalid deletions.</p>
-<p>These components can be chained as many times as needed, as long as there is one parent at the root of the tree which provides the I/O context (see <code><a class="el" href="classkouta_1_1base_1_1Component.html#a9d9aa7f22cb9d9091d7a32c04ca8faef" title="Obtain a reference to the underlying I/O context.">kouta::base::Component::context()</a></code>).</p>
+<p>These components can be chained as many times as needed, as long as there is one parent at the root of the tree which provides the I/O context (see <code><a class="el" href="classkouta_1_1base_1_1Component.html#a5cc008d14ada869b1406cac88b68500e" title="Obtain a reference to the underlying I/O context.">kouta::base::Component::context()</a></code>).</p>
 <p>Note that all components deriving from a single parent will be executed <b>in the same thread</b>.</p>
 <p>Method calls can be <b>posted to the event loop</b> via the <code><a class="el" href="classkouta_1_1base_1_1Component.html#aef017236c14b620cf8f671a812f7b07b" title="Post a method call to the event loop for deferred execution.">kouta::base::Component::post()</a></code> method. This is the core of the event-based architecture, as it allows to defer method execution in a single thread in an efficient manner. In addition, it is also possible to <b>post calls to lambdas and free functions</b>.</p>
 <p>A simple component could be:</p>
@@ -311,6 +311,38 @@ Callbacks</h1>
 <div class="ttc" id="aclasskouta_1_1base_1_1callback_1_1CallbackList_html"><div class="ttname"><a href="classkouta_1_1base_1_1callback_1_1CallbackList.html">kouta::base::callback::CallbackList</a></div><div class="ttdoc">Callback list.</div><div class="ttdef"><b>Definition:</b> callback-list.hpp:22</div></div>
 <div class="ttc" id="aclasskouta_1_1base_1_1callback_1_1DeferredCallback_html"><div class="ttname"><a href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html">kouta::base::callback::DeferredCallback</a></div><div class="ttdoc">Deferred Callback implementation.</div><div class="ttdef"><b>Definition:</b> deferred-callback.hpp:27</div></div>
 <div class="ttc" id="aclasskouta_1_1base_1_1callback_1_1DirectCallback_html"><div class="ttname"><a href="classkouta_1_1base_1_1callback_1_1DirectCallback.html">kouta::base::callback::DirectCallback</a></div><div class="ttdoc">Direct Callback implementation.</div><div class="ttdef"><b>Definition:</b> direct-callback.hpp:18</div></div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md9"></a>
+Timer</h1>
+<p>Implemented in <code><a class="el" href="classkouta_1_1base_1_1Timer.html">kouta::base::Timer</a></code>.</p>
+<p>The <code>Timer</code> allows performing actions after a certain amount of time. Its duration can be modified at any point, and can also be stopped before it elapses (for instance to cancel a timeout in a request).</p>
+<p>Once the <code>Timer</code> elapses, it <b>is within the context of its parent component</b>, so it is up to the developer to make sure that proper synchronization occurs if calling something outside of that context.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="timer_8hpp.html">kouta/base/timer.hpp</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">class </span>MyComponent : <span class="keyword">public</span> <a class="code" href="classkouta_1_1base_1_1Component.html">kouta::base::Component</a></div>
+<div class="line">{</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">    <span class="keyword">explicit</span> MyComponent(<a class="code" href="classkouta_1_1base_1_1Component.html">kouta::base::Component</a>* parent)</div>
+<div class="line">        : <a class="code" href="namespacekouta.html">kouta</a>::base::Component{parent}</div>
+<div class="line">        , m_timer{this, std::chrono::milliseconds{200}, std::bind_front(this, &amp;MyComponent::handle_timeout)}</div>
+<div class="line">    {</div>
+<div class="line">        m_timer.start();</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordtype">void</span> handle_timeout(Timer&amp; timer)</div>
+<div class="line">    {</div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Timer expired &quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">// Modify duration and restart</span></div>
+<div class="line">        timer.set_duration(std::chrono::milliseconds{500});</div>
+<div class="line">        timer.start();</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">private</span>:</div>
+<div class="line">    <a class="code" href="classkouta_1_1base_1_1Timer.html">kouta::base::Timer</a> m_timer;</div>
+<div class="line">};</div>
+<div class="ttc" id="aclasskouta_1_1base_1_1Timer_html"><div class="ttname"><a href="classkouta_1_1base_1_1Timer.html">kouta::base::Timer</a></div><div class="ttdef"><b>Definition:</b> timer.hpp:11</div></div>
+<div class="ttc" id="atimer_8hpp_html"><div class="ttname"><a href="timer_8hpp.html">timer.hpp</a></div></div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

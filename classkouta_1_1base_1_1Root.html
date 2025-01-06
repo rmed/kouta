@@ -144,9 +144,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a443c7f71c56d3c843b36923ba0bc2e5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acacb06359d7cf97f459d5904fbbfaead"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1Root.html#acacb06359d7cf97f459d5904fbbfaead">~Root</a> ()=default</td></tr>
 <tr class="separator:acacb06359d7cf97f459d5904fbbfaead"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac23182be81ec5471105a431b89fb6317"><td class="memItemLeft" align="right" valign="top">boost::asio::io_context &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1Root.html#ac23182be81ec5471105a431b89fb6317">context</a> () override</td></tr>
-<tr class="memdesc:ac23182be81ec5471105a431b89fb6317"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtain a reference to the underlying I/O context.  <a href="classkouta_1_1base_1_1Root.html#ac23182be81ec5471105a431b89fb6317">More...</a><br /></td></tr>
-<tr class="separator:ac23182be81ec5471105a431b89fb6317"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aae6338ad8fa8c7efc7375af5632731"><td class="memItemLeft" align="right" valign="top">asio::io_context &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1Root.html#a7aae6338ad8fa8c7efc7375af5632731">context</a> () override</td></tr>
+<tr class="memdesc:a7aae6338ad8fa8c7efc7375af5632731"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtain a reference to the underlying I/O context.  <a href="classkouta_1_1base_1_1Root.html#a7aae6338ad8fa8c7efc7375af5632731">More...</a><br /></td></tr>
+<tr class="separator:a7aae6338ad8fa8c7efc7375af5632731"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5b26cd9cf7befb15ecfef3b61d7019b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1Root.html#ad5b26cd9cf7befb15ecfef3b61d7019b">run</a> ()</td></tr>
 <tr class="memdesc:ad5b26cd9cf7befb15ecfef3b61d7019b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the event loop.  <a href="classkouta_1_1base_1_1Root.html#ad5b26cd9cf7befb15ecfef3b61d7019b">More...</a><br /></td></tr>
 <tr class="separator:ad5b26cd9cf7befb15ecfef3b61d7019b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -191,8 +191,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a3dce312b6c45ff4d9b5b957a13bd10f4"><td class="memItemLeft" align="right" valign="top">boost::asio::io_context&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1Root.html#a3dce312b6c45ff4d9b5b957a13bd10f4">m_context</a></td></tr>
-<tr class="separator:a3dce312b6c45ff4d9b5b957a13bd10f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a787703432e19dbcb45c0579d6212d1"><td class="memItemLeft" align="right" valign="top">asio::io_context&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkouta_1_1base_1_1Root.html#a4a787703432e19dbcb45c0579d6212d1">m_context</a></td></tr>
+<tr class="separator:a4a787703432e19dbcb45c0579d6212d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classkouta_1_1base_1_1Root.html" title="Root component.">Root</a> component. </p>
@@ -333,8 +333,8 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ac23182be81ec5471105a431b89fb6317"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac23182be81ec5471105a431b89fb6317">&#9670;&nbsp;</a></span>context()</h2>
+<a id="a7aae6338ad8fa8c7efc7375af5632731"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7aae6338ad8fa8c7efc7375af5632731">&#9670;&nbsp;</a></span>context()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -343,7 +343,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">boost::asio::io_context&amp; kouta::base::Root::context </td>
+          <td class="memname">asio::io_context&amp; kouta::base::Root::context </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -359,7 +359,7 @@ Private Attributes</h2></td></tr>
 <p>Obtain a reference to the underlying I/O context. </p>
 <dl class="section note"><dt>Note</dt><dd>The I/O context is owned by the root. </dd></dl>
 
-<p>Reimplemented from <a class="el" href="classkouta_1_1base_1_1Component.html#a9d9aa7f22cb9d9091d7a32c04ca8faef">kouta::base::Component</a>.</p>
+<p>Reimplemented from <a class="el" href="classkouta_1_1base_1_1Component.html#a5cc008d14ada869b1406cac88b68500e">kouta::base::Component</a>.</p>
 
 </div>
 </div>
@@ -474,8 +474,8 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a3dce312b6c45ff4d9b5b957a13bd10f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3dce312b6c45ff4d9b5b957a13bd10f4">&#9670;&nbsp;</a></span>m_context</h2>
+<a id="a4a787703432e19dbcb45c0579d6212d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a787703432e19dbcb45c0579d6212d1">&#9670;&nbsp;</a></span>m_context</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -484,7 +484,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">boost::asio::io_context kouta::base::Root::m_context</td>
+          <td class="memname">asio::io_context kouta::base::Root::m_context</td>
         </tr>
       </table>
   </td>

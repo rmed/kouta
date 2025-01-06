@@ -10,12 +10,12 @@ var annotated_dup =
         ] ],
         [ "Branch", "classkouta_1_1base_1_1Branch.html", "classkouta_1_1base_1_1Branch" ],
         [ "Component", "classkouta_1_1base_1_1Component.html", "classkouta_1_1base_1_1Component" ],
-        [ "Root", "classkouta_1_1base_1_1Root.html", "classkouta_1_1base_1_1Root" ]
+        [ "Root", "classkouta_1_1base_1_1Root.html", "classkouta_1_1base_1_1Root" ],
+        [ "Timer", "classkouta_1_1base_1_1Timer.html", "classkouta_1_1base_1_1Timer" ]
       ] ],
       [ "io", "namespacekouta_1_1io.html", [
         [ "Packer", "classkouta_1_1io_1_1Packer.html", "classkouta_1_1io_1_1Packer" ],
-        [ "Parser", "classkouta_1_1io_1_1Parser.html", "classkouta_1_1io_1_1Parser" ],
-        [ "Timer", "classkouta_1_1io_1_1Timer.html", "classkouta_1_1io_1_1Timer" ]
+        [ "Parser", "classkouta_1_1io_1_1Parser.html", "classkouta_1_1io_1_1Parser" ]
       ] ],
       [ "utils", "namespacekouta_1_1utils.html", [
         [ "EnumSet", "classkouta_1_1utils_1_1EnumSet.html", "classkouta_1_1utils_1_1EnumSet" ]
