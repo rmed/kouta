@@ -40,25 +40,42 @@ namespace kouta::tests::base
         ::testing::InSequence s;
         RootMock root{};
 
+        std::function<void(std::int32_t, const std::string&)> test_func{std::bind_front(&RootMock::handler_b, &root)};
+
         callback::DirectCallback<std::uint16_t> cb_a{&root, &RootMock::handler_a};
+        callback::DirectCallback<std::uint16_t> cb_a_2{[&root](std::uint16_t value)
+                                                       {
+                                                           root.handler_a(value);
+                                                       }};
         callback::DirectCallback<std::int32_t, const std::string&> cb_b{&root, &RootMock::handler_b};
+        callback::DirectCallback<std::int32_t, const std::string&> cb_b_2{test_func};
         callback::DirectCallback<const std::vector<std::uint8_t>&> cb_c{&root, &RootMock::handler_c};
 
         std::uint16_t data_a{127};
+        std::uint16_t data_a_2{564};
 
         std::int32_t data_b_a{42};
         std::string data_b_b{"this is a test"};
+
+        std::int32_t data_b_a_2{13};
+        std::string data_b_b_2{"this is another test"};
 
         std::vector<std::uint8_t> data_c{1, 2, 4, 5, 7, 8, 9, 212, 48, 2, 84};
 
         EXPECT_CALL(root, handler_a(data_a)).Times(1);
 
+        EXPECT_CALL(root, handler_a(data_a_2)).Times(1);
+
         EXPECT_CALL(root, handler_b(data_b_a, data_b_b)).Times(1);
+
+        EXPECT_CALL(root, handler_b(data_b_a_2, data_b_b_2)).Times(1);
 
         EXPECT_CALL(root, handler_c(data_c)).Times(1);
 
         cb_a(data_a);
+        cb_a_2(data_a_2);
         cb_b(data_b_a, data_b_b);
+        cb_b(data_b_a_2, data_b_b_2);
         cb_c(data_c);
     }
 
@@ -71,6 +88,8 @@ namespace kouta::tests::base
         ::testing::InSequence s;
         RootMock root{};
 
+        std::function<void(std::int32_t, const std::string&)> test_func{std::bind_front(&RootMock::handler_b, &root)};
+
         callback::DeferredCallback<std::uint16_t> cb_a{&root, &RootMock::handler_a};
         callback::DeferredCallback<std::uint16_t> cb_a_2{
             &root,
@@ -79,6 +98,7 @@ namespace kouta::tests::base
                 root.handler_a(value);
             }};
         callback::DirectCallback<std::int32_t, const std::string&> cb_b{&root, &RootMock::handler_b};
+        callback::DeferredCallback<std::int32_t, const std::string&> cb_b_2{&root, test_func};
         callback::DeferredCallback<const std::vector<std::uint8_t>&> cb_c{&root, &RootMock::handler_c};
 
         std::uint16_t data_a{127};
@@ -87,12 +107,17 @@ namespace kouta::tests::base
         std::int32_t data_b_a{42};
         std::string data_b_b{"this is a test"};
 
+        std::int32_t data_b_a_2{13};
+        std::string data_b_b_2{"this is another test"};
+
         std::vector<std::uint8_t> data_c{1, 2, 4, 5, 7, 8, 9, 212, 48, 2, 84};
         auto data_c_copy{data_c};
 
         EXPECT_CALL(root, handler_b(data_b_a, data_b_b)).Times(1);
 
         EXPECT_CALL(root, handler_c(data_c_copy)).Times(1);
+
+        EXPECT_CALL(root, handler_b(data_b_a_2, data_b_b_2)).Times(1);
 
         EXPECT_CALL(root, handler_a(data_a)).Times(1);
 
@@ -105,6 +130,7 @@ namespace kouta::tests::base
 
         // Clear the vector to verify that the data is copied.
         cb_c(data_c);
+        cb_b_2(data_b_a_2, data_b_b_2);
         data_c.clear();
 
         cb_a(data_a);

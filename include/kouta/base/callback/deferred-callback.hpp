@@ -56,8 +56,11 @@ namespace kouta::base::callback
         DeferredCallback(TClass* object, void (TClass::*method)(TArgs...))
             : BaseCallback<TArgs...>{}
         {
-            this->set_callable([object, method](TArgs... args)
-                               { object->template post<TClass, TArgs...>(method, args...); });
+            this->set_callable(
+                [object, method](TArgs... args)
+                {
+                    object->template post<TClass, TArgs...>(method, args...);
+                });
         }
 
         /// @brief Callback constructor from a callable.
@@ -67,7 +70,7 @@ namespace kouta::base::callback
         /// invoked from within the context of the provided @p object , which must implement a `post()` method to which
         /// the invokation can be passed to defer execution.
         ///
-        /// The developer must guarantee the lifetime of the @p object to rpevent invalid memory access.
+        /// The developer must guarantee the lifetime of the @p object to prevent invalid memory access.
         ///
         /// @tparam TClass              Object type.
         ///
@@ -75,11 +78,26 @@ namespace kouta::base::callback
         /// @param[in] callable         Callable to store. For instance, this could be a lambda or anything convertible
         ///                             to `std::function`.
         template<class TClass>
+        DeferredCallback(TClass* object, const DeferredCallback::Callable& callable)
+            : BaseCallback<TArgs...>{}
+        {
+            this->set_callable(
+                [object, callable](TArgs... args)
+                {
+                    object->template post<TArgs...>(callable, args...);
+                });
+        }
+
+        template<class TClass>
         DeferredCallback(TClass* object, DeferredCallback::Callable&& callable)
             : BaseCallback<TArgs...>{}
         {
-            this->set_callable([object, callable](TArgs... args)
-                               { object->template post<TArgs...>(callable, args...); });
+            this->set_callable(
+                [object, callable = std::move(callable)](TArgs... args)
+                {
+                    object->template post<TArgs...>(callable, args...);
+                });
         }
+        /// @}
     };
 }  // namespace kouta::base::callback

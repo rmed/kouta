@@ -17,6 +17,9 @@ namespace kouta::base::callback
     class DirectCallback : public BaseCallback<TArgs...>
     {
     public:
+        /// @brief The type of the callable the Callback points to.
+        using Callable = BaseCallback<TArgs...>::Callable;
+
         // Copyable
         DirectCallback(const DirectCallback&) = default;
         DirectCallback& operator=(const DirectCallback&) = default;
@@ -44,5 +47,30 @@ namespace kouta::base::callback
         {
             this->set_callable(std::bind_front(method, object));
         }
+
+        /// @brief Callback constructor from a callable.
+        ///
+        /// @details
+        /// This constructor initializes the intenal callable to the one specified in @p callable , so that it is
+        /// invoked from within the current context (i.e. as a regular function).
+        ///
+        /// @tparam TClass              Object type.
+        ///
+        /// @param[in] object           Pointer to the object whose method is going to be called.
+        /// @param[in] callable         Callable to store. For instance, this could be a lambda or anything convertible
+        ///                             to `std::function`.
+        /// @{
+        explicit DirectCallback(const DirectCallback::Callable& callable)
+            : BaseCallback<TArgs...>{}
+        {
+            this->set_callable(callable);
+        }
+
+        explicit DirectCallback(DirectCallback::Callable&& callable)
+            : BaseCallback<TArgs...>{}
+        {
+            this->set_callable(callable);
+        }
+        /// @}
     };
 }  // namespace kouta::base::callback
