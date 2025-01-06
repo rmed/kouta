@@ -54,9 +54,6 @@ namespace kouta::base::callback
         /// This constructor initializes the internal callable to the one specified in @p callable , so that it is
         /// invoked from within the current context (i.e. as a regular function).
         ///
-        /// @tparam TClass              Object type.
-        ///
-        /// @param[in] object           Pointer to the object whose method is going to be called.
         /// @param[in] callable         Callable to store. For instance, this could be a lambda or anything convertible
         ///                             to `std::function`.
         /// @{
