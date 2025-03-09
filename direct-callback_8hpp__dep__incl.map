@@ -1,5 +1,7 @@
 <map id="include/kouta/base/callback/direct&#45;callback.hpp" name="include/kouta/base/callback/direct&#45;callback.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,213,47"/>
-<area shape="rect" id="node2" href="$callback_8hpp.html" title=" " alt="" coords="37,95,181,136"/>
-<area shape="rect" id="node3" href="$base_8hpp.html" title=" " alt="" coords="23,184,195,211"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,213,45"/>
+<area shape="rect" id="Node000002" href="$callback_8hpp.html" title=" " alt="" coords="37,93,181,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,59,112,93,107,93,107,59"/>
+<area shape="rect" id="Node000003" href="$base_8hpp.html" title=" " alt="" coords="23,181,195,207"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="112,147,112,181,107,181,107,147"/>
 </map>

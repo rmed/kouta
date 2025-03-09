@@ -1,5 +1,8 @@
 <map id="include/kouta/base/root.hpp" name="include/kouta/base/root.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="60,5,204,47"/>
-<area shape="rect" id="node2" href="$branch_8hpp.html" title=" " alt="" coords="5,95,149,136"/>
-<area shape="rect" id="node3" href="$base_8hpp.html" title=" " alt="" coords="46,184,218,211"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="19,5,163,45"/>
+<area shape="rect" id="Node000002" href="$base_8hpp.html" title=" " alt="" coords="5,181,177,207"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,59,65,94,62,113,65,133,74,158,86,180,81,182,69,161,59,134,56,113,59,93,72,57"/>
+<area shape="rect" id="Node000003" href="$branch_8hpp.html" title=" " alt="" coords="74,93,218,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="113,56,136,92,132,95,109,58"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="127,146,102,183,97,179,123,143"/>
 </map>

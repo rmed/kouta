@@ -1,5 +1,7 @@
 <map id="include/kouta/base/callback/deferred&#45;callback.hpp" name="include/kouta/base/callback/deferred&#45;callback.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,232,47"/>
-<area shape="rect" id="node2" href="$callback_8hpp.html" title=" " alt="" coords="47,95,191,136"/>
-<area shape="rect" id="node3" href="$base_8hpp.html" title=" " alt="" coords="33,184,205,211"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,232,45"/>
+<area shape="rect" id="Node000002" href="$callback_8hpp.html" title=" " alt="" coords="47,93,191,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,59,121,93,116,93,116,59"/>
+<area shape="rect" id="Node000003" href="$base_8hpp.html" title=" " alt="" coords="33,181,205,207"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="121,147,121,181,116,181,116,147"/>
 </map>

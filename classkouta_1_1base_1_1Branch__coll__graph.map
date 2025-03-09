@@ -1,7 +1,13 @@
 <map id="kouta::base::Branch&lt; TWrapped &gt;" name="kouta::base::Branch&lt; TWrapped &gt;">
-<area shape="rect" id="node1" title="Background component executor." alt="" coords="164,199,315,240"/>
-<area shape="rect" id="node2" href="$classkouta_1_1base_1_1Root.html" title="Root component." alt="" coords="5,102,140,129"/>
-<area shape="rect" id="node3" href="$classkouta_1_1base_1_1Component.html" title="Base class for asynchronous components." alt="" coords="64,5,244,32"/>
-<area shape="rect" id="node4" title=" " alt="" coords="165,95,335,136"/>
-<area shape="rect" id="node5" title=" " alt="" coords="360,102,452,129"/>
+<area shape="rect" id="Node000001" title="Background component executor." alt="" coords="164,196,315,236"/>
+<area shape="rect" id="Node000002" href="$classkouta_1_1base_1_1Root.html" title="Root component." alt="" coords="5,101,140,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,131,209,194,207,198,102,135"/>
+<area shape="rect" id="Node000003" href="$classkouta_1_1base_1_1Component.html" title="Base class for asynchronous components." alt="" coords="64,5,244,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="137,43,85,102,81,99,133,39"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="259,10,271,18,262,25,245,28,244,23,260,20,265,18,257,15"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="165,93,335,133"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="149,44,148,57,152,68,164,81,179,91,176,95,160,85,148,71,143,58,143,44"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="236,82,219,56,202,43,183,33,186,28,205,39,223,53,240,79"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="360,101,452,126"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="377,135,272,198,269,194,374,131"/>
 </map>

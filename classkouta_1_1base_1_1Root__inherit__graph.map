@@ -1,5 +1,7 @@
 <map id="kouta::base::Root" name="kouta::base::Root">
-<area shape="rect" id="node1" title="Root component." alt="" coords="28,80,163,107"/>
-<area shape="rect" id="node3" href="$classkouta_1_1base_1_1Branch.html" title="Background component executor." alt="" coords="20,155,171,196"/>
-<area shape="rect" id="node2" href="$classkouta_1_1base_1_1Component.html" title="Base class for asynchronous components." alt="" coords="5,5,185,32"/>
+<area shape="rect" id="Node000001" title="Root component." alt="" coords="28,79,163,104"/>
+<area shape="rect" id="Node000003" href="$classkouta_1_1base_1_1Branch.html" title="Background component executor." alt="" coords="20,152,171,192"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="98,118,98,152,93,152,93,118"/>
+<area shape="rect" id="Node000002" href="$classkouta_1_1base_1_1Component.html" title="Base class for asynchronous components." alt="" coords="5,5,185,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="98,44,98,79,93,79,93,44"/>
 </map>

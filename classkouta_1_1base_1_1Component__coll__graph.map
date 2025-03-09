@@ -1,4 +1,7 @@
 <map id="kouta::base::Component" name="kouta::base::Component">
-<area shape="rect" id="node1" title="Base class for asynchronous components." alt="" coords="5,5,185,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="10,95,181,136"/>
+<area shape="rect" id="Node000001" title="Base class for asynchronous components." alt="" coords="5,5,185,31"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="201,10,212,18,204,25,186,28,185,23,202,20,207,18,198,15"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="10,93,181,133"/>
+<area shape="poly" id="edge3_Node000002_Node000001" title=" " alt="" coords="59,40,46,56,44,65,46,74,63,91,59,95,42,77,38,65,41,53,55,37"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="110,80,112,68,111,55,101,32,106,30,117,54,118,68,115,81"/>
 </map>

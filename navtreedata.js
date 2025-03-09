@@ -25,21 +25,21 @@
 var NAVTREE =
 [
   [ "Kouta", "index.html", [
-    [ "Introduction", "md_docs_introduction.html", [
-      [ "Building", "md_docs_introduction.html#autotoc_md1", null ],
-      [ "Documentation", "md_docs_introduction.html#autotoc_md2", null ],
-      [ "Testing", "md_docs_introduction.html#autotoc_md3", null ]
+    [ "Introduction", "md_docs_2introduction.html", [
+      [ "Building", "md_docs_2introduction.html#autotoc_md1", null ],
+      [ "Documentation", "md_docs_2introduction.html#autotoc_md2", null ],
+      [ "Testing", "md_docs_2introduction.html#autotoc_md3", null ]
     ] ],
-    [ "Base package", "md_docs_base_package.html", [
-      [ "Component", "md_docs_base_package.html#autotoc_md5", null ],
-      [ "Root", "md_docs_base_package.html#autotoc_md6", null ],
-      [ "Branch", "md_docs_base_package.html#autotoc_md7", null ],
-      [ "Callbacks", "md_docs_base_package.html#autotoc_md8", null ],
-      [ "Timer", "md_docs_base_package.html#autotoc_md9", null ]
+    [ "Base package", "md_docs_2base-package.html", [
+      [ "Component", "md_docs_2base-package.html#autotoc_md5", null ],
+      [ "Root", "md_docs_2base-package.html#autotoc_md6", null ],
+      [ "Branch", "md_docs_2base-package.html#autotoc_md7", null ],
+      [ "Callbacks", "md_docs_2base-package.html#autotoc_md8", null ],
+      [ "Timer", "md_docs_2base-package.html#autotoc_md9", null ]
     ] ],
-    [ "I/O package", "md_docs_io_package.html", [
-      [ "Parser", "md_docs_io_package.html#autotoc_md11", null ],
-      [ "Packer", "md_docs_io_package.html#autotoc_md12", null ]
+    [ "I/O package", "md_docs_2io-package.html", [
+      [ "Parser", "md_docs_2io-package.html#autotoc_md11", null ],
+      [ "Packer", "md_docs_2io-package.html#autotoc_md12", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -68,7 +68,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_2home_2runner_2work_2kouta_2kouta_2include_2kouta_2utils_2enum-set_8hpp-example.html"
+"_2home_2runner_2work_2kouta_2kouta_2include_2kouta_2utils_2enum-set_8hpp-example.html",
+"classkouta_1_1io_1_1Packer.html#afa0df72a46c4edf60f769c65bddfc3c8"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

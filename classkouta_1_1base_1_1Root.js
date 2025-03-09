@@ -5,9 +5,9 @@ var classkouta_1_1base_1_1Root =
     [ "Root", "classkouta_1_1base_1_1Root.html#a73feb9b380364f8d512474146aa9c2dc", null ],
     [ "Root", "classkouta_1_1base_1_1Root.html#a9975cafefef13c850ed29e5fbea6524a", null ],
     [ "~Root", "classkouta_1_1base_1_1Root.html#acacb06359d7cf97f459d5904fbbfaead", null ],
-    [ "context", "classkouta_1_1base_1_1Root.html#a7aae6338ad8fa8c7efc7375af5632731", null ],
-    [ "operator=", "classkouta_1_1base_1_1Root.html#afadbca7fa39b2a0418354c81e0d3dbbd", null ],
-    [ "operator=", "classkouta_1_1base_1_1Root.html#a443c7f71c56d3c843b36923ba0bc2e5a", null ],
+    [ "context", "classkouta_1_1base_1_1Root.html#ac2d6cac7acedd43159b513dd49cbc273", null ],
+    [ "operator=", "classkouta_1_1base_1_1Root.html#a87d5905514b7f8ea3fb60d235ddb5841", null ],
+    [ "operator=", "classkouta_1_1base_1_1Root.html#a26c38b1aec72bbe55c8f2808134c2d41", null ],
     [ "run", "classkouta_1_1base_1_1Root.html#ad5b26cd9cf7befb15ecfef3b61d7019b", null ],
     [ "stop", "classkouta_1_1base_1_1Root.html#a73597cb310947a9e37e8ba8ebe80b912", null ],
     [ "m_context", "classkouta_1_1base_1_1Root.html#a4a787703432e19dbcb45c0579d6212d1", null ]

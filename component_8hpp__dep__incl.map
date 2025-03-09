@@ -1,7 +1,15 @@
 <map id="include/kouta/base/component.hpp" name="include/kouta/base/component.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="111,5,255,47"/>
-<area shape="rect" id="node2" href="$branch_8hpp.html" title=" " alt="" coords="5,184,149,225"/>
-<area shape="rect" id="node3" href="$base_8hpp.html" title=" " alt="" coords="126,273,298,300"/>
-<area shape="rect" id="node4" href="$root_8hpp.html" title=" " alt="" coords="56,95,200,136"/>
-<area shape="rect" id="node5" href="$timer_8hpp.html" title=" " alt="" coords="275,184,419,225"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="83,5,227,45"/>
+<area shape="rect" id="Node000002" href="$base_8hpp.html" title=" " alt="" coords="69,269,241,295"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="114,55,71,88,31,130,17,152,9,175,9,197,19,220,33,236,51,249,91,267,89,272,48,254,29,240,14,223,4,198,4,174,12,150,27,126,67,84,111,51"/>
+<area shape="rect" id="Node000003" href="$branch_8hpp.html" title=" " alt="" coords="29,181,173,221"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="143,59,128,94,107,182,101,181,123,93,138,57"/>
+<area shape="rect" id="Node000004" href="$root_8hpp.html" title=" " alt="" coords="138,93,282,133"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="177,56,200,92,196,95,172,58"/>
+<area shape="rect" id="Node000005" href="$timer_8hpp.html" title=" " alt="" coords="247,181,391,221"/>
+<area shape="poly" id="edge7_Node000001_Node000005" title=" " alt="" coords="237,49,269,67,296,92,309,113,317,138,322,181,317,182,312,139,304,116,292,95,266,71,234,53"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="124,231,149,267,145,271,119,234"/>
+<area shape="poly" id="edge5_Node000004_Node000002" title=" " alt="" coords="207,148,187,222,164,270,160,268,182,220,202,146"/>
+<area shape="poly" id="edge6_Node000004_Node000003" title=" " alt="" coords="177,144,126,183,123,179,173,140"/>
+<area shape="poly" id="edge8_Node000005_Node000002" title=" " alt="" coords="269,230,181,272,178,267,267,225"/>
 </map>

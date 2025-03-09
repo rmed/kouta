@@ -1,5 +1,8 @@
 <map id="kouta::base::callback::CallbackList&lt; TArgs &gt;" name="kouta::base::callback::CallbackList&lt; TArgs &gt;">
-<area shape="rect" id="node1" title="Callback list." alt="" coords="667,5,841,47"/>
-<area shape="rect" id="node2" href="$classkouta_1_1base_1_1callback_1_1BaseCallback.html" title=" " alt="" coords="5,12,201,53"/>
-<area shape="rect" id="node3" title=" " alt="" coords="315,38,533,94"/>
+<area shape="rect" id="Node000001" title="Callback list." alt="" coords="667,5,841,45"/>
+<area shape="rect" id="Node000002" href="$classkouta_1_1base_1_1callback_1_1BaseCallback.html" title=" " alt="" coords="5,12,201,52"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="215,22,225,21,434,14,643,16,666,17,666,22,643,21,434,19,225,27,215,27"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="315,38,533,93"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="215,41,314,51,314,57,215,46"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="546,48,666,33,667,39,547,53"/>
 </map>

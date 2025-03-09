@@ -1,5 +1,9 @@
 <map id="kouta::base::Timer" name="kouta::base::Timer">
-<area shape="rect" id="node1" title=" " alt="" coords="5,102,148,129"/>
-<area shape="rect" id="node2" href="$classkouta_1_1base_1_1Component.html" title="Base class for asynchronous components." alt="" coords="72,5,252,32"/>
-<area shape="rect" id="node3" title=" " alt="" coords="173,95,343,136"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,101,148,126"/>
+<area shape="rect" id="Node000002" href="$classkouta_1_1base_1_1Component.html" title="Base class for asynchronous components." alt="" coords="72,5,252,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="144,42,89,102,85,99,140,39"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="267,10,279,18,270,25,253,28,252,23,268,20,273,18,265,15"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="173,93,343,133"/>
+<area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="157,44,156,57,160,68,172,81,187,91,184,95,168,85,156,71,151,58,151,44"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="244,82,227,56,210,43,191,33,194,28,213,39,231,53,248,79"/>
 </map>

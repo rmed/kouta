@@ -1,6 +1,9 @@
 <map id="kouta::base::Component" name="kouta::base::Component">
-<area shape="rect" id="node1" title="Base class for asynchronous components." alt="" coords="72,5,252,32"/>
-<area shape="rect" id="node2" href="$classkouta_1_1base_1_1Root.html" title="Root component." alt="" coords="13,80,148,107"/>
-<area shape="rect" id="node4" href="$classkouta_1_1base_1_1Timer.html" title=" " alt="" coords="172,80,315,107"/>
-<area shape="rect" id="node3" href="$classkouta_1_1base_1_1Branch.html" title="Background component executor." alt="" coords="5,155,156,196"/>
+<area shape="rect" id="Node000001" title="Base class for asynchronous components." alt="" coords="72,5,252,31"/>
+<area shape="rect" id="Node000002" href="$classkouta_1_1base_1_1Root.html" title="Root component." alt="" coords="13,79,148,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="140,42,96,80,92,76,137,38"/>
+<area shape="rect" id="Node000004" href="$classkouta_1_1base_1_1Timer.html" title=" " alt="" coords="172,79,315,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="187,38,232,76,228,80,184,42"/>
+<area shape="rect" id="Node000003" href="$classkouta_1_1base_1_1Branch.html" title="Background component executor." alt="" coords="5,152,156,192"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="83,118,83,152,78,152,78,118"/>
 </map>

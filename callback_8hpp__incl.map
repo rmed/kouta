@@ -1,10 +1,20 @@
 <map id="include/kouta/base/callback.hpp" name="include/kouta/base/callback.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="122,5,266,47"/>
-<area shape="rect" id="node2" href="$base-callback_8hpp.html" title=" " alt="" coords="133,184,284,225"/>
-<area shape="rect" id="node4" href="$direct-callback_8hpp.html" title=" " alt="" coords="27,95,177,136"/>
-<area shape="rect" id="node5" href="$deferred-callback_8hpp.html" title=" " alt="" coords="202,95,370,136"/>
-<area shape="rect" id="node6" href="$callback-list_8hpp.html" title=" " alt="" coords="395,95,545,136"/>
-<area shape="rect" id="node3" title=" " alt="" coords="165,273,252,300"/>
-<area shape="rect" id="node7" title=" " alt="" coords="359,191,469,218"/>
-<area shape="rect" id="node8" title=" " alt="" coords="493,191,556,218"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="122,5,266,45"/>
+<area shape="rect" id="Node000002" href="$base-callback_8hpp.html" title=" " alt="" coords="133,181,284,221"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,43,74,58,33,78,18,89,10,102,9,116,16,132,37,154,63,170,91,182,121,190,119,195,89,187,60,175,34,158,12,135,4,117,5,100,14,86,30,73,72,53,121,38"/>
+<area shape="rect" id="Node000004" href="$direct-callback_8hpp.html" title=" " alt="" coords="27,93,177,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="175,48,134,86,130,82,172,44"/>
+<area shape="rect" id="Node000005" href="$deferred-callback_8hpp.html" title=" " alt="" coords="202,93,370,133"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="216,44,258,82,254,86,213,48"/>
+<area shape="rect" id="Node000006" href="$callback-list_8hpp.html" title=" " alt="" coords="395,93,545,133"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="255,43,398,87,396,92,254,48"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="165,269,252,295"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="211,222,211,255,206,255,206,222"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="127,132,176,171,173,175,124,136"/>
+<area shape="poly" id="edge6_Node000005_Node000002" title=" " alt="" coords="271,135,237,173,233,169,267,132"/>
+<area shape="poly" id="edge10_Node000006_Node000002" title=" " alt="" coords="413,136,280,180,278,174,412,131"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="359,189,469,214"/>
+<area shape="poly" id="edge8_Node000006_Node000007" title=" " alt="" coords="460,135,431,178,427,175,455,132"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="493,189,556,214"/>
+<area shape="poly" id="edge9_Node000006_Node000008" title=" " alt="" coords="484,132,512,175,508,178,480,135"/>
 </map>
