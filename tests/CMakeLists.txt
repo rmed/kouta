@@ -1,10 +1,15 @@
 if(KOUTA_BUILD_TESTS)
-    find_package(GTest)
+    find_package(GTest REQUIRED)
+    find_package(Threads REQUIRED)
 
     if(NOT GTEST_FOUND)
         message("GTest was not found. Test target won't be compiled")
     else()
         enable_testing()
+
+        if(NOT MSVC)
+            set(_pthread pthread)
+        endif()
 
         set(_test_sources
             "base/dummy-component.cpp"
@@ -33,6 +38,7 @@ if(KOUTA_BUILD_TESTS)
                 gmock
                 gtest_main
                 gtest
+                ${_pthread}
                 ${_test_libs}
         )
 
@@ -48,6 +54,7 @@ if(KOUTA_BUILD_TESTS)
                 gmock
                 gtest_main
                 gtest
+                ${_pthread}
         )
 
         target_link_libraries(kouta-tests-header

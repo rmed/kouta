@@ -18,7 +18,7 @@ namespace kouta::base::callback
     {
     public:
         /// @brief The type of the callable the Callback points to.
-        using Callable = BaseCallback<TArgs...>::Callable;
+        using Callable = typename BaseCallback<TArgs...>::Callable;
 
         // Copyable
         DirectCallback(const DirectCallback&) = default;

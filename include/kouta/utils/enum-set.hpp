@@ -52,7 +52,7 @@ namespace kouta::utils
         /// Base biset type.
         using BaseType = std::bitset<static_cast<std::size_t>(TEnum::_Total)>;
 
-        using reference = BaseType::reference;
+        using reference = typename BaseType::reference;
 
         // Re-export some methods
         using BaseType::BaseType;

@@ -73,10 +73,17 @@ function(kouta_add_library)
     add_library("kouta::${ARGS_TARGET}" ALIAS ${_lib_target})
 
     # Header-only library
-    add_library(${_header_target}
-        INTERFACE
-            ${ARGS_HEADERS}
-    )
+    if (${CMAKE_VERSION} VERSION_GREATER "3.18")
+        # Cannot specify sources until version 3.19
+        add_library(${_header_target}
+            INTERFACE
+        )
+    else()
+        add_library(${_header_target}
+            INTERFACE
+                ${ARGS_HEADERS}
+        )
+    endif()
 
     target_include_directories(${_header_target}
         INTERFACE

@@ -8,9 +8,9 @@ A small asynchronous application framework based on Boost/Asio, with components 
 
 Kouta requires the following libraries:
 
-- [CMake](https://cmake.org/) >= `3.27`
-- [Boost](https://www.boost.org/) >= `1.78.0`
-- [Asio](https://think-async.com/Asio)>= `1.22.0` (if standalone Asio is used via the `KOUTA_STANDALONE_ASIO` option).
+- [CMake](https://cmake.org/) >= `3.18`
+- [Boost](https://www.boost.org/) >= `1.74.0`
+- [Asio](https://think-async.com/Asio)>= `1.18.0` (if standalone Asio is used via the `KOUTA_STANDALONE_ASIO` option).
 
 ```
 $ mkdir build && cd build

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.27)
+cmake_minimum_required(VERSION 3.18)
 
 project(kouta)
 
@@ -15,7 +15,7 @@ option(KOUTA_PREFER_HEADER_ONLY_LIBS "Prefer to use header-only instead of share
 option(KOUTA_STANDALONE_ASIO "Use (header-only) standalone Asio instead of Boost.Asio where possible" ON)
 
 # Boost
-set(BOOST_MIN_VERSION "1.78.0")
+set(BOOST_MIN_VERSION "1.74.0")
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
