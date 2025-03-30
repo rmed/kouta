@@ -1,11 +1,14 @@
 #include "kouta/db/client.hpp"
 
+#include <format>
+
 #include <soci/session.h>
 
 namespace kouta::db
 {
     Client::Client(std::size_t pool_size)
-        : m_pool_size{pool_size}
+        : kouta::utils::LoggerAware{}
+        , m_pool_size{pool_size}
         , m_initialized{}
         , m_backend{}
         , m_pool{}
@@ -67,6 +70,8 @@ namespace kouta::db
 
         std::string conn_string{conn_stream.str()};
 
+        log_debug(std::format("Connecting to SQLite database with connection string: {}", conn_string));
+
         m_pool = std::make_unique<Pool>(m_pool_size);
 
         try
@@ -89,6 +94,8 @@ namespace kouta::db
             m_backend = Backend::None;
             m_initialized = false;
 
+            log_error(std::format("Failed to connect to SQLite3 database at {}", db_path));
+
             return false;
         }
     }
@@ -100,6 +107,8 @@ namespace kouta::db
             // Nothing to do
             return;
         }
+
+        log_debug("Disconnected");
 
         m_pool.reset();
         m_backend = Backend::None;
