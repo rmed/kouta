@@ -11,6 +11,7 @@ Kouta requires the following libraries:
 - [CMake](https://cmake.org/) >= `3.18`
 - [Boost](https://www.boost.org/) >= `1.74.0`
 - [Asio](https://think-async.com/Asio)>= `1.18.0` (if standalone Asio is used via the `KOUTA_STANDALONE_ASIO` option).
+- [SOCI](https://github.com/SOCI/soci) >= `4.1` (for the database module)
 
 ```
 $ mkdir build && cd build

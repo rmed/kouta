@@ -19,8 +19,9 @@ option(KOUTA_BUILD_TESTS "Enable compilation of tests" OFF)
 option(KOUTA_PREFER_HEADER_ONLY_LIBS "Prefer to use header-only instead of shared external libraries where possible" ON)
 option(KOUTA_STANDALONE_ASIO "Use (header-only) standalone Asio instead of Boost.Asio where possible" ON)
 
-# Boost
+# Versions required
 set(BOOST_MIN_VERSION "1.74.0")
+set(SOCI_MIN_VERSION "4.1")
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
@@ -54,6 +55,7 @@ else()
 endif()
 
 kouta_add_library(
+    HEADERONLY
     TARGET base
     HEADERS
         "base/callback/base-callback.hpp"
@@ -78,7 +80,9 @@ kouta_add_library(
 
 # Assumes that Boost.endian headers are available/in path
 kouta_add_library(
+    HEADERONLY
     TARGET io
+
     HEADERS
         "io/packer.hpp"
         "io/parser.hpp"
@@ -87,8 +91,11 @@ kouta_add_library(
         "io.cpp"
 )
 
+# Kouta Utils module
 kouta_add_library(
+    HEADERONLY
     TARGET utils
+
     HEADERS
         "utils/enum-set.hpp"
         "utils/ilogger.hpp"
@@ -97,6 +104,47 @@ kouta_add_library(
     SOURCES
         "utils.cpp"
 )
+
+# Kouta DB module
+
+# Requires SOCI.
+find_package(SOCI ${SOCI_MIN_VERSION})
+
+if(SOCI_FOUND)
+    # SOCI may be compiled with Boost::date_time support.
+    find_package(Boost ${BOOST_MIN_VERSION}
+        COMPONENTS
+            date_time
+    )
+
+    kouta_add_library(
+        HEADERONLY
+        TARGET db
+        HEADERS
+            "db/migration/abstract-version.hpp"
+            "db/migration/migration-manager.hpp"
+            "db/params/sqlite-params.hpp"
+            "db/query/condition-group.hpp"
+            "db/query/query-builder.hpp"
+            "db/query/where-builder.hpp"
+            "db/abstract-adapter.hpp"
+            "db/client.hpp"
+            "db/page.hpp"
+            "db/result-code.hpp"
+            "db/result.hpp"
+
+        SOURCES
+            "db.cpp"
+
+        INTERNAL
+            "utils"
+
+        LIBS
+            SOCI::Core
+    )
+else()
+    message("SOCI was not found. kouta-db module will not be enabled")
+endif()
 
 # Tests
 add_subdirectory("tests")
