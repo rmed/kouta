@@ -8,7 +8,7 @@
 
 #include <kouta/utils/logger-aware.hpp>
 
-#include "detail/sqlite-params.hpp"
+#include "params/sqlite-params.hpp"
 
 namespace kouta::db
 {
@@ -88,7 +88,7 @@ namespace kouta::db
         /// @param[in] params               Optional parameters for the connection.
         ///
         /// @returns Whether connection succeeded.
-        bool connect_sqlite(std::string_view db_path, detail::SqliteParams&& params);
+        bool connect_sqlite(std::string_view db_path, const params::SqliteParams& params);
 
         /// @brief Disconnect the client and release the pool.
         ///

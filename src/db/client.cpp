@@ -35,7 +35,7 @@ namespace kouta::db
         return connect_sqlite(db_path, {});
     }
 
-    bool Client::connect_sqlite(std::string_view db_path, detail::SqliteParams&& params)
+    bool Client::connect_sqlite(std::string_view db_path, const params::SqliteParams& params)
     {
         if (m_initialized || m_backend != Backend::None)
         {

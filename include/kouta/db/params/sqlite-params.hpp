@@ -4,7 +4,7 @@
 #include <optional>
 #include <string>
 
-namespace kouta::db::detail
+namespace kouta::db::params
 {
     /// @brief Set of optional parameters to pass to the SQLite3 connection string.
     ///
@@ -35,4 +35,4 @@ namespace kouta::db::detail
         /// @note The VFS should be registered before opening the connection.
         std::optional<std::string> vfs;
     };
-}  // namespace kouta::db::detail
+}  // namespace kouta::db::params

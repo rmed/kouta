@@ -9,6 +9,7 @@
 #
 # Args:
 #
+# - HEADERONLY: whether this is a header-only library
 # - TARGET: name of the target to generate, treated as a suffix
 # - HEADERS: list of headers relative to the include/kouta/ directory
 # - SOURCES: list of sources relative to the src/ directory
@@ -32,7 +33,7 @@
 #         base
 # )
 function(kouta_add_library)
-    cmake_parse_arguments(ARGS "" "TARGET" "HEADERS;SOURCES;INTERNAL;LIBS" ${ARGN})
+    cmake_parse_arguments(ARGS "HEADERONLY" "TARGET" "HEADERS;SOURCES;INTERNAL;LIBS" ${ARGN})
 
     set(_lib_target "kouta-${ARGS_TARGET}")
     set(_header_target "${_lib_target}-header")
@@ -73,31 +74,33 @@ function(kouta_add_library)
     add_library("kouta::${ARGS_TARGET}" ALIAS ${_lib_target})
 
     # Header-only library
-    if (${CMAKE_VERSION} VERSION_GREATER "3.18")
-        # Cannot specify sources until version 3.19
-        add_library(${_header_target}
+    if(ARGS_HEADERONLY)
+        if (${CMAKE_VERSION} VERSION_GREATER "3.18")
+            # Cannot specify sources until version 3.19
+            add_library(${_header_target}
+                INTERFACE
+            )
+        else()
+            add_library(${_header_target}
+                INTERFACE
+                    ${ARGS_HEADERS}
+            )
+        endif()
+
+        target_include_directories(${_header_target}
             INTERFACE
+            "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>"
         )
-    else()
-        add_library(${_header_target}
-            INTERFACE
-                ${ARGS_HEADERS}
-        )
+
+        if(ARGS_INTERNAL)
+            target_link_libraries(${_header_target} INTERFACE "kouta-${ARGS_INTERNAL}-header")
+        endif()
+
+        # External libs
+        if(ARGS_LIBS)
+            target_link_libraries(${_header_target} INTERFACE ${ARGS_LIBS})
+        endif()
+
+        add_library("kouta::${ARGS_TARGET}Header" ALIAS ${_header_target})
     endif()
-
-    target_include_directories(${_header_target}
-        INTERFACE
-        "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>"
-    )
-
-    if(ARGS_INTERNAL)
-        target_link_libraries(${_header_target} INTERFACE "kouta-${ARGS_INTERNAL}-header")
-    endif()
-
-    # External libs
-    if(ARGS_LIBS)
-        target_link_libraries(${_header_target} INTERFACE ${ARGS_LIBS})
-    endif()
-
-    add_library("kouta::${ARGS_TARGET}Header" ALIAS ${_header_target})
 endfunction()

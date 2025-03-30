@@ -54,6 +54,7 @@ else()
 endif()
 
 kouta_add_library(
+    HEADERONLY
     TARGET base
     HEADERS
         "base/callback/base-callback.hpp"
@@ -78,7 +79,9 @@ kouta_add_library(
 
 # Assumes that Boost.endian headers are available/in path
 kouta_add_library(
+    HEADERONLY
     TARGET io
+
     HEADERS
         "io/packer.hpp"
         "io/parser.hpp"
@@ -90,8 +93,11 @@ kouta_add_library(
         "base"
 )
 
+# Kouta Utils module
 kouta_add_library(
+    HEADERONLY
     TARGET utils
+
     HEADERS
         "utils/enum-set.hpp"
         "utils/ilogger.hpp"
@@ -100,6 +106,42 @@ kouta_add_library(
     SOURCES
         "utils.cpp"
 )
+
+# Kouta DB module
+
+# Requires SOCI.
+find_package(SOCI)
+
+if(SOCI_FOUND)
+    # SOCI may be compiled with Boost::date_time support.
+    find_package(Boost ${BOOST_MIN_VERSION}
+        COMPONENTS
+            date_time
+    )
+
+    kouta_add_library(
+        TARGET db
+        HEADERS
+            "db/params/sqlite-params.hpp"
+            "db/abstract-adapter.hpp"
+            "db/client.hpp"
+            "db/page.hpp"
+            "db/result-code.hpp"
+            "db/result.hpp"
+
+        SOURCES
+            "db/abstract-adapter.cpp"
+            "db/client.cpp"
+
+        INTERNAL
+            "utils"
+
+        LIBS
+            SOCI::soci_core
+    )
+else()
+    message("SOCI was not found. kouta-db module will not be enabled")
+endif()
 
 # Tests
 add_subdirectory("tests")
