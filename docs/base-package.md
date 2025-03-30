@@ -1,4 +1,4 @@
-# Base package
+# Base package {#docs-base}
 
 The base package provides the basic building blocks for an asynchronous/event-based application and, more often than not, will be used by the rest of the packages.
 

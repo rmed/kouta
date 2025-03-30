@@ -94,6 +94,8 @@ kouta_add_library(
     TARGET utils
     HEADERS
         "utils/enum-set.hpp"
+        "utils/ilogger.hpp"
+        "utils/logger-aware.hpp"
 
     SOURCES
         "utils.cpp"

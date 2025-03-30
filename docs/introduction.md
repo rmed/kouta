@@ -1,4 +1,4 @@
-# Introduction
+\mainpage
 
 A small asynchronous application framework based on Boost/Asio, with components that can be reused accross different projects.
 

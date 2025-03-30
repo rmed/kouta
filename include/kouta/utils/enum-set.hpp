@@ -18,8 +18,7 @@ namespace kouta::utils
     /// The `_Total` label is used to determine the number of values in the enumeration (by explicitly casting it to an
     /// std::size_t value).
     ///
-    /// @example
-    /// ```c++
+    /// @code{c++}
     /// enum class MyEnum : std::size_t
     /// {
     ///     A,
@@ -38,7 +37,7 @@ namespace kouta::utils
     /// // Or raw indices
     /// set.test(0);
     /// set.set(1);
-    /// ```
+    /// @endcode
     ///
     /// @tparam TEnum               Enumeration type to use.
     template<class TEnum>
