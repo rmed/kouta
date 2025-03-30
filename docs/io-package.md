@@ -1,10 +1,10 @@
-# I/O package
+# I/O package {#docs-io}
 
 The I/O package provides building blocks for I/O-related functionalities.
 
 ## Parser
 
-Implemented in `kouta::io::Parser`.
+Implemented in kouta::io::Parser.
 
 The `Parser` is supposed to be placed over a sequence of raw bytes in order to help extracting information from said sequence. In particular, the following information can be extracted:
 
@@ -44,7 +44,7 @@ parser::View view{parser.view()};
 
 ## Packer
 
-Implemented in `kouta::io::Packer`.
+Implemented in kouta::io::Packer.
 
 The `Packer` does the **opposite from the `Parser`**: it adds the following to a raw byte sequence:
 

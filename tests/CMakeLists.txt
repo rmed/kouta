@@ -18,6 +18,7 @@ if(KOUTA_BUILD_TESTS)
             "io/test-packer.cpp"
             "io/test-parser.cpp"
             "utils/test-enum-set.cpp"
+            "utils/test-logger-aware.cpp"
         )
 
         set(_test_libs
