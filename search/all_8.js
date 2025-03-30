@@ -1,15 +1,11 @@
 var searchData=
 [
-  ['m_5fcallable_0',['m_callable',['../classkouta_1_1base_1_1callback_1_1BaseCallback.html#a2a6cc4e073bca45eee982cce69abb9c1',1,'kouta::base::callback::BaseCallback']]],
-  ['m_5fcallbacks_1',['m_callbacks',['../classkouta_1_1base_1_1callback_1_1CallbackList.html#a46475d065bdc3ce0e9cc97bbf63ec8f8',1,'kouta::base::callback::CallbackList']]],
-  ['m_5fchildren_2',['m_children',['../classkouta_1_1base_1_1Component.html#a2407598bd20e36db7cb3eaf1d07ae770',1,'kouta::base::Component']]],
-  ['m_5fcomponent_3',['m_component',['../classkouta_1_1base_1_1Branch.html#a3cfe604611ea0868c4f2cbc223426302',1,'kouta::base::Branch']]],
-  ['m_5fcontext_4',['m_context',['../classkouta_1_1base_1_1Root.html#a4a787703432e19dbcb45c0579d6212d1',1,'kouta::base::Root']]],
-  ['m_5fdata_5',['m_data',['../classkouta_1_1io_1_1Packer.html#a60afba28a85ee00045e0e4de22c292f3',1,'kouta::io::Packer']]],
-  ['m_5fduration_6',['m_duration',['../classkouta_1_1base_1_1Timer.html#a71e86efd39a034570df2b336f4d92d9b',1,'kouta::base::Timer']]],
-  ['m_5fon_5fexpired_7',['m_on_expired',['../classkouta_1_1base_1_1Timer.html#a5ee67fbcebaaa9ac7032f2bce5ffd147',1,'kouta::base::Timer']]],
-  ['m_5fparent_8',['m_parent',['../classkouta_1_1base_1_1Component.html#ace149d1f3085f19981928c4189a1731d',1,'kouta::base::Component']]],
-  ['m_5ftimer_9',['m_timer',['../classkouta_1_1base_1_1Timer.html#a949ad3601a0c7b834b80802353ab1d85',1,'kouta::base::Timer']]],
-  ['m_5fview_10',['m_view',['../classkouta_1_1io_1_1Parser.html#a0ff3c8a8479e0c80f52b042bc81f7d1e',1,'kouta::io::Parser']]],
-  ['m_5fworker_11',['m_worker',['../classkouta_1_1base_1_1Branch.html#a6a9ec6e123957b344608365fafa4f122',1,'kouta::base::Branch']]]
+  ['log_5fcritical_0',['log_critical',['../classkouta_1_1utils_1_1LoggerAware.html#aac7ffcc7d7c4ef6c9284e24790733e0a',1,'kouta::utils::LoggerAware']]],
+  ['log_5fdebug_1',['log_debug',['../classkouta_1_1utils_1_1LoggerAware.html#ab9acb11a2ed8ad8eeef6ab8e1248a234',1,'kouta::utils::LoggerAware']]],
+  ['log_5ferror_2',['log_error',['../classkouta_1_1utils_1_1LoggerAware.html#a86cdfc96f047c6faa5761fe18ae1efa2',1,'kouta::utils::LoggerAware']]],
+  ['log_5finfo_3',['log_info',['../classkouta_1_1utils_1_1LoggerAware.html#a25e1a5505fe99c53fd5a7c8320a0b6d4',1,'kouta::utils::LoggerAware']]],
+  ['log_5fwarning_4',['log_warning',['../classkouta_1_1utils_1_1LoggerAware.html#a67bbec7713fbd49b3ba1f6e80ce98f51',1,'kouta::utils::LoggerAware']]],
+  ['logger_20aware_20classes_5',['Logger-aware classes',['../docs-utils.html#autotoc_md11',1,'']]],
+  ['logger_2daware_2ehpp_6',['logger-aware.hpp',['../logger-aware_8hpp.html',1,'']]],
+  ['loggeraware_7',['loggeraware',['../classkouta_1_1utils_1_1LoggerAware.html',1,'kouta::utils::LoggerAware'],['../classkouta_1_1utils_1_1LoggerAware.html#a90e7db46974f4efc7a7416fb9b8d185e',1,'kouta::utils::LoggerAware::LoggerAware(const LoggerAware &amp;)=default'],['../classkouta_1_1utils_1_1LoggerAware.html#ac42b1c06ee73f53d420748180f34aef5',1,'kouta::utils::LoggerAware::LoggerAware(LoggerAware &amp;&amp;)=default'],['../classkouta_1_1utils_1_1LoggerAware.html#abaa49cc81f052c8da115cac7421e237f',1,'kouta::utils::LoggerAware::LoggerAware()=default'],['../classkouta_1_1utils_1_1LoggerAware.html#a5caff9128f0a668a49a648ffdd0b146d',1,'kouta::utils::LoggerAware::LoggerAware(ILogger *logger)']]]
 ];

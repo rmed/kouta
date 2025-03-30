@@ -1,5 +1,10 @@
 var searchData=
 [
-  ['test_0',['test',['../classkouta_1_1utils_1_1EnumSet.html#a832202cd232e0f6bf37543fa2c638585',1,'kouta::utils::EnumSet']]],
-  ['timer_1',['timer',['../classkouta_1_1base_1_1Timer.html#ac5326c0db699b25f40c34301f1f81719',1,'kouta::base::Timer::Timer()=delete'],['../classkouta_1_1base_1_1Timer.html#a13edeedbc85e12778e2d4307a023b379',1,'kouta::base::Timer::Timer(Component *parent, std::chrono::milliseconds duration, OnExpired &amp;&amp;on_expired)'],['../classkouta_1_1base_1_1Timer.html#a8a58f0c089f7d2ace7bd5d5af0d5d5ab',1,'kouta::base::Timer::Timer(const Timer &amp;)=delete'],['../classkouta_1_1base_1_1Timer.html#aa6d9e907003551f53f321f7ccf6aed93',1,'kouta::base::Timer::Timer(Timer &amp;&amp;)=delete']]]
+  ['set_0',['set',['../classkouta_1_1utils_1_1EnumSet.html#a59214e84bb18e1a382d43ed01df21cab',1,'kouta::utils::EnumSet']]],
+  ['set_5fcallable_1',['set_callable',['../classkouta_1_1base_1_1callback_1_1BaseCallback.html#a7ac37aba12dd4e132276c0b00ebee989',1,'kouta::base::callback::BaseCallback::set_callable(const Callable &amp;callable)'],['../classkouta_1_1base_1_1callback_1_1BaseCallback.html#a7e35c322b3395518a8f9694dc1b42529',1,'kouta::base::callback::BaseCallback::set_callable(Callable &amp;&amp;callable)']]],
+  ['set_5fduration_2',['set_duration',['../classkouta_1_1base_1_1Timer.html#af81a55c29bb6d38a058d98308c3def15',1,'kouta::base::Timer']]],
+  ['set_5flogger_3',['set_logger',['../classkouta_1_1utils_1_1LoggerAware.html#a56d2a601b1c4013c4153c85f63f9fd9f',1,'kouta::utils::LoggerAware']]],
+  ['size_4',['size',['../classkouta_1_1io_1_1Packer.html#a6e73db0dcedfc092729cc86c07ca30c6',1,'kouta::io::Packer::size()'],['../classkouta_1_1io_1_1Parser.html#a8f95962109cf75c3dfd2120e9956b2e6',1,'kouta::io::Parser::size()']]],
+  ['start_5',['start',['../classkouta_1_1base_1_1Timer.html#abaffd7cb5b8cf00d4d9a4df0f0a73a34',1,'kouta::base::Timer']]],
+  ['stop_6',['stop',['../classkouta_1_1base_1_1Root.html#a73597cb310947a9e37e8ba8ebe80b912',1,'kouta::base::Root::stop()'],['../classkouta_1_1base_1_1Timer.html#a6f3a110061590013b4f0da848d7ab519',1,'kouta::base::Timer::stop()']]]
 ];

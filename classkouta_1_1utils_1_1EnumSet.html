@@ -105,13 +105,16 @@ $(document).ready(function(){initNavTree('classkouta_1_1utils_1_1EnumSet.html','
 </div><!--header-->
 <div class="contents">
 
+<p>Custom bitset implementation that allows using enumeration values as indices.  
+ <a href="classkouta_1_1utils_1_1EnumSet.html#details">More...</a></p>
+
 <p><code>#include &lt;enum-set.hpp&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for kouta::utils::EnumSet&lt; TEnum &gt;:</div>
 <div class="dyncontent">
 <div class="center"><img src="classkouta_1_1utils_1_1EnumSet__inherit__graph.png" border="0" usemap="#akouta_1_1utils_1_1EnumSet_3_01TEnum_01_4_inherit__map" alt="Inheritance graph"/></div>
 <map name="akouta_1_1utils_1_1EnumSet_3_01TEnum_01_4_inherit__map" id="akouta_1_1utils_1_1EnumSet_3_01TEnum_01_4_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,79,165,119"/>
+<area shape="rect" title="Custom bitset implementation that allows using enumeration values as indices." alt="" coords="5,79,165,119"/>
 <area shape="rect" title=" " alt="" coords="14,5,157,31"/>
 <area shape="poly" title=" " alt="" coords="88,44,88,79,83,79,83,44"/>
 </map>
@@ -121,7 +124,7 @@ Collaboration diagram for kouta::utils::EnumSet&lt; TEnum &gt;:</div>
 <div class="dyncontent">
 <div class="center"><img src="classkouta_1_1utils_1_1EnumSet__coll__graph.png" border="0" usemap="#akouta_1_1utils_1_1EnumSet_3_01TEnum_01_4_coll__map" alt="Collaboration graph"/></div>
 <map name="akouta_1_1utils_1_1EnumSet_3_01TEnum_01_4_coll__map" id="akouta_1_1utils_1_1EnumSet_3_01TEnum_01_4_coll__map">
-<area shape="rect" title=" " alt="" coords="5,79,165,119"/>
+<area shape="rect" title="Custom bitset implementation that allows using enumeration values as indices." alt="" coords="5,79,165,119"/>
 <area shape="rect" title=" " alt="" coords="14,5,157,31"/>
 <area shape="poly" title=" " alt="" coords="88,44,88,79,83,79,83,44"/>
 </map>
@@ -156,7 +159,46 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a59214e84bb18e1a382d43ed01df21cab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value of a specific bit.  <br /></td></tr>
 <tr class="separator:a59214e84bb18e1a382d43ed01df21cab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Typedef Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="classkouta_1_1utils_1_1EnumSet.html#aafbd1ea62809cb29808393769712a805">class</a> <a class="el" href="classkouta_1_1utils_1_1EnumSet.html#aafbd1ea62809cb29808393769712a805">TEnum</a>&gt;<br />
+requires std::is_enum_v&lt;<a class="el" href="classkouta_1_1utils_1_1EnumSet.html#aafbd1ea62809cb29808393769712a805">TEnum</a>&gt;<br />
+class kouta::utils::EnumSet&lt; TEnum &gt;</div><p>Custom bitset implementation that allows using enumeration values as indices. </p>
+<p>The used enumeration type used must:</p>
+<ul>
+<li>Derive from std::size_t</li>
+<li>Not set any value for the labels (optionally, value 0 can be set for the first one)</li>
+<li>Contain a <code>_Total</code> label at the end</li>
+</ul>
+<p>The <code>_Total</code> label is used to determine the number of values in the enumeration (by explicitly casting it to an std::size_t value).</p>
+<div class="fragment"><div class="line">{<a class="code hl_class" href="classkouta_1_1utils_1_1EnumSet.html">c</a>++} </div>
+<div class="line"><span class="keyword">enum class</span> <a class="code hl_class" href="classkouta_1_1utils_1_1EnumSet.html">MyEnum</a> : std::size_t</div>
+<div class="line">{</div>
+<div class="line">    <a class="code hl_class" href="classkouta_1_1utils_1_1EnumSet.html">A</a>,</div>
+<div class="line">    <a class="code hl_class" href="classkouta_1_1utils_1_1EnumSet.html">B</a>,</div>
+<div class="line">    <a class="code hl_class" href="classkouta_1_1utils_1_1EnumSet.html">C</a>,</div>
+<div class="line"> </div>
+<div class="line">    <a class="code hl_class" href="classkouta_1_1utils_1_1EnumSet.html">_Total</a></div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line">EnumSet&lt;MyEnum&gt; <a class="code hl_function" href="classkouta_1_1utils_1_1EnumSet.html#a59214e84bb18e1a382d43ed01df21cab">set</a>{MyEnum::A, MyEnum::C};</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Test and set using enumeration values</span></div>
+<div class="line"><a class="code hl_function" href="classkouta_1_1utils_1_1EnumSet.html#a59214e84bb18e1a382d43ed01df21cab">set</a>.<a class="code hl_function" href="classkouta_1_1utils_1_1EnumSet.html#a832202cd232e0f6bf37543fa2c638585">test</a>(MyEnum::A);</div>
+<div class="line"><a class="code hl_function" href="classkouta_1_1utils_1_1EnumSet.html#a59214e84bb18e1a382d43ed01df21cab">set</a>.<a class="code hl_function" href="classkouta_1_1utils_1_1EnumSet.html#a59214e84bb18e1a382d43ed01df21cab">set</a>{MyEnum::B};</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Or raw indices</span></div>
+<div class="line"><a class="code hl_function" href="classkouta_1_1utils_1_1EnumSet.html#a59214e84bb18e1a382d43ed01df21cab">set</a>.<a class="code hl_function" href="classkouta_1_1utils_1_1EnumSet.html#a832202cd232e0f6bf37543fa2c638585">test</a>(0);</div>
+<div class="line"><a class="code hl_function" href="classkouta_1_1utils_1_1EnumSet.html#a59214e84bb18e1a382d43ed01df21cab">set</a>.<a class="code hl_function" href="classkouta_1_1utils_1_1EnumSet.html#a59214e84bb18e1a382d43ed01df21cab">set</a>(1);</div>
+<div class="ttc" id="aclasskouta_1_1utils_1_1EnumSet_html"><div class="ttname"><a href="classkouta_1_1utils_1_1EnumSet.html">kouta::utils::EnumSet</a></div><div class="ttdoc">Custom bitset implementation that allows using enumeration values as indices.</div><div class="ttdef"><b>Definition</b> enum-set.hpp:46</div></div>
+<div class="ttc" id="aclasskouta_1_1utils_1_1EnumSet_html_a59214e84bb18e1a382d43ed01df21cab"><div class="ttname"><a href="classkouta_1_1utils_1_1EnumSet.html#a59214e84bb18e1a382d43ed01df21cab">kouta::utils::EnumSet::set</a></div><div class="ttdeci">EnumSet &amp; set(EnumType pos, bool value=true)</div><div class="ttdoc">Set the value of a specific bit.</div><div class="ttdef"><b>Definition</b> enum-set.hpp:118</div></div>
+<div class="ttc" id="aclasskouta_1_1utils_1_1EnumSet_html_a832202cd232e0f6bf37543fa2c638585"><div class="ttname"><a href="classkouta_1_1utils_1_1EnumSet.html#a832202cd232e0f6bf37543fa2c638585">kouta::utils::EnumSet::test</a></div><div class="ttdeci">bool test(EnumType pos) const</div><div class="ttdoc">Access a specific bit.</div><div class="ttdef"><b>Definition</b> enum-set.hpp:105</div></div>
+</div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TEnum</td><td>Enumeration type to use. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a93a4a8eed7094d26f437a96ddc1e48dd" name="a93a4a8eed7094d26f437a96ddc1e48dd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a93a4a8eed7094d26f437a96ddc1e48dd">&#9670;&#160;</a></span>BaseType</h2>
 
@@ -172,8 +214,6 @@ template&lt;<a class="el" href="classkouta_1_1utils_1_1EnumSet.html">class</a> <
 </div><div class="memdoc">
 
 <p>Base biset type. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2kouta_2kouta_2include_2kouta_2utils_2enum-set_8hpp-example.html#a1">/home/runner/work/kouta/kouta/include/kouta/utils/enum-set.hpp</a>.</dd>
-</dl>
 
 </div>
 </div>
@@ -192,8 +232,6 @@ template&lt;<a class="el" href="classkouta_1_1utils_1_1EnumSet.html">class</a> <
 </div><div class="memdoc">
 
 <p>Enumeration type used. </p>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2kouta_2kouta_2include_2kouta_2utils_2enum-set_8hpp-example.html#a0">/home/runner/work/kouta/kouta/include/kouta/utils/enum-set.hpp</a>.</dd>
-</dl>
 
 </div>
 </div>
@@ -210,8 +248,6 @@ template&lt;<a class="el" href="classkouta_1_1utils_1_1EnumSet.html">class</a> <
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2kouta_2kouta_2include_2kouta_2utils_2enum-set_8hpp-example.html#a2">/home/runner/work/kouta/kouta/include/kouta/utils/enum-set.hpp</a>.</dd>
-</dl>
 
 </div>
 </div>
@@ -326,8 +362,6 @@ template&lt;<a class="el" href="classkouta_1_1utils_1_1EnumSet.html">class</a> <
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Value of the bit. </dd></dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2kouta_2kouta_2include_2kouta_2utils_2enum-set_8hpp-example.html#a4">/home/runner/work/kouta/kouta/include/kouta/utils/enum-set.hpp</a>.</dd>
-</dl>
 
 </div>
 </div>
@@ -382,8 +416,6 @@ template&lt;<a class="el" href="classkouta_1_1utils_1_1EnumSet.html">class</a> <
   </table>
   </dd>
 </dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2kouta_2kouta_2include_2kouta_2utils_2enum-set_8hpp-example.html#a3">/home/runner/work/kouta/kouta/include/kouta/utils/enum-set.hpp</a>.</dd>
-</dl>
 
 </div>
 </div>
@@ -426,8 +458,6 @@ template&lt;<a class="el" href="classkouta_1_1utils_1_1EnumSet.html">class</a> <
     <tr><td class="paramname">std::out_of_range</td><td>if pos does not correspond to a valid position within the bitset. </td></tr>
   </table>
   </dd>
-</dl>
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2kouta_2kouta_2include_2kouta_2utils_2enum-set_8hpp-example.html#a5">/home/runner/work/kouta/kouta/include/kouta/utils/enum-set.hpp</a>.</dd>
 </dl>
 
 </div>

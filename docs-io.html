@@ -71,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('md_docs_2io-package.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('docs-io.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -100,10 +100,10 @@ $(document).ready(function(){initNavTree('md_docs_2io-package.html',''); initRes
   <div class="headertitle"><div class="title">I/O package</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md10"></a> The I/O package provides building blocks for I/O-related functionalities.</p>
-<h1><a class="anchor" id="autotoc_md11"></a>
+<div class="textblock"><p>The I/O package provides building blocks for I/O-related functionalities.</p>
+<h1><a class="anchor" id="autotoc_md8"></a>
 Parser</h1>
-<p>Implemented in <code><a class="el" href="classkouta_1_1io_1_1Parser.html" title="Binary data parser.">kouta::io::Parser</a></code>.</p>
+<p>Implemented in <a class="el" href="classkouta_1_1io_1_1Parser.html" title="Binary data parser.">kouta::io::Parser</a>.</p>
 <p>The <code>Parser</code> is supposed to be placed over a sequence of raw bytes in order to help extracting information from said sequence. In particular, the following information can be extracted:</p>
 <ul>
 <li><b>Integer values</b> (endian-aware via <code>boost::endian</code>)</li>
@@ -138,9 +138,9 @@ Parser</h1>
 <div class="ttc" id="aclasskouta_1_1io_1_1Parser_html"><div class="ttname"><a href="classkouta_1_1io_1_1Parser.html">kouta::io::Parser</a></div><div class="ttdoc">Binary data parser.</div><div class="ttdef"><b>Definition</b> parser.hpp:22</div></div>
 <div class="ttc" id="aclasskouta_1_1io_1_1Parser_html_a6c4cca042435cc1ef52369e4e2dde319"><div class="ttname"><a href="classkouta_1_1io_1_1Parser.html#a6c4cca042435cc1ef52369e4e2dde319">kouta::io::Parser::extract_integral</a></div><div class="ttdeci">TValue extract_integral(std::size_t offset) const</div><div class="ttdoc">Extract an integral value from the view.</div><div class="ttdef"><b>Definition</b> parser.hpp:82</div></div>
 <div class="ttc" id="aparser_8hpp_html"><div class="ttname"><a href="parser_8hpp.html">parser.hpp</a></div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md12"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md9"></a>
 Packer</h1>
-<p>Implemented in <code><a class="el" href="classkouta_1_1io_1_1Packer.html" title="Binary data packer.">kouta::io::Packer</a></code>.</p>
+<p>Implemented in <a class="el" href="classkouta_1_1io_1_1Packer.html" title="Binary data packer.">kouta::io::Packer</a>.</p>
 <p>The <code>Packer</code> does the <b>opposite from the <code>Parser</code></b>: it adds the following to a raw byte sequence:</p>
 <ul>
 <li><b>Integer values</b> (endian-aware via <code>boost::endian</code>)</li>

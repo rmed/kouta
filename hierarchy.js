@@ -15,6 +15,8 @@ var hierarchy =
       ] ],
       [ "kouta::base::Timer", "classkouta_1_1base_1_1Timer.html", null ]
     ] ],
+    [ "kouta::utils::ILogger", "classkouta_1_1utils_1_1ILogger.html", null ],
+    [ "kouta::utils::LoggerAware", "classkouta_1_1utils_1_1LoggerAware.html", null ],
     [ "kouta::io::Packer", "classkouta_1_1io_1_1Packer.html", null ],
     [ "kouta::io::Parser", "classkouta_1_1io_1_1Parser.html", null ]
 ];

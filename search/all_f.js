@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['view_0',['view',['../classkouta_1_1io_1_1Parser.html#ac578f21076b72ae443298935ff3294fb',1,'kouta::io::Parser::view() const'],['../classkouta_1_1io_1_1Parser.html#af540b4cd8431c20a1babca2b14895f35',1,'kouta::io::Parser::View']]]
+  ['utils_20package_0',['Utils package',['../docs-utils.html',1,'']]],
+  ['utils_2dpackage_2emd_1',['utils-package.md',['../utils-package_8md.html',1,'']]],
+  ['utils_2ehpp_2',['utils.hpp',['../utils_8hpp.html',1,'']]]
 ];

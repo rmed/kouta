@@ -18,7 +18,9 @@ var annotated_dup =
         [ "Parser", "classkouta_1_1io_1_1Parser.html", "classkouta_1_1io_1_1Parser" ]
       ] ],
       [ "utils", "namespacekouta_1_1utils.html", [
-        [ "EnumSet", "classkouta_1_1utils_1_1EnumSet.html", "classkouta_1_1utils_1_1EnumSet" ]
+        [ "EnumSet", "classkouta_1_1utils_1_1EnumSet.html", "classkouta_1_1utils_1_1EnumSet" ],
+        [ "ILogger", "classkouta_1_1utils_1_1ILogger.html", "classkouta_1_1utils_1_1ILogger" ],
+        [ "LoggerAware", "classkouta_1_1utils_1_1LoggerAware.html", "classkouta_1_1utils_1_1LoggerAware" ]
       ] ]
     ] ]
 ];

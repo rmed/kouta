@@ -1,0 +1,5 @@
+<map id="kouta::utils::LoggerAware" name="kouta::utils::LoggerAware">
+<area shape="rect" id="Node000001" title="Abstract class providing integration with external loggers." alt="" coords="5,93,192,119"/>
+<area shape="rect" id="Node000002" href="$classkouta_1_1utils_1_1ILogger.html" title="Interface defining logging capabilities for the library." alt="" coords="23,5,174,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,45,101,93,96,93,96,45"/>
+</map>

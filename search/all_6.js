@@ -1,14 +1,16 @@
 var searchData=
 [
-  ['i_20o_20package_0',['I/O package',['../md_docs_2io-package.html',1,'']]],
-  ['insert_5fbyte_1',['insert_byte',['../classkouta_1_1io_1_1Packer.html#a551fffb30c4cd9cd639f04b8aba2239c',1,'kouta::io::Packer']]],
-  ['insert_5fbytes_2',['insert_bytes',['../classkouta_1_1io_1_1Packer.html#ad2ac96aa95300013055724691bad9c70',1,'kouta::io::Packer::insert_bytes(InputIt first, InputIt last)'],['../classkouta_1_1io_1_1Packer.html#aa1f80becc2d2582d0ba9993b4d4c24d0',1,'kouta::io::Packer::insert_bytes(std::initializer_list&lt; std::uint8_t &gt; bytes)'],['../classkouta_1_1io_1_1Packer.html#a380d5cef46a85bb6eeefa09b60368e6b',1,'kouta::io::Packer::insert_bytes(const std::span&lt; const std::uint8_t &gt; &amp;view)']]],
-  ['insert_5ffloating_5fpoint_3',['insert_floating_point',['../classkouta_1_1io_1_1Packer.html#a2deff631c75d265e37e81e9210d65916',1,'kouta::io::Packer']]],
-  ['insert_5fintegral_4',['insert_integral',['../classkouta_1_1io_1_1Packer.html#aa9a6fe4b3d7fd4467b6c9af57d054cd2',1,'kouta::io::Packer']]],
-  ['insert_5fstring_5',['insert_string',['../classkouta_1_1io_1_1Packer.html#a925f8fe46755248cd9b783c99a4a90fb',1,'kouta::io::Packer']]],
-  ['introduction_6',['Introduction',['../md_docs_2introduction.html',1,'']]],
-  ['introduction_2emd_7',['introduction.md',['../introduction_8md.html',1,'']]],
-  ['invoke_5fcallbacks_8',['invoke_callbacks',['../classkouta_1_1base_1_1callback_1_1CallbackList.html#a7f31cec4d89f0d341a1888117b311ea2',1,'kouta::base::callback::CallbackList']]],
-  ['io_2dpackage_2emd_9',['io-package.md',['../io-package_8md.html',1,'']]],
-  ['io_2ehpp_10',['io.hpp',['../io_8hpp.html',1,'']]]
+  ['i_20o_20package_0',['I/O package',['../docs-io.html',1,'']]],
+  ['ilogger_1',['ILogger',['../classkouta_1_1utils_1_1ILogger.html',1,'kouta::utils']]],
+  ['ilogger_2ehpp_2',['ilogger.hpp',['../ilogger_8hpp.html',1,'']]],
+  ['info_3',['info',['../classkouta_1_1utils_1_1ILogger.html#a54a3aba2c7d3d4c853eb541747a631f5',1,'kouta::utils::ILogger']]],
+  ['insert_5fbyte_4',['insert_byte',['../classkouta_1_1io_1_1Packer.html#a551fffb30c4cd9cd639f04b8aba2239c',1,'kouta::io::Packer']]],
+  ['insert_5fbytes_5',['insert_bytes',['../classkouta_1_1io_1_1Packer.html#ad2ac96aa95300013055724691bad9c70',1,'kouta::io::Packer::insert_bytes(InputIt first, InputIt last)'],['../classkouta_1_1io_1_1Packer.html#aa1f80becc2d2582d0ba9993b4d4c24d0',1,'kouta::io::Packer::insert_bytes(std::initializer_list&lt; std::uint8_t &gt; bytes)'],['../classkouta_1_1io_1_1Packer.html#a380d5cef46a85bb6eeefa09b60368e6b',1,'kouta::io::Packer::insert_bytes(const std::span&lt; const std::uint8_t &gt; &amp;view)']]],
+  ['insert_5ffloating_5fpoint_6',['insert_floating_point',['../classkouta_1_1io_1_1Packer.html#a2deff631c75d265e37e81e9210d65916',1,'kouta::io::Packer']]],
+  ['insert_5fintegral_7',['insert_integral',['../classkouta_1_1io_1_1Packer.html#aa9a6fe4b3d7fd4467b6c9af57d054cd2',1,'kouta::io::Packer']]],
+  ['insert_5fstring_8',['insert_string',['../classkouta_1_1io_1_1Packer.html#a925f8fe46755248cd9b783c99a4a90fb',1,'kouta::io::Packer']]],
+  ['introduction_2emd_9',['introduction.md',['../introduction_8md.html',1,'']]],
+  ['invoke_5fcallbacks_10',['invoke_callbacks',['../classkouta_1_1base_1_1callback_1_1CallbackList.html#a7f31cec4d89f0d341a1888117b311ea2',1,'kouta::base::callback::CallbackList']]],
+  ['io_2dpackage_2emd_11',['io-package.md',['../io-package_8md.html',1,'']]],
+  ['io_2ehpp_12',['io.hpp',['../io_8hpp.html',1,'']]]
 ];

@@ -71,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('md_docs_2base-package.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('docs-base.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -100,9 +100,9 @@ $(document).ready(function(){initNavTree('md_docs_2base-package.html',''); initR
   <div class="headertitle"><div class="title">Base package</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md4"></a> The base package provides the basic building blocks for an asynchronous/event-based application and, more often than not, will be used by the rest of the packages.</p>
+<div class="textblock"><p>The base package provides the basic building blocks for an asynchronous/event-based application and, more often than not, will be used by the rest of the packages.</p>
 <p>The backbone is the event loop provided by <code>kouta::base::asio</code>, which aliases either <code>asio::</code> or <code>boost::asio</code> depending on whether the <code>KOUTA_STANDALONE_ASIO</code> option is set in CMake.. Kouta builds on top of that to provide a <b>tree-like</b> architecture with the following elements.</p>
-<h1><a class="anchor" id="autotoc_md5"></a>
+<h1><a class="anchor" id="autotoc_md3"></a>
 Component</h1>
 <p>Implemented in <code><a class="el" href="classkouta_1_1base_1_1Component.html" title="Base class for asynchronous components.">kouta::base::Component</a></code>.</p>
 <p>This is the <b>base type for any asynchronous element that requires access to the event loop</b>. A <code>Component</code> <b>does not own the I/O context</b>, and instead is expected to have a <b>parent</b> from which it can reference said context (hence the aforementioned tree-like architecture).</p>
@@ -143,7 +143,7 @@ Component</h1>
 <div class="ttc" id="aclasskouta_1_1base_1_1Component_html_aef017236c14b620cf8f671a812f7b07b"><div class="ttname"><a href="classkouta_1_1base_1_1Component.html#aef017236c14b620cf8f671a812f7b07b">kouta::base::Component::post</a></div><div class="ttdeci">void post(void(TClass::*method)(TMethodArgs...), TArgs... args)</div><div class="ttdoc">Post a method call to the event loop for deferred execution.</div><div class="ttdef"><b>Definition</b> component.hpp:115</div></div>
 <div class="ttc" id="acomponent_8hpp_html"><div class="ttname"><a href="component_8hpp.html">component.hpp</a></div></div>
 <div class="ttc" id="anamespacekouta_html"><div class="ttname"><a href="namespacekouta.html">kouta</a></div><div class="ttdef"><b>Definition</b> branch.hpp:9</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md4"></a>
 Root</h1>
 <p>Implemented in <code><a class="el" href="classkouta_1_1base_1_1Root.html" title="Root component.">kouta::base::Root</a></code>.</p>
 <p>As opposed to the base <code>Component</code> explained above, the <code>Root</code> <b>owns the I/O context</b> and is supposed to serve as the <b>parent</b> for other components that want to share the same event loop.</p>
@@ -197,7 +197,7 @@ Root</h1>
 <div class="ttc" id="aclasskouta_1_1base_1_1Root_html"><div class="ttname"><a href="classkouta_1_1base_1_1Root.html">kouta::base::Root</a></div><div class="ttdoc">Root component.</div><div class="ttdef"><b>Definition</b> root.hpp:13</div></div>
 <div class="ttc" id="aclasskouta_1_1base_1_1Root_html_ad5b26cd9cf7befb15ecfef3b61d7019b"><div class="ttname"><a href="classkouta_1_1base_1_1Root.html#ad5b26cd9cf7befb15ecfef3b61d7019b">kouta::base::Root::run</a></div><div class="ttdeci">virtual void run()</div><div class="ttdoc">Run the event loop.</div><div class="ttdef"><b>Definition</b> root.hpp:58</div></div>
 <div class="ttc" id="aroot_8hpp_html"><div class="ttname"><a href="root_8hpp.html">root.hpp</a></div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md7"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>
 Branch</h1>
 <p>Implemented in <code><a class="el" href="classkouta_1_1base_1_1Branch.html" title="Background component executor.">kouta::base::Branch</a></code>.</p>
 <p>The <em>problem</em> with the <code>Root</code> type is that there is a one-to-one relation between a <code>Root</code> and a thread, considering that the event loop must block in order to handle events. Even though this is probably fine in most cases, there might be situations where another "asynchronous tree" needs to be introduced in the application, for instance to handle communications with an I/O device with high throughput.</p>
@@ -259,7 +259,7 @@ Branch</h1>
 <div class="ttc" id="abranch_8hpp_html"><div class="ttname"><a href="branch_8hpp.html">branch.hpp</a></div></div>
 <div class="ttc" id="aclasskouta_1_1base_1_1Branch_html"><div class="ttname"><a href="classkouta_1_1base_1_1Branch.html">kouta::base::Branch</a></div><div class="ttdoc">Background component executor.</div><div class="ttdef"><b>Definition</b> branch.hpp:26</div></div>
 <div class="ttc" id="aclasskouta_1_1base_1_1Branch_html_adbad6cff641bcf6c465a5458290ec035"><div class="ttname"><a href="classkouta_1_1base_1_1Branch.html#adbad6cff641bcf6c465a5458290ec035">kouta::base::Branch::run</a></div><div class="ttdeci">void run() override</div><div class="ttdoc">Run the event loop in the worker thread.</div><div class="ttdef"><b>Definition</b> branch.hpp:91</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md8"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
 Callbacks</h1>
 <p>Implemented in <code><a class="el" href="namespacekouta_1_1base_1_1callback.html">kouta::base::callback</a></code>.</p>
 <p>Callbacks are wrappers around <code>std::function</code> that allow safely registering a method to call.</p>
@@ -315,7 +315,7 @@ Callbacks</h1>
 <div class="ttc" id="aclasskouta_1_1base_1_1callback_1_1CallbackList_html"><div class="ttname"><a href="classkouta_1_1base_1_1callback_1_1CallbackList.html">kouta::base::callback::CallbackList</a></div><div class="ttdoc">Callback list.</div><div class="ttdef"><b>Definition</b> callback-list.hpp:22</div></div>
 <div class="ttc" id="aclasskouta_1_1base_1_1callback_1_1DeferredCallback_html"><div class="ttname"><a href="classkouta_1_1base_1_1callback_1_1DeferredCallback.html">kouta::base::callback::DeferredCallback</a></div><div class="ttdoc">Deferred Callback implementation.</div><div class="ttdef"><b>Definition</b> deferred-callback.hpp:27</div></div>
 <div class="ttc" id="aclasskouta_1_1base_1_1callback_1_1DirectCallback_html"><div class="ttname"><a href="classkouta_1_1base_1_1callback_1_1DirectCallback.html">kouta::base::callback::DirectCallback</a></div><div class="ttdoc">Direct Callback implementation.</div><div class="ttdef"><b>Definition</b> direct-callback.hpp:18</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md9"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md7"></a>
 Timer</h1>
 <p>Implemented in <code><a class="el" href="classkouta_1_1base_1_1Timer.html">kouta::base::Timer</a></code>.</p>
 <p>The <code>Timer</code> allows performing actions after a certain amount of time. Its duration can be modified at any point, and can also be stopped before it elapses (for instance to cancel a timeout in a request).</p>

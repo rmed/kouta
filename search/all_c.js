@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['set_0',['set',['../classkouta_1_1utils_1_1EnumSet.html#a59214e84bb18e1a382d43ed01df21cab',1,'kouta::utils::EnumSet']]],
-  ['set_5fcallable_1',['set_callable',['../classkouta_1_1base_1_1callback_1_1BaseCallback.html#a7ac37aba12dd4e132276c0b00ebee989',1,'kouta::base::callback::BaseCallback::set_callable(const Callable &amp;callable)'],['../classkouta_1_1base_1_1callback_1_1BaseCallback.html#a7e35c322b3395518a8f9694dc1b42529',1,'kouta::base::callback::BaseCallback::set_callable(Callable &amp;&amp;callable)']]],
-  ['set_5fduration_2',['set_duration',['../classkouta_1_1base_1_1Timer.html#af81a55c29bb6d38a058d98308c3def15',1,'kouta::base::Timer']]],
-  ['size_3',['size',['../classkouta_1_1io_1_1Packer.html#a6e73db0dcedfc092729cc86c07ca30c6',1,'kouta::io::Packer::size()'],['../classkouta_1_1io_1_1Parser.html#a8f95962109cf75c3dfd2120e9956b2e6',1,'kouta::io::Parser::size()']]],
-  ['start_4',['start',['../classkouta_1_1base_1_1Timer.html#abaffd7cb5b8cf00d4d9a4df0f0a73a34',1,'kouta::base::Timer']]],
-  ['stop_5',['stop',['../classkouta_1_1base_1_1Root.html#a73597cb310947a9e37e8ba8ebe80b912',1,'kouta::base::Root::stop()'],['../classkouta_1_1base_1_1Timer.html#a6f3a110061590013b4f0da848d7ab519',1,'kouta::base::Timer::stop()']]]
+  ['reference_0',['reference',['../classkouta_1_1utils_1_1EnumSet.html#a2d2d5ab82eea00ece75afd3f07e02b0d',1,'kouta::utils::EnumSet']]],
+  ['remove_5fchild_1',['remove_child',['../classkouta_1_1base_1_1Component.html#a48be1c471d5636bc25259d077b32ad6d',1,'kouta::base::Component']]],
+  ['root_2',['root',['../classkouta_1_1base_1_1Root.html',1,'kouta::base::Root'],['../classkouta_1_1base_1_1Root.html#a4ace293f92d80944077f764eea932ff2',1,'kouta::base::Root::Root()'],['../classkouta_1_1base_1_1Root.html#ae216c3a17c8c64bea2599a4c24dd1a92',1,'kouta::base::Root::Root(Component *parent)'],['../classkouta_1_1base_1_1Root.html#a73feb9b380364f8d512474146aa9c2dc',1,'kouta::base::Root::Root(const Root &amp;)=delete'],['../classkouta_1_1base_1_1Root.html#a9975cafefef13c850ed29e5fbea6524a',1,'kouta::base::Root::Root(Root &amp;&amp;)=delete'],['../docs-base.html#autotoc_md4',1,'Root']]],
+  ['root_2ehpp_3',['root.hpp',['../root_8hpp.html',1,'']]],
+  ['run_4',['run',['../classkouta_1_1base_1_1Branch.html#adbad6cff641bcf6c465a5458290ec035',1,'kouta::base::Branch::run()'],['../classkouta_1_1base_1_1Root.html#ad5b26cd9cf7befb15ecfef3b61d7019b',1,'kouta::base::Root::run()']]],
+  ['run_5fworker_5',['run_worker',['../classkouta_1_1base_1_1Branch.html#a47aeca959111b8ad722d80ea14c69aa7',1,'kouta::base::Branch']]]
 ];

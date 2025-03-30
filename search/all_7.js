@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['kouta_0',['kouta',['../namespacekouta.html',1,'']]],
+  ['kouta_0',['kouta',['../namespacekouta.html',1,'kouta'],['../index.html',1,'Kouta']]],
   ['kouta_3a_3abase_1',['base',['../namespacekouta_1_1base.html',1,'kouta']]],
   ['kouta_3a_3abase_3a_3acallback_2',['callback',['../namespacekouta_1_1base_1_1callback.html',1,'kouta::base']]],
   ['kouta_3a_3aio_3',['io',['../namespacekouta_1_1io.html',1,'kouta']]],

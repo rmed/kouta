@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Kouta: Introduction</title>
+<title>Kouta: Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript">var page_layout=1;</script>
 <script type="text/javascript" src="jquery.js"></script>
@@ -71,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('md_docs_2introduction.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('classkouta_1_1utils_1_1ILogger.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -96,46 +96,19 @@ $(document).ready(function(){initNavTree('md_docs_2introduction.html',''); initR
 </div>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">Introduction</div></div>
+<div class="header">
+  <div class="headertitle"><div class="title">kouta::utils::ILogger Member List</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md0"></a> A small asynchronous application framework based on Boost/Asio, with components that can be reused accross different projects.</p>
-<p><b>Requires C++20</b>.</p>
-<p>It is divided in <em>packages</em> depending on the type of functionality offered:</p>
-<ul>
-<li>Base package (<code><a class="el" href="namespacekouta_1_1base.html">kouta::base</a></code>): Provides the basic building blocks for the application (event loop access and callbacks)</li>
-<li>I/O package (<code><a class="el" href="namespacekouta_1_1io.html">kouta::io</a></code>): Provides I/O related functionality</li>
-<li>Utilities package (<code><a class="el" href="namespacekouta_1_1utils.html">kouta::utils</a></code>): Provides useful utilities</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md1"></a>
-Building</h1>
-<p>Kouta requires the following libraries:</p>
-<ul>
-<li><a href="https://cmake.org/">CMake</a> &gt;= <code>3.18</code></li>
-<li><a href="https://www.boost.org/">Boost</a> &gt;= <code>1.74.0</code></li>
-<li><a href="https://think-async.com/Asio">Asio</a>&gt;= <code>1.18.0</code> (if standalone Asio is used via the <code>KOUTA_STANDALONE_ASIO</code> option)</li>
-</ul>
-<div class="fragment"><div class="line">$ mkdir build &amp;&amp; cd build</div>
-<div class="line">$ cmake ..</div>
-<div class="line">$ cmake --build .</div>
-</div><!-- fragment --><p>The library can be built statically or as a shared library (configurable via the <code>KOUTA_BUILD_SHARED</code>). In addition, there are targets exposing a <b>header-only</b> interface, which may be identified by the suffix <code>-header</code>.</p>
-<h1><a class="anchor" id="autotoc_md2"></a>
-Documentation</h1>
-<p>Documentation can be built with <a href="https://www.doxygen.nl/">Doxygen</a>:</p>
-<div class="fragment"><div class="line">$ doxygen Doxyfile</div>
-</div><!-- fragment --><p>The resulting HTML documentation can be found in <code>docs/html</code>.</p>
-<h1><a class="anchor" id="autotoc_md3"></a>
-Testing</h1>
-<p>Tests are implemented using <a href="https://github.com/google/googletest">GoogleTest</a> and can be compiled after enabling the <code>KOUTA_BUILD_TESTS</code> option in CMake</p>
-<div class="fragment"><div class="line"># Static/Shared library version</div>
-<div class="line">$ cmake --build build --target kouta-tests</div>
-<div class="line"> </div>
-<div class="line"># Header-only version</div>
-<div class="line">$ cmake --build build --target kouta-tests-header</div>
-</div><!-- fragment --><p>The above command will result in the binaries <code>build/tests/kouta-tests</code> and <code>build/tests/kouta-tests-header</code> respectively, which can be executed to run all the test cases. </p>
-</div></div><!-- contents -->
-</div><!-- PageDoc -->
+
+<p>This is the complete list of members for <a class="el" href="classkouta_1_1utils_1_1ILogger.html">kouta::utils::ILogger</a>, including all inherited members.</p>
+<table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="classkouta_1_1utils_1_1ILogger.html#acafee6779e3ab1709b2b46dae12f998e">critical</a>(std::string_view msg)=0</td><td class="entry"><a class="el" href="classkouta_1_1utils_1_1ILogger.html">kouta::utils::ILogger</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classkouta_1_1utils_1_1ILogger.html#ae62e1444e08c257c9b66417db390edcc">debug</a>(std::string_view msg)=0</td><td class="entry"><a class="el" href="classkouta_1_1utils_1_1ILogger.html">kouta::utils::ILogger</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classkouta_1_1utils_1_1ILogger.html#a6a3362907d7edd00470be078d4b29f74">error</a>(std::string_view msg)=0</td><td class="entry"><a class="el" href="classkouta_1_1utils_1_1ILogger.html">kouta::utils::ILogger</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classkouta_1_1utils_1_1ILogger.html#a54a3aba2c7d3d4c853eb541747a631f5">info</a>(std::string_view msg)=0</td><td class="entry"><a class="el" href="classkouta_1_1utils_1_1ILogger.html">kouta::utils::ILogger</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classkouta_1_1utils_1_1ILogger.html#a55f6eb31253869e6b0e5d30765761d65">warning</a>(std::string_view msg)=0</td><td class="entry"><a class="el" href="classkouta_1_1utils_1_1ILogger.html">kouta::utils::ILogger</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+</table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
