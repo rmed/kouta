@@ -12,6 +12,13 @@
 
 namespace kouta::db
 {
+    /// @brief Abstract database adapter definition.
+    ///
+    /// @details
+    /// Derived classes gain access to the generic database connection pool, and also to automatic handling of general
+    /// errors and logging capabilities.
+    ///
+    /// In the most basic scenario, there is a one-to-one relation between an adapter and a database table.
     class AbstractAdapter : public kouta::utils::LoggerAware
     {
     public:
