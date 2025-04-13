@@ -35,7 +35,7 @@ namespace kouta::db
     ///
     /// This class is intended to be *integrated* into application-specific database code and will not perform any logic
     /// outside of the scope of connecting to the backend and managing the connection pool.
-    class Client : kouta::utils::LoggerAware
+    class Client : public kouta::utils::LoggerAware
     {
     public:
         /// @brief Database connection pool type.

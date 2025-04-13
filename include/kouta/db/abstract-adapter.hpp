@@ -18,8 +18,11 @@ namespace kouta::db
         /// @brief Database connection pool type.
         using Pool = soci::connection_pool;
 
+        /// @brief Backend-specific error handler function signature.
+        using BackendErrorHandler = std::function<std::pair<ResultCode, int>(const soci::soci_error*)>;
+
         /// @brief Default constructor.
-        AbstractAdapter() = default;
+        AbstractAdapter();
 
         // Copyable
         AbstractAdapter(const AbstractAdapter&) = default;
@@ -35,6 +38,18 @@ namespace kouta::db
         ///
         /// @param[in] pool             Pointer to the connection pool. Set to `nullptr` to disable the adapter.
         void set_pool(Pool* pool);
+
+        /// @brief Set the specialized backend error handler function.
+        ///
+        /// @details
+        /// This function should do the appropriate conversions in order to get the backend-specific error code from
+        /// SOCI.
+        ///
+        /// Passing an empty function will cause the adapter to use the empty default handler @ref
+        /// default_backend_error_handler.
+        ///
+        /// @param[in] handler              Handler to use.
+        void set_backend_error_handler(BackendErrorHandler&& handler);
 
     protected:
         /// @brief Obtain a pointer to the connection pool.
@@ -52,7 +67,8 @@ namespace kouta::db
         ///
         /// In addition, common errors will be transformed into their appropriate @ref ResultCode values, so that
         /// callers need only implement the logic related to the queries themselves. However, more specific cases will
-        /// need to be handled by the caller (e.g. backend-specific exceptions).
+        /// need to be handled via a backend error handler function that should be registered via @ref
+        /// set_backend_error_handler.
         ///
         /// @note If the pool has not been initialized, no query will be executed.
         ///
@@ -81,6 +97,7 @@ namespace kouta::db
 
                 // Handle common errors
                 ResultCode code;
+                int error_detail{};
 
                 switch (e.get_error_category())
                 {
@@ -105,12 +122,20 @@ namespace kouta::db
                 case soci::soci_error::system_error:
                     code = ResultCode::SystemError;
                     break;
+                case soci::soci_error::unknown:
+                    // May be a backend-specific error
+                    {
+                        std::pair<ResultCode, int> specialized{m_backend_error_handler(&e)};
+                        code = specialized.first;
+                        error_detail = specialized.second;
+                    }
+                    break;
                 default:
                     code = ResultCode::UnknownError;
                     break;
                 }
 
-                return {code};
+                return {code, error_detail};
             }
             catch (const std::runtime_error& e)
             {
@@ -127,7 +152,19 @@ namespace kouta::db
         }
 
     private:
+        /// @brief Default function used to handle unknown errors when running queries.
+        ///
+        /// @note The unknown error may indicate a backend-specific error, but there is no guarantee.
+        ///
+        /// @param[in] e            Caught exception.
+        ///
+        /// @returns Pair containing UnknownError as result code.
+        std::pair<ResultCode, int> default_backend_error_handler(const soci::soci_error* /*e*/);
+
         /// @brief Pointer to the connection pool used.
         Pool* m_pool;
+
+        /// @brief Backend-specific error handler.
+        BackendErrorHandler m_backend_error_handler;
     };
 }  // namespace kouta::db

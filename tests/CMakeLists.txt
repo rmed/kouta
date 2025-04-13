@@ -15,6 +15,7 @@ if(KOUTA_BUILD_TESTS)
             "base/dummy-component.cpp"
             "base/test-base.cpp"
             "base/test-timer.cpp"
+            "db/test-sqlite.cpp"
             "io/test-packer.cpp"
             "io/test-parser.cpp"
             "utils/test-enum-set.cpp"
@@ -23,6 +24,7 @@ if(KOUTA_BUILD_TESTS)
 
         set(_test_libs
             "kouta-base"
+            "kouta-db"
             "kouta-io"
             "kouta-utils"
         )
@@ -39,6 +41,7 @@ if(KOUTA_BUILD_TESTS)
                 gmock
                 gtest_main
                 gtest
+                SOCI::soci_sqlite3
                 ${_pthread}
                 ${_test_libs}
         )
@@ -55,6 +58,7 @@ if(KOUTA_BUILD_TESTS)
                 gmock
                 gtest_main
                 gtest
+                SOCI::soci_sqlite3
                 ${_pthread}
         )
 
