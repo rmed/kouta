@@ -29,7 +29,11 @@ namespace kouta::db
         using BackendErrorHandler = std::function<std::pair<ResultCode, int>(const soci::soci_error*)>;
 
         /// @brief Default constructor.
-        AbstractAdapter();
+        AbstractAdapter()
+            : m_pool{nullptr}
+            , m_backend_error_handler{std::bind_front(&AbstractAdapter::default_backend_error_handler, this)}
+        {
+        }
 
         // Copyable
         AbstractAdapter(const AbstractAdapter&) = default;
@@ -44,7 +48,10 @@ namespace kouta::db
         /// @brief Set the internal pointer to the connection pool.
         ///
         /// @param[in] pool             Pointer to the connection pool. Set to `nullptr` to disable the adapter.
-        void set_pool(Pool* pool);
+        void set_pool(Pool* pool)
+        {
+            m_pool = pool;
+        }
 
         /// @brief Set the specialized backend error handler function.
         ///
@@ -56,7 +63,18 @@ namespace kouta::db
         /// default_backend_error_handler.
         ///
         /// @param[in] handler              Handler to use.
-        void set_backend_error_handler(BackendErrorHandler&& handler);
+        void set_backend_error_handler(BackendErrorHandler&& handler)
+        {
+            if (handler)
+            {
+                m_backend_error_handler = handler;
+            }
+            else
+            {
+                // Use default function
+                m_backend_error_handler = std::bind_front(&AbstractAdapter::default_backend_error_handler, this);
+            }
+        }
 
     protected:
         /// @brief Obtain a pointer to the connection pool.
@@ -64,7 +82,10 @@ namespace kouta::db
         /// @note The pool must have been initialized beforehand via the @ref set_pool() method.
         ///
         /// @returns Pointer to the connection pool if initialized, `nullptr` otherwise.
-        Pool* pool();
+        Pool* pool()
+        {
+            return m_pool;
+        }
 
         /// @brief Run a query/statement through the pool.
         ///
@@ -166,7 +187,10 @@ namespace kouta::db
         /// @param[in] e            Caught exception.
         ///
         /// @returns Pair containing UnknownError as result code.
-        std::pair<ResultCode, int> default_backend_error_handler(const soci::soci_error* /*e*/);
+        std::pair<ResultCode, int> default_backend_error_handler(const soci::soci_error* /*e*/)
+        {  // Defaults to unknown error
+            return std::make_pair(ResultCode::UnknownError, 0);
+        }
 
         /// @brief Pointer to the connection pool used.
         Pool* m_pool;

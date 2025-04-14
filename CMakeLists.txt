@@ -120,6 +120,7 @@ if(SOCI_FOUND)
     )
 
     kouta_add_library(
+        HEADERONLY
         TARGET db
         HEADERS
             "db/params/sqlite-params.hpp"
@@ -130,8 +131,7 @@ if(SOCI_FOUND)
             "db/result.hpp"
 
         SOURCES
-            "db/abstract-adapter.cpp"
-            "db/client.cpp"
+            "db.cpp"
 
         INTERNAL
             "utils"

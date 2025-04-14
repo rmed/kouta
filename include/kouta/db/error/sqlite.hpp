@@ -26,7 +26,13 @@ namespace kouta::db::error::sqlite
         {
             const soci::sqlite3_soci_error* specialized{dynamic_cast<const soci::sqlite3_soci_error*>(e)};
 
-            return std::make_pair(ResultCode::DatabaseBackendError, specialized->result());
+            switch (specialized->result())
+            {
+            case SQLITE_CONSTRAINT:
+                return std::make_pair(ResultCode::ConstraintViolation, 0);
+            default:
+                return std::make_pair(ResultCode::DatabaseBackendError, specialized->result());
+            }
         }
         catch (...)
         {
