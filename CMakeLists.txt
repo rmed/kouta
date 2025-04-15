@@ -124,6 +124,9 @@ if(SOCI_FOUND)
         TARGET db
         HEADERS
             "db/params/sqlite-params.hpp"
+            "db/query/condition-group.hpp"
+            "db/query/query-builder.hpp"
+            "db/query/where-builder.hpp"
             "db/abstract-adapter.hpp"
             "db/client.hpp"
             "db/page.hpp"
