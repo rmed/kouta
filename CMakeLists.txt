@@ -120,6 +120,8 @@ if(SOCI_FOUND)
         HEADERONLY
         TARGET db
         HEADERS
+            "db/migration/abstract-version.hpp"
+            "db/migration/migration-manager.hpp"
             "db/params/sqlite-params.hpp"
             "db/query/condition-group.hpp"
             "db/query/query-builder.hpp"

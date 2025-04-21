@@ -15,6 +15,7 @@ if(KOUTA_BUILD_TESTS)
             "base/dummy-component.cpp"
             "base/test-base.cpp"
             "base/test-timer.cpp"
+            "db/test-migration.cpp"
             "db/test-query-builder.cpp"
             "db/test-sqlite.cpp"
             "io/test-packer.cpp"
