@@ -88,9 +88,6 @@ kouta_add_library(
 
     SOURCES
         "io.cpp"
-
-    INTERNAL
-        "base"
 )
 
 # Kouta Utils module
