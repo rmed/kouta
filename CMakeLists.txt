@@ -85,9 +85,6 @@ kouta_add_library(
 
     SOURCES
         "io.cpp"
-
-    INTERNAL
-        "base"
 )
 
 kouta_add_library(
