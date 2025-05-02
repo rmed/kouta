@@ -23,14 +23,39 @@ namespace kouta::db::query
         WhereBuilder() = default;
 
         // Copyable
-        WhereBuilder(const WhereBuilder&) = delete;
-        WhereBuilder& operator=(const WhereBuilder&) = delete;
+        WhereBuilder(const WhereBuilder& other)
+        {
+            m_has_conditions = other.m_has_conditions;
+            m_conditions.clear();
+            m_conditions << other.m_conditions.rdbuf();
+        }
+
+        WhereBuilder& operator=(const WhereBuilder& other)
+        {
+            m_has_conditions = other.m_has_conditions;
+            m_conditions.clear();
+            m_conditions << other.m_conditions.rdbuf();
+
+            return *this;
+        }
 
         // Movable
         WhereBuilder(WhereBuilder&&) = default;
         WhereBuilder& operator=(WhereBuilder&&) = default;
 
+        /// @brief Determine whether the builder has any conditions
+        explicit operator bool() const noexcept
+        {
+            return m_has_conditions;
+        }
+
         virtual ~WhereBuilder() = default;
+
+        /// @brief Build the final SQL WHERE clause for the query.
+        std::string build() const
+        {
+            return m_conditions.str();
+        }
 
         /// @brief Add an AND condition.
         ///
@@ -76,12 +101,6 @@ namespace kouta::db::query
             m_has_conditions = true;
 
             return *this;
-        }
-
-        /// @brief Build the final SQL WHERE clause for the query.
-        std::string build() const
-        {
-            return m_conditions.str();
         }
 
     private:

@@ -33,14 +33,45 @@ namespace kouta::db::query
         QueryBuilder() = default;
 
         // Copyable
-        QueryBuilder(const QueryBuilder&) = delete;
-        QueryBuilder& operator=(const QueryBuilder&) = delete;
+        QueryBuilder(const QueryBuilder& other)
+        {
+            m_query.clear();
+            m_query << other.m_query.rdbuf();
+        }
+
+        QueryBuilder& operator=(const QueryBuilder& other)
+        {
+            m_query.clear();
+            m_query << other.m_query.rdbuf();
+
+            return *this;
+        }
 
         // Movable
         QueryBuilder(QueryBuilder&&) = default;
         QueryBuilder& operator=(QueryBuilder&&) = default;
 
         virtual ~QueryBuilder() = default;
+
+        /// @brief Retrieve the SQL query string
+        std::string query() const
+        {
+            std::string query{m_query.str()};
+
+            // Trim trailing whitespaces
+            query.erase(
+                std::find_if(
+                    query.rbegin(),
+                    query.rend(),
+                    [](unsigned char c)
+                    {
+                        return !std::isspace(c);
+                    })
+                    .base(),
+                query.end());
+
+            return query;
+        }
 
         /// @brief Start building a SELECT query.
         ///
@@ -300,26 +331,6 @@ namespace kouta::db::query
         {
             m_query << " LIMIT " << std::to_string(page_size) << " OFFSET " << std::to_string(page * page_size);
             return *this;
-        }
-
-        /// @brief Retrieve the SQL query string
-        std::string query() const
-        {
-            std::string query{m_query.str()};
-
-            // Trim trailing whitespaces
-            query.erase(
-                std::find_if(
-                    query.rbegin(),
-                    query.rend(),
-                    [](unsigned char c)
-                    {
-                        return !std::isspace(c);
-                    })
-                    .base(),
-                query.end());
-
-            return query;
         }
 
     protected:

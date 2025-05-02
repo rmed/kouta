@@ -26,14 +26,39 @@ namespace kouta::db::query
         ConditionGroup() = default;
 
         // Copyable
-        ConditionGroup(const ConditionGroup&) = delete;
-        ConditionGroup& operator=(const ConditionGroup&) = delete;
+        ConditionGroup(const ConditionGroup& other)
+        {
+            m_has_conditions = other.m_has_conditions;
+            m_conditions.clear();
+            m_conditions << other.m_conditions.rdbuf();
+        }
+
+        ConditionGroup& operator=(const ConditionGroup& other)
+        {
+            m_has_conditions = other.m_has_conditions;
+            m_conditions.clear();
+            m_conditions << other.m_conditions.rdbuf();
+
+            return *this;
+        }
 
         // Movable
         ConditionGroup(ConditionGroup&&) = default;
         ConditionGroup& operator=(ConditionGroup&&) = default;
 
+        /// @brief Determine whether the builder has any conditions
+        explicit operator bool() const noexcept
+        {
+            return m_has_conditions;
+        }
+
         virtual ~ConditionGroup() = default;
+
+        /// @brief Build the final SQL condition group for the query.
+        std::string build() const
+        {
+            return std::format("({})", m_conditions.str());
+        }
 
         /// @brief Add an AND condition.
         ///
@@ -144,12 +169,6 @@ namespace kouta::db::query
             return *this;
         }
         /// @}
-
-        /// @brief Build the final SQL condition group for the query.
-        std::string build() const
-        {
-            return std::format("({})", m_conditions.str());
-        }
 
     private:
         bool m_has_conditions;
