@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include <cstdint>
 #include <vector>
 
@@ -133,6 +134,27 @@ namespace kouta::db
         void set_total_items(std::size_t total)
         {
             m_total_items = total;
+        }
+
+        /// @brief Compute the total number of pages based on the number of items and the page size.
+        ///
+        /// @param[in] count        Total number of items. Should be greater than zero.
+        /// @param[in] page_size    Maximum number of items per page. If set to zero, the page will be considered to
+        ///                         contain all items.
+        void compute_pages(std::size_t count, std::size_t page_size)
+        {
+            m_total_items = count;
+
+            if (page_size == 0)
+            {
+                // Not paginated
+                m_pages = 0;
+            }
+            else
+            {
+                // Paginated
+                m_pages = (count > page_size) ? std::lround(count / page_size) : 1;
+            }
         }
 
     private:
