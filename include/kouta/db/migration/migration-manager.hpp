@@ -55,7 +55,8 @@ namespace kouta::db::migration
         ///
         /// @param[in] table            Name of the table to use.
         explicit MigrationManager(std::string_view table)
-            : m_pool{nullptr}
+            : kouta::utils::LoggerAware{}
+            , m_pool{nullptr}
             , m_versions{}
             , m_table{table}
         {
