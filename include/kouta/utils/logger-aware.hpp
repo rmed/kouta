@@ -30,7 +30,7 @@ namespace kouta::utils
         /// @brief Update the internal logger pointer.
         ///
         /// @param[in] logger           Pointer to the logger to use. Set to `nullptr` to disable logging.
-        void set_logger(ILogger* logger)
+        virtual void set_logger(ILogger* logger)
         {
             m_logger = logger;
         }
