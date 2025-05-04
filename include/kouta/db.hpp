@@ -11,4 +11,3 @@
 #include <kouta/db/page.hpp>
 #include <kouta/db/result-code.hpp>
 #include <kouta/db/result.hpp>
-#include <kouta/db/utils.hpp>

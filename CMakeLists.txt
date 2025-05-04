@@ -131,7 +131,6 @@ if(SOCI_FOUND)
             "db/page.hpp"
             "db/result-code.hpp"
             "db/result.hpp"
-            "db/utils.hpp"
 
         SOURCES
             "db.cpp"
