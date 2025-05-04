@@ -12,6 +12,6 @@ var classkouta_1_1utils_1_1LoggerAware =
     [ "log_warning", "classkouta_1_1utils_1_1LoggerAware.html#a67bbec7713fbd49b3ba1f6e80ce98f51", null ],
     [ "operator=", "classkouta_1_1utils_1_1LoggerAware.html#a32f2863c176caf37defa3828d484e6b6", null ],
     [ "operator=", "classkouta_1_1utils_1_1LoggerAware.html#a71d66ec1ee70db90c0049b8708d5a087", null ],
-    [ "set_logger", "classkouta_1_1utils_1_1LoggerAware.html#a56d2a601b1c4013c4153c85f63f9fd9f", null ],
+    [ "set_logger", "classkouta_1_1utils_1_1LoggerAware.html#a856270ba65a93b1b6592ef1f679a32f7", null ],
     [ "m_logger", "classkouta_1_1utils_1_1LoggerAware.html#ae1d7a835a06723f4d4bf808f93c9bc66", null ]
 ];
