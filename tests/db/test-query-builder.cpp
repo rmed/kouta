@@ -77,6 +77,21 @@ namespace kouta::tests::db::query
             "= "
             ":col2)");
 
+        // Limit a query
+        builder.select("mytable5", {})
+            .where(
+                [](WhereBuilder& b)
+                {
+                    b.and_(
+                        [](ConditionGroup& c)
+                        {
+                            c.and_("col1 = :col1");
+                        });
+                })
+            .limit(4);
+
+        ASSERT_EQ(builder.query(), "SELECT * FROM mytable5 LIMIT 4");
+
         // Paginate a query
         builder.select("mytable5", {}).paginate(0, 1000);
 

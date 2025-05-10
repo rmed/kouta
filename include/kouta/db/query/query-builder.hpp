@@ -319,6 +319,19 @@ namespace kouta::db::query
         }
         /// @}
 
+        /// @brief Limit the number of results in a query.
+        ///
+        /// @details
+        /// This method assumes that the backend supports LIMIT clauses. However, it might need to be
+        /// overriden in order to adapt it to backend-specific behaviour.
+        ///
+        /// @param[in] max_rows         Maximum number of rows to retrieve.
+        virtual QueryBuilder& limit(std::size_t max_rows)
+        {
+            m_query << " LIMIT " << std::to_string(max_rows);
+            return *this;
+        }
+
         /// @brief Paginate a query.
         ///
         /// @details
