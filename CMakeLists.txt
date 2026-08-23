@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.18)
 
 project(kouta
-    VERSION 0.1.0
-    DESCRIPTION "A small asynchronous application framework based on Boost/Asio, with components that can be reused accross different projects."
+    VERSION 1.0.0
+    DESCRIPTION "A small framework with reusable elements and components for multiple projects."
     HOMEPAGE_URL "https://github.com/rmed/kouta"
     LANGUAGES C CXX
 )
@@ -14,45 +14,30 @@ include(GNUInstallDirs)
 include(cmake/helper.cmake)
 
 # Options
-option(KOUTA_BUILD_SHARED "Build a shared library instead of static one" OFF)
 option(KOUTA_BUILD_TESTS "Enable compilation of tests" OFF)
-option(KOUTA_PREFER_HEADER_ONLY_LIBS "Prefer to use header-only instead of shared external libraries where possible" ON)
-option(KOUTA_STANDALONE_ASIO "Use (header-only) standalone Asio instead of Boost.Asio where possible" ON)
 
-# Versions required
-set(BOOST_MIN_VERSION "1.74.0")
+# Third-party module versions required
 set(SOCI_MIN_VERSION "4.1")
 
-include_directories(${PROJECT_SOURCE_DIR}/include)
+# Paths
+set(_kouta_include_dir "${PROJECT_SOURCE_DIR}/include")
+set(_kouta_src_dir "${PROJECT_SOURCE_DIR}/src")
 
-# Kouta base module
+include_directories(${_kouta_include_dir})
 
-# Select Asio version to use
-configure_file("${PROJECT_SOURCE_DIR}/include/kouta/base/asio.hpp.in" "${PROJECT_SOURCE_DIR}/include/kouta/base/asio.hpp")
+# Kouta callback library
+add_library(kouta_callback
+    INTERFACE
+        "${_kouta_include_dir}/kouta/callback/abstract-callback.hpp"
+        "${_kouta_include_dir}/kouta/callback/callback-list.hpp"
+        "${_kouta_include_dir}/kouta/callback/direct-callback.hpp"
+        "${_kouta_include_dir}/kouta/callback/null-callback.hpp"
+)
 
-if(NOT KOUTA_STANDALONE_ASIO)
-    # Use Boost.Asio
-    find_package(Boost ${BOOST_MIN_VERSION}
-        REQUIRED COMPONENTS
-            system
-        CONFIG
-    )
+add_library("kouta::callback" ALIAS kouta_callback)
 
-    include_directories(${Boost_SYSTEM_INCLUDE_DIRS})
-    link_directories(${Boost_SYSTEM_LIBRARY_DIRS})
+# Kouta async library
 
-    set(_KOUTA_BASE_ASIO_LIB "")
-
-    # Link against library only if required
-    if(NOT KOUTA_PREFER_HEADER_ONLY_LIBS)
-        set(_KOUTA_BASE_ASIO_LIB "Boost::system")
-    endif()
-else()
-    # Use standalone Asio (no need to link against anything else)
-    #
-    # Assumes that Asio headers can be found.
-    set(_KOUTA_BASE_ASIO_LIB "")
-endif()
 
 kouta_add_library(
     HEADERONLY
