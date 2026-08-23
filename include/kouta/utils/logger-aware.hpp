@@ -30,10 +30,7 @@ namespace kouta::utils
         /// @brief Update the internal logger pointer.
         ///
         /// @param[in] logger           Pointer to the logger to use. Set to `nullptr` to disable logging.
-        virtual void set_logger(ILogger* logger)
-        {
-            m_logger = logger;
-        }
+        virtual void set_logger(ILogger* logger);
 
     protected:
         /// @brief Default constructor
@@ -42,65 +39,32 @@ namespace kouta::utils
         /// @brief Constructor using an existing logger.
         ///
         /// @param[in] logger           Pointer to the logger to use. Set to ǹullptr` to disable logging.
-        explicit LoggerAware(ILogger* logger)
-            : m_logger{logger}
-        {
-        }
+        explicit LoggerAware(ILogger* logger);
 
         /// @brief Log a message with DEBUG (or equivalent) level.
         ///
         /// @note If no logger has been configured, this method simply discards the message.
-        void log_debug(std::string_view msg)
-        {
-            if (m_logger != nullptr)
-            {
-                m_logger->debug(msg);
-            }
-        }
+        void log_debug(std::string_view msg) const;
 
         /// @brief Log a message with INFO (or equivalent) level.
         ///
         /// @note If no logger has been configured, this method simply discards the message.
-        void log_info(std::string_view msg)
-        {
-            if (m_logger != nullptr)
-            {
-                m_logger->info(msg);
-            }
-        }
+        void log_info(std::string_view msg) const;
 
         /// @brief Log a message with WARNING (or equivalent) level.
         ///
         /// @note If no logger has been configured, this method simply discards the message.
-        void log_warning(std::string_view msg)
-        {
-            if (m_logger != nullptr)
-            {
-                m_logger->warning(msg);
-            }
-        }
+        void log_warning(std::string_view msg) const;
 
         /// @brief Log a message with ERROR (or equivalent) level.
         ///
         /// @note If no logger has been configured, this method simply discards the message.
-        void log_error(std::string_view msg)
-        {
-            if (m_logger != nullptr)
-            {
-                m_logger->error(msg);
-            }
-        }
+        void log_error(std::string_view msg) const;
 
         /// @brief Log a message with CRITICAL (or equivalent) level.
         ///
         /// @note If no logger has been configured, this method simply discards the message.
-        void log_critical(std::string_view msg)
-        {
-            if (m_logger != nullptr)
-            {
-                m_logger->critical(msg);
-            }
-        }
+        void log_critical(std::string_view msg) const;
 
     private:
         ILogger* m_logger;

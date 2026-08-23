@@ -35,6 +35,16 @@ add_library(kouta_callback
 )
 
 add_library("kouta::callback" ALIAS kouta_callback)
+target_include_directories(kouta_callback ${_kouta_include_dir})
+
+# Kouta utils library
+add_library(kouta_utils
+    SHARED
+        "${_kouta_src_dir}/utils/logger-aware.hpp"
+)
+
+add_library("kouta::utils" ALIAS kouta_utils)
+target_include_directories(kouta_utils, ${_kouta_include_dir})
 
 # Kouta async library
 
