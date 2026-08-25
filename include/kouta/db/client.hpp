@@ -1,9 +1,7 @@
 #pragma once
 
 #include <atomic>
-#include <format>
 #include <memory>
-#include <mutex>
 #include <shared_mutex>
 #include <string_view>
 #include <thread>
@@ -12,7 +10,7 @@
 #include <soci/connection-pool.h>
 #include <soci/session.h>
 
-#include <kouta/utils/logger-aware.hpp>
+#include "kouta/utils/logger-aware.hpp"
 
 #include "params/sqlite-params.hpp"
 
@@ -63,25 +61,13 @@ namespace kouta::db
         ///
         /// @details
         /// The internal connection pool size will be set to 1.
-        Client()
-            : Client{1}
-        {
-        }
+        Client();
 
         /// @brief Constructor.
         ///
         /// @param[in] pool_size            Size of the internal connection pool. Will be set to 1 if value 0 is
         ///                                 specified.
-        explicit Client(std::size_t pool_size)
-            : kouta::utils::LoggerAware{}
-            , m_pool_size{pool_size > 0 ? pool_size : 1}
-            , m_initialized{}
-            , m_backend{}
-            , m_pool{}
-            , m_thread_session_mutex{}
-            , m_thread_leases{}
-        {
-        }
+        explicit Client(std::size_t pool_size);
 
         // Not copyable
         Client(const Client&) = delete;
@@ -94,22 +80,13 @@ namespace kouta::db
         virtual ~Client() = default;
 
         /// @brief Determine whether the client has been initialized.
-        bool initialized() const
-        {
-            return m_initialized;
-        }
+        bool initialized() const;
 
         /// @brief Determine the backend used by the client.
-        Backend backend() const
-        {
-            return m_backend;
-        }
+        Backend backend() const;
 
         /// @brief Obtain the map of leased sessions per thread.
-        const LeaseMap& thread_leases() const
-        {
-            return m_thread_leases;
-        }
+        const LeaseMap& thread_leases() const;
 
         /// @brief Obtain a pointer to the internal pool.
         ///
@@ -121,10 +98,7 @@ namespace kouta::db
         /// @warning The pool must have been initialized beforehand via one of the connection methods.
         ///
         /// @returns Pointer to the connection pool if initialized, `nullptr` otherwise.
-        Pool* pool()
-        {
-            return m_pool.get();
-        }
+        Pool* pool();
 
         /// @brief Clean thread session leases which are no longer valid.
         ///
@@ -141,34 +115,14 @@ namespace kouta::db
         /// @warning
         /// Calling this method may incur in a performance overhead as it is not possible to lease any sessions while
         /// the cleaning is in progress.
-        void clean_leases()
-        {
-            std::unique_lock<std::shared_mutex> lock{m_thread_session_mutex};
-
-            auto it = m_thread_leases.begin();
-
-            while (it != m_thread_leases.end())
-            {
-                if (it->second.expired())
-                {
-                    m_thread_leases.erase(it++);
-                }
-                else
-                {
-                    ++it;
-                }
-            }
-        }
+        void clean_leases();
 
         /// @brief Connect to a SQLite3 database.
         ///
         /// @param[in] db_path              Path to the database file to connect to.
         ///
         /// @returns Whether connection succeeded.
-        bool connect_sqlite(std::string_view db_path)
-        {
-            return connect_sqlite(db_path, {});
-        }
+        bool connect_sqlite(std::string_view db_path);
 
         /// @brief Connect to a SQLite3 database.
         ///
@@ -176,70 +130,7 @@ namespace kouta::db
         /// @param[in] params               Optional parameters for the connection.
         ///
         /// @returns Whether connection succeeded.
-        bool connect_sqlite(std::string_view db_path, const params::SqliteParams& params)
-        {
-            if (m_initialized || m_backend != Backend::None)
-            {
-                // Already initialized
-                return false;
-            }
-
-            // Parse parameters
-            std::ostringstream conn_stream{};
-
-            conn_stream << "db=" << db_path << " shared_cache=true";
-
-            if (params.timeout.has_value())
-            {
-                conn_stream << " timeout=" << std::to_string(params.timeout.value());
-            }
-
-            if (params.readonly.has_value())
-            {
-                conn_stream << " readonly=" << (params.readonly.value() ? "1" : "0");
-            }
-
-            if (params.synchronous.has_value())
-            {
-                conn_stream << " synchronous=" << params.synchronous.value();
-            }
-
-            if (params.vfs.has_value())
-            {
-                conn_stream << " vfs=" << params.vfs.value();
-            }
-
-            std::string conn_string{conn_stream.str()};
-
-            log_debug(std::format("Connecting to SQLite database with connection string: {}", conn_string));
-
-            m_pool = std::make_unique<Pool>(m_pool_size);
-
-            try
-            {
-                // Initialize sessions
-                for (std::size_t i{}; i < m_pool_size; i++)
-                {
-                    soci::session& sql{m_pool->at(i)};
-                    sql.open("sqlite3", conn_string);
-                }
-
-                m_backend = Backend::Sqlite;
-                m_initialized = true;
-
-                return true;
-            }
-            catch (...)
-            {
-                m_pool.reset();
-                m_backend = Backend::None;
-                m_initialized = false;
-
-                log_error(std::format("Failed to connect to SQLite3 database at {}", db_path));
-
-                return false;
-            }
-        }
+        bool connect_sqlite(std::string_view db_path, const params::SqliteParams& params);
 
         /// @brief Disconnect the client and release the pool.
         ///
@@ -248,36 +139,7 @@ namespace kouta::db
         /// subsequent connections.
         ///
         /// @warning The client does not verify whether sessions in the pool are currently being used.
-        void disconnect()
-        {
-            if (!m_initialized || m_backend == Backend::None)
-            {
-                // Nothing to do
-                return;
-            }
-
-            // Close sessions
-            log_debug("Closing sessions in the connection pool...");
-
-            for (std::size_t i{}; i < m_pool_size; i++)
-            {
-                try
-                {
-                    soci::session& sql{m_pool->at(i)};
-                    sql.close();
-                }
-                catch (...)
-                {
-                    log_error(std::format("Failed to close database session {}", i));
-                }
-            }
-
-            m_pool.reset();
-            m_backend = Backend::None;
-            m_initialized = false;
-
-            log_debug("Disconnected");
-        }
+        void disconnect();
 
         /// @brief Obtain a session from the session pool.
         ///
@@ -304,57 +166,14 @@ namespace kouta::db
         /// lease.
         ///
         /// @returns Shared pointer to the session, or an empty pointer if the pool has not been initialized.
-        SessionLease lease_session()
-        {
-            if (!m_pool)
-            {
-                log_warning("Attempted to lease a session even though a connection pool is not configured");
-                return {};
-            }
-
-            // Check if current thread has a lease already
-            {
-                std::shared_lock<std::shared_mutex> lock{m_thread_session_mutex};
-
-                auto it = m_thread_leases.find(std::this_thread::get_id());
-
-                if (it != m_thread_leases.cend() && !it->second.expired())
-                {
-                    // Session already exists
-                    return it->second.lock();
-                }
-            }
-
-            // Need to create a new session (this may block)
-            SessionLease lease{std::make_shared<soci::session>(*m_pool)};
-
-            {
-                std::unique_lock<std::shared_mutex> lock{m_thread_session_mutex};
-
-                m_thread_leases.insert_or_assign(std::this_thread::get_id(), std::weak_ptr<soci::session>{lease});
-            }
-
-            return lease;
-        }
+        SessionLease lease_session();
 
         /// @brief Set the size of the connection pool.
         ///
         /// @note This can only be done if the connection has not been established.
         ///
         /// @param[in] pool_size        New size for the pool. If set to 0, will be automatically be se to 1.
-        void set_connection_pool_size(std::size_t pool_size)
-        {
-            if (m_initialized || m_backend != Backend::None)
-            {
-                // Already initialized
-                log_warning("Cannot change the size of the connection pool after the client has been initialized");
-                return;
-            }
-
-            m_pool_size = pool_size > 0 ? pool_size : 1;
-
-            log_debug(std::format("Connection pool size set to {}", m_pool_size));
-        }
+        void set_connection_pool_size(std::size_t pool_size);
 
     private:
         std::size_t m_pool_size;

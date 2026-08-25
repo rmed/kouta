@@ -1,5 +1,3 @@
-#pragma once
-
 #include "kouta/utils/logger-aware.hpp"
 
 namespace kouta::utils

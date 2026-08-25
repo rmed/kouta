@@ -1,8 +1,8 @@
 #pragma once
 
-#include <kouta/base/callback/base-callback.hpp>
+#include "kouta/callback/abstract-callback.hpp"
 
-namespace kouta::base::callback
+namespace kouta::async
 {
     /// @brief Deferred Callback implementation.
     ///
@@ -21,13 +21,49 @@ namespace kouta::base::callback
     ///
     /// The lifetime of the object the Callback points to must be guaranteed to surpass that of the Callback itself.
     ///
+    /// Example usage:
+    ///
+    /// @code
+    /// void free_func(int a, const std::string& b)
+    /// {
+    ///     std::cout << "Function: " << a << " " << b << std::endl;
+    /// }
+    ///
+    /// class Cls : Component
+    /// {
+    /// public:
+    ///     // Constructors...
+    ///
+    ///     void bound_method(int a, const std::string& b)
+    ///     {
+    ///         std::cout << "Method: " << a << " " << b << std::endl;
+    ///     }
+    /// };
+    ///
+    /// Cls obj{};
+    ///
+    /// // Callback pointing to a free function
+    /// DeferredCallback<int, const std::string& cb{&obj, free_func};
+    /// cb(42, "test");
+    ///
+    /// // Callback pointing to a bound method
+    /// DeferredCallback<int, const std::string& cb2{&obj, &Cls::bound_method};
+    /// cb2(42, "test");
+    ///
+    /// // Callback pointing to a lambda
+    /// DeferredCallback<int, const std::string& cb3{&obj, [](int a, const std::string& b) {
+    ///     std::cout << "Lambda: " << a << " " << b << std::endl;
+    /// }};
+    /// cb3(42, "test");
+    /// @endcode
+    ///
     /// @tparam TArgs                   Callable arguments.
     template<class... TArgs>
-    class DeferredCallback : public BaseCallback<TArgs...>
+    class DeferredCallback : public callback::AbstractCallback<TArgs...>
     {
     public:
         /// @brief The type of the callable the Callback points to.
-        using Callable = typename BaseCallback<TArgs...>::Callable;
+        using Callable = typename callback::AbstractCallback<TArgs...>::Callable;
 
         // Copyable
         DeferredCallback(const DeferredCallback&) = default;
@@ -54,7 +90,7 @@ namespace kouta::base::callback
         ///                             must match those of this method.
         template<class TClass>
         DeferredCallback(TClass* object, void (TClass::*method)(TArgs...))
-            : BaseCallback<TArgs...>{}
+            : callback::AbstractCallback<TArgs...>{}
         {
             this->set_callable(
                 [object, method](TArgs... args)
@@ -79,7 +115,7 @@ namespace kouta::base::callback
         ///                             to `std::function`.
         template<class TClass>
         DeferredCallback(TClass* object, const DeferredCallback::Callable& callable)
-            : BaseCallback<TArgs...>{}
+            : callback::AbstractCallback<TArgs...>{}
         {
             this->set_callable(
                 [object, callable](TArgs... args)
@@ -90,7 +126,7 @@ namespace kouta::base::callback
 
         template<class TClass>
         DeferredCallback(TClass* object, DeferredCallback::Callable&& callable)
-            : BaseCallback<TArgs...>{}
+            : callback::AbstractCallback<TArgs...>{}
         {
             this->set_callable(
                 [object, callable = std::move(callable)](TArgs... args)
@@ -100,4 +136,4 @@ namespace kouta::base::callback
         }
         /// @}
     };
-}  // namespace kouta::base::callback
+}  // namespace kouta::async
