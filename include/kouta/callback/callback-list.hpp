@@ -78,9 +78,10 @@ namespace kouta::callback
         ///
         /// @param[in] callbacks        Set of Callbacks to store.
         CallbackList(std::initializer_list<AbstractCallback<TArgs...>> callbacks)
-            : CallbackList<TArgs...>{}
+            : AbstractCallback<TArgs...>{}
             , m_callbacks{callbacks}
         {
+            this->set_callable(std::bind_front(&CallbackList::invoke_callbacks, this));
         }
 
         /// @brief Update the internal list of callbacks to invoke.

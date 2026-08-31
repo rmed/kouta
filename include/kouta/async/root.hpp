@@ -1,14 +1,18 @@
 #pragma once
 
-#include <kouta/base/component.hpp>
+#include "component.hpp"
 
-namespace kouta::base
+namespace kouta::async
 {
     /// @brief Root component.
     ///
     /// @details
-    /// As opposed to a regular @ref Component, the Root does own the event loop and is in charge of
-    /// running it and acting as the entry-point to the rest of the application.
+    /// As opposed to a regular @ref Component, the Root does own the I/O context and is in charge of running the event
+    /// loop and acting as the entry-point to the rest of the application.
+    ///
+    /// @note
+    /// There is usually a single Root per application, as running it blocks the thread. For multi-threaded/context
+    /// use-cases, @see Branch.
     class Root : public Component
     {
     public:
@@ -17,22 +21,15 @@ namespace kouta::base
         /// @details
         /// This constructor assumes that the Root object will not have a parent (e.g. it is the main object of the
         /// tree), meaning that it will not attempt to register itself with the parent, nor remove itself from its list
-        /// when being destroyed.
-        Root()
-            : Root{nullptr}
-        {
-        }
+        /// of children when being destroyed.
+        Root();
 
         /// @brief Construct from a parent.
         ///
         /// @details
         /// This constructor will register the Root object with the parent **only to manage the memory deallocation** in
         /// case the object was allocated on the heap. Regardless of having a parent, the Root owns its event loop.
-        explicit Root(Component* parent)
-            : Component{parent}
-            , m_context{}
-        {
-        }
+        explicit Root(Component* parent);
 
         // Not copyable
         Root(const Root&) = delete;
@@ -42,35 +39,24 @@ namespace kouta::base
         Root(Root&&) = delete;
         Root& operator=(Root&&) = delete;
 
-        virtual ~Root() = default;
+        ~Root() override = default;
 
         /// @brief Obtain a reference to the underlying I/O context.
         ///
         /// @note The I/O context is owned by the root.
-        asio::io_context& context() override
-        {
-            return m_context;
-        }
+        Context& context() override;
 
         /// @brief Run the event loop.
         ///
-        /// @note This method blocks until the event loop is terminated.
-        virtual void run()
-        {
-            // Have the event loop run forever
-            auto work_guard{asio::make_work_guard(m_context)};
-            m_context.run();
-        }
+        /// @note Internally, this calls @ref Context::run();
+        virtual void run();
 
         /// @brief Stop the event loop and exit.
         ///
-        /// @note Under normal circumstances, this would only be called when terminating the application.
-        virtual void stop()
-        {
-            m_context.stop();
-        }
+        /// @note Internally, this calls @ref Context::stop();
+        virtual void stop();
 
     private:
-        asio::io_context m_context;
+        Context m_context;
     };
-}  // namespace kouta::base
+}  // namespace kouta::async

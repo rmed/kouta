@@ -1,16 +1,17 @@
 #include "dummy-component.hpp"
 
-namespace kouta::tests::base
+namespace kouta::tests::async
 {
     DummyComponent::DummyComponent(Component* parent)
         : Component{parent}
-    {}
+    {
+    }
 
     DummyComponent::DummyComponent(
         Component* parent,
-        const Callback<std::uint16_t>& callback_a,
-        const Callback<std::int32_t, const std::string&>& callback_b,
-        const Callback<const std::vector<std::uint8_t>&>& callback_c)
+        const callback::AbstractCallback<std::uint16_t>& callback_a,
+        const callback::AbstractCallback<std::int32_t, const std::string&>& callback_b,
+        const callback::AbstractCallback<const std::vector<std::uint8_t>&>& callback_c)
         : Component{parent}
         , m_callback_a{callback_a}
         , m_callback_b{callback_b}
@@ -20,10 +21,10 @@ namespace kouta::tests::base
 
     DummyComponent::DummyComponent(
         Component* parent,
-        const Callback<std::uint16_t>& callback_a,
-        const Callback<std::int32_t, const std::string&>& callback_b,
-        const Callback<const std::vector<std::uint8_t>&>& callback_c,
-        const Callback<std::thread::id>& callback_d)
+        const callback::AbstractCallback<std::uint16_t>& callback_a,
+        const callback::AbstractCallback<std::int32_t, const std::string&>& callback_b,
+        const callback::AbstractCallback<const std::vector<std::uint8_t>&>& callback_c,
+        const callback::AbstractCallback<std::thread::id>& callback_d)
         : Component{parent}
         , m_callback_a{callback_a}
         , m_callback_b{callback_b}
@@ -32,7 +33,7 @@ namespace kouta::tests::base
     {
     }
 
-    DummyComponent::DummyComponent(Component* parent, const Callback<Component*> callback_on_delete)
+    DummyComponent::DummyComponent(Component* parent, const callback::AbstractCallback<Component*> callback_on_delete)
         : Component{parent}
         , m_callback_on_delete{callback_on_delete}
     {
@@ -58,4 +59,4 @@ namespace kouta::tests::base
         // Provide the ID of the thread this component is running in
         m_callback_d(std::this_thread::get_id());
     }
-}  // namespace kouta::tests::base
+}  // namespace kouta::tests::async

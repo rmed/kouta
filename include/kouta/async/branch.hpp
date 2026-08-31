@@ -2,10 +2,9 @@
 
 #include <thread>
 
-#include <kouta/base/component.hpp>
-#include <kouta/base/root.hpp>
+#include "root.hpp"
 
-namespace kouta::base
+namespace kouta::async
 {
     /// @brief Background component executor.
     ///
@@ -15,16 +14,17 @@ namespace kouta::base
     /// the worker thread.
     ///
     /// By default, the Branch does nothing, and its event loop must be explicitly started by calling the @ref run()
-    /// method. As opposed to the original method defined in @ref Root, the one specified here will launch the thread
-    /// (and the event loop) and return immediately.
+    /// method. As opposed to @ref Root::run(), this method will launch the thread (and the event loop) and return
+    /// immediately.
     ///
-    /// @tparam TWrapped            Wrapped @ref Component type. IT is assumed that the first argument of the component
+    /// @tparam TWrapped            Wrapped @ref Component type. It is assumed that the first argument of the component
     ///                             will be a pointer to a parent component (which will be set to this Branch).
     template<class TWrapped>
         requires std::is_base_of_v<Component, TWrapped>
     class Branch : public Root
     {
     public:
+        /// @brief Wrapped component type.
         using WrappedComponent = TWrapped;
 
         // Not default-constructible.
@@ -62,7 +62,7 @@ namespace kouta::base
         /// @details
         /// The destructor takes care of the cleanup of the worker thread, by stopping its event loop and waiting
         /// for the thread to terminate before joining it.
-        virtual ~Branch()
+        ~Branch() override
         {
             if (m_worker.joinable())
             {
@@ -93,7 +93,10 @@ namespace kouta::base
             // Can only run the thread once
             if (!m_worker.joinable())
             {
-                m_worker = std::thread{&Branch<WrappedComponent>::run_worker, this};
+                m_worker = std::thread{[this]()
+                                       {
+                                           context().run();
+                                       }};
             }
         }
 
@@ -122,16 +125,7 @@ namespace kouta::base
         using Root::post;
 
     private:
-        /// @brief Run the event loop.
-        ///
-        /// @note This method blocks until the event loop is terminated.
-        void run_worker()
-        {
-            auto work_guard{asio::make_work_guard(context())};
-            context().run();
-        }
-
         std::thread m_worker;
         WrappedComponent m_component;
     };
-}  // namespace kouta::base
+}  // namespace kouta::async

@@ -11,31 +11,15 @@ if(KOUTA_BUILD_TESTS)
             set(_pthread pthread)
         endif()
 
-        set(_test_sources
-            "base/dummy-component.cpp"
-            "base/test-base.cpp"
-            "base/test-timer.cpp"
-            "db/test-migration.cpp"
-            "db/test-query-builder.cpp"
-            "db/test-sqlite.cpp"
-            "io/test-packer.cpp"
-            "io/test-parser.cpp"
-            "utils/test-enum-set.cpp"
-            "utils/test-logger-aware.cpp"
-        )
 
         set(_test_libs
-            "kouta-base"
-            "kouta-db"
-            "kouta-io"
-            "kouta-utils"
+            "kouta_async"
         )
-        set(_header_libs _test_libs)
-        list(TRANSFORM _header_libs APPEND "-header")
 
-        # Static/Shared library version
         add_executable(kouta-tests
-            ${_test_sources}
+            "async/dummy-component.cpp"
+            "async/test-async.cpp"
+            "async/test-timer.cpp"
         )
 
         target_link_libraries(kouta-tests
@@ -43,32 +27,10 @@ if(KOUTA_BUILD_TESTS)
                 gmock
                 gtest_main
                 gtest
-                SOCI::SQLite3
                 ${_pthread}
-                ${_test_libs}
+                kouta_async
         )
 
         gtest_discover_tests(kouta-tests)
-
-        # Header-only version
-        add_executable(kouta-tests-header
-            ${_test_sources}
-        )
-
-        target_link_libraries(kouta-tests-header
-            PUBLIC
-                gmock
-                gtest_main
-                gtest
-                SOCI::SQLite3
-                ${_pthread}
-        )
-
-        target_link_libraries(kouta-tests-header
-            INTERFACE
-                ${_header_libs}
-        )
-
-        gtest_discover_tests(kouta-tests-header)
     endif()
 endif()

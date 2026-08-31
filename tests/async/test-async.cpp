@@ -1,13 +1,16 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include <kouta/base/branch.hpp>
-#include <kouta/base/callback.hpp>
-#include <kouta/base/root.hpp>
+#include "kouta/callback/abstract-callback.hpp"
+#include "kouta/callback/direct-callback.hpp"
+#include "kouta/callback/callback-list.hpp"
+#include "kouta/async/branch.hpp"
+#include "kouta/async/deferred-callback.hpp"
+#include "kouta/async/root.hpp"
 
 #include "dummy-component.hpp"
 
-namespace kouta::tests::base
+namespace kouta::tests::async
 {
     /// @brief Mock the Root to provide the event loop and receive callbacks.
     class RootMock : public Root
@@ -24,9 +27,9 @@ namespace kouta::tests::base
     ///
     /// @details
     /// The test succeeds if invoking the empty callback throws an exception.
-    TEST(BaseTest, EmptyCallback)
+    TEST(AsyncTest, EmptyCallback)
     {
-        Callback<std::uint16_t> cb{};
+        callback::AbstractCallback<std::uint16_t> cb{};
 
         EXPECT_THROW(cb(42), std::bad_function_call);
     }
@@ -35,7 +38,7 @@ namespace kouta::tests::base
     ///
     /// @details
     /// The test succeeds if all callbacks are invoked in the correct order.
-    TEST(BaseTest, DirectCallback)
+    TEST(AsyncTest, DirectCallback)
     {
         ::testing::InSequence s;
         RootMock root{};
@@ -83,23 +86,23 @@ namespace kouta::tests::base
     ///
     /// @details
     /// The test succeeds if all callbacks are invoked in the correct order.
-    TEST(BaseTest, DeferredCallback)
+    TEST(AsyncTest, DeferredCallback)
     {
         ::testing::InSequence s;
         RootMock root{};
 
         std::function<void(std::int32_t, const std::string&)> test_func{std::bind_front(&RootMock::handler_b, &root)};
 
-        callback::DeferredCallback<std::uint16_t> cb_a{&root, &RootMock::handler_a};
-        callback::DeferredCallback<std::uint16_t> cb_a_2{
+        DeferredCallback<std::uint16_t> cb_a{&root, &RootMock::handler_a};
+        DeferredCallback<std::uint16_t> cb_a_2{
             &root,
             [&root](std::uint16_t value)
             {
                 root.handler_a(value);
             }};
         callback::DirectCallback<std::int32_t, const std::string&> cb_b{&root, &RootMock::handler_b};
-        callback::DeferredCallback<std::int32_t, const std::string&> cb_b_2{&root, test_func};
-        callback::DeferredCallback<const std::vector<std::uint8_t>&> cb_c{&root, &RootMock::handler_c};
+        DeferredCallback<std::int32_t, const std::string&> cb_b_2{&root, test_func};
+        DeferredCallback<const std::vector<std::uint8_t>&> cb_c{&root, &RootMock::handler_c};
 
         std::uint16_t data_a{127};
         std::uint16_t data_a_2{564};
@@ -146,7 +149,7 @@ namespace kouta::tests::base
     ///
     /// @details
     /// The test succeeds if all callbacks are invoked in the correct order.
-    TEST(BaseTest, CallbackList)
+    TEST(AsyncTest, CallbackList)
     {
         ::testing::InSequence s;
         RootMock root{};
@@ -158,9 +161,9 @@ namespace kouta::tests::base
         };
 
         callback::CallbackList<std::int32_t, const std::string&> cb_list_deferred{
-            callback::DeferredCallback{&root, &RootMock::handler_b},
-            callback::DeferredCallback{&root, &RootMock::handler_b},
-            callback::DeferredCallback<std::int32_t, const std::string&>{
+            DeferredCallback{&root, &RootMock::handler_b},
+            DeferredCallback{&root, &RootMock::handler_b},
+            DeferredCallback<std::int32_t, const std::string&>{
                 &root,
                 [&root](std::int32_t value_a, const std::string& value_b)
                 {
@@ -195,7 +198,7 @@ namespace kouta::tests::base
     ///
     /// @details
     /// The test succeeds if no event is dispatched.
-    TEST(BaseTest, PostStoppedEventLoop)
+    TEST(AsyncTest, PostStoppedEventLoop)
     {
         RootMock root{};
 
@@ -218,7 +221,7 @@ namespace kouta::tests::base
     ///
     /// @details
     /// The test succeeds if events are dispatched in the correct order.
-    TEST(BaseTest, PostRunningEventLoop)
+    TEST(AsyncTest, PostRunningEventLoop)
     {
         ::testing::InSequence s;
         RootMock root{};
@@ -247,21 +250,21 @@ namespace kouta::tests::base
     ///
     /// @details
     /// The test succeeds if no deferred event is dispatched, but the direct ones are.
-    TEST(BaseTest, ChildrenStoppedEventLoop)
+    TEST(AsyncTest, ChildrenStoppedEventLoop)
     {
         RootMock root{};
 
         DummyComponent comp_a{
             &root,
             callback::DirectCallback{&root, &RootMock::handler_a},
-            callback::DeferredCallback{&root, &RootMock::handler_b},
-            callback::DeferredCallback{&root, &RootMock::handler_c}};
+            DeferredCallback{&root, &RootMock::handler_b},
+            DeferredCallback{&root, &RootMock::handler_c}};
 
         DummyComponent comp_b{
             &comp_a,
-            callback::DeferredCallback{&root, &RootMock::handler_a},
-            callback::DeferredCallback{&root, &RootMock::handler_b},
-            callback::DeferredCallback{&root, &RootMock::handler_c}};
+            DeferredCallback{&root, &RootMock::handler_a},
+            DeferredCallback{&root, &RootMock::handler_b},
+            DeferredCallback{&root, &RootMock::handler_c}};
 
         std::uint16_t data_a{42};
 
@@ -285,7 +288,7 @@ namespace kouta::tests::base
     ///
     /// @details
     /// The test succeeds if all events are dispatched in order.
-    TEST(BaseTest, ChildrenRunningEventLoop)
+    TEST(AsyncTest, ChildrenRunningEventLoop)
     {
         ::testing::InSequence s;
 
@@ -294,14 +297,14 @@ namespace kouta::tests::base
         DummyComponent comp_a{
             &root,
             callback::DirectCallback{&root, &RootMock::handler_a},
-            callback::DeferredCallback{&root, &RootMock::handler_b},
-            callback::DeferredCallback{&root, &RootMock::handler_c}};
+            DeferredCallback{&root, &RootMock::handler_b},
+            DeferredCallback{&root, &RootMock::handler_c}};
 
         DummyComponent comp_b{
             &comp_a,
-            callback::DeferredCallback{&root, &RootMock::handler_a},
-            callback::DeferredCallback{&root, &RootMock::handler_b},
-            callback::DeferredCallback{&root, &RootMock::handler_c}};
+            DeferredCallback{&root, &RootMock::handler_a},
+            DeferredCallback{&root, &RootMock::handler_b},
+            DeferredCallback{&root, &RootMock::handler_c}};
 
         std::uint16_t data_a_a{42};
         std::int32_t data_a_b1{-512};
@@ -350,7 +353,7 @@ namespace kouta::tests::base
     ///
     /// @details
     /// The test succeeds if all events are dispatched in order.
-    TEST(BaseTest, BranchComponent)
+    TEST(AsyncTest, BranchComponent)
     {
         ::testing::InSequence s;
 
@@ -358,9 +361,9 @@ namespace kouta::tests::base
         Branch<DummyComponent> worker{
             &root,
             callback::DirectCallback{&root, &RootMock::handler_a},
-            callback::DeferredCallback{&root, &RootMock::handler_b},
-            callback::DeferredCallback{&root, &RootMock::handler_c},
-            callback::DeferredCallback{&root, &RootMock::handler_d}};
+            DeferredCallback{&root, &RootMock::handler_b},
+            DeferredCallback{&root, &RootMock::handler_c},
+            DeferredCallback{&root, &RootMock::handler_d}};
 
         std::uint16_t data_a_a{42};
         std::int32_t data_a_b1{-512};
@@ -401,25 +404,25 @@ namespace kouta::tests::base
     ///
     /// @details
     /// The test succeeds if all components are deallocated.
-    TEST(BaseTest, HeapAllocation)
+    TEST(AsyncTest, HeapAllocation)
     {
         RootMock root{};
 
-        auto* dummy_base = new DummyComponent{&root, callback::DeferredCallback{&root, &RootMock::handler_delete}};
+        auto* dummy_base = new DummyComponent{&root, DeferredCallback{&root, &RootMock::handler_delete}};
 
         // Layer 1
-        auto* comp_a = new DummyComponent{dummy_base, callback::DeferredCallback{&root, &RootMock::handler_delete}};
-        auto* comp_b = new DummyComponent{dummy_base, callback::DeferredCallback{&root, &RootMock::handler_delete}};
-        auto* comp_c = new DummyComponent{dummy_base, callback::DeferredCallback{&root, &RootMock::handler_delete}};
+        auto* comp_a = new DummyComponent{dummy_base, DeferredCallback{&root, &RootMock::handler_delete}};
+        auto* comp_b = new DummyComponent{dummy_base, DeferredCallback{&root, &RootMock::handler_delete}};
+        auto* comp_c = new DummyComponent{dummy_base, DeferredCallback{&root, &RootMock::handler_delete}};
 
         // Layer 2
-        auto* comp_a1 = new DummyComponent{comp_a, callback::DeferredCallback{&root, &RootMock::handler_delete}};
-        auto* comp_a2 = new DummyComponent{comp_a, callback::DeferredCallback{&root, &RootMock::handler_delete}};
-        auto* comp_c1 = new DummyComponent{comp_c, callback::DeferredCallback{&root, &RootMock::handler_delete}};
+        auto* comp_a1 = new DummyComponent{comp_a, DeferredCallback{&root, &RootMock::handler_delete}};
+        auto* comp_a2 = new DummyComponent{comp_a, DeferredCallback{&root, &RootMock::handler_delete}};
+        auto* comp_c1 = new DummyComponent{comp_c, DeferredCallback{&root, &RootMock::handler_delete}};
 
         // Layer 3
-        auto* comp_a1_1 = new DummyComponent{comp_a1, callback::DeferredCallback{&root, &RootMock::handler_delete}};
-        auto* comp_a1_2 = new DummyComponent{comp_a1, callback::DeferredCallback{&root, &RootMock::handler_delete}};
+        auto* comp_a1_1 = new DummyComponent{comp_a1, DeferredCallback{&root, &RootMock::handler_delete}};
+        auto* comp_a1_2 = new DummyComponent{comp_a1, DeferredCallback{&root, &RootMock::handler_delete}};
 
         // Deletion will be in reverse creation order, but we don't really care
         EXPECT_CALL(root, handler_delete(dummy_base))
@@ -449,7 +452,7 @@ namespace kouta::tests::base
     ///
     /// @details
     /// The test succeeds if no exception is thrown due to free().
-    TEST(BaseTest, StackAllocation)
+    TEST(AsyncTest, StackAllocation)
     {
         RootMock root{};
 
@@ -473,4 +476,4 @@ namespace kouta::tests::base
 
         // Everything is deleted in reverse order, so there shouldn't be any exceptions at this point
     }
-}  // namespace kouta::tests::base
+}  // namespace kouta::tests::async

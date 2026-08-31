@@ -113,6 +113,7 @@ namespace kouta::async
         /// @param[in] object           Pointer to the object whose method is going to be called.
         /// @param[in] callable         Callable to store. For instance, this could be a lambda or anything convertible
         ///                             to `std::function`.
+        /// @{
         template<class TClass>
         DeferredCallback(TClass* object, const DeferredCallback::Callable& callable)
             : callback::AbstractCallback<TArgs...>{}

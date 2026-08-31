@@ -1,12 +1,12 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <kouta/base/root.hpp>
-#include <kouta/base/timer.hpp>
+#include "kouta/async/root.hpp"
+#include "kouta/async/timer.hpp"
 
-namespace kouta::tests::base
+namespace kouta::tests::async
 {
-    using namespace kouta::base;
+    using namespace kouta::async;
 
     namespace
     {
@@ -18,11 +18,11 @@ namespace kouta::tests::base
         };
 
         /// @brief Mock the Root to provide the event loop and also stop tests after some time.
-        class RootMockTimed : public base::Root
+        class RootMockTimed : public async::Root
         {
         public:
             explicit RootMockTimed(std::chrono::milliseconds timeout)
-                : base::Root{}
+                : async::Root{}
                 , m_test_timeout{this, timeout, std::bind_front(&RootMockTimed::handle_test_timeout, this)}
             {
             }
@@ -51,7 +51,7 @@ namespace kouta::tests::base
     ///
     /// @details
     /// The test succeeds if all values are correctly added to the packer.
-    TEST(BaseTest, TimerElapsed)
+    TEST(AsyncTest, TimerElapsed)
     {
         RootMock root{};
         std::chrono::milliseconds timeout{200};
@@ -82,7 +82,7 @@ namespace kouta::tests::base
     ///
     /// @details
     /// The test succeeds if the timer never ticks.
-    TEST(BaseTest, TimerNotStarted)
+    TEST(AsyncTest, TimerNotStarted)
     {
         RootMockTimed root{std::chrono::milliseconds{500}};
         std::chrono::milliseconds timeout{100};
@@ -102,7 +102,7 @@ namespace kouta::tests::base
     ///
     /// @details
     /// The test succeeds if the timer never ticks.
-    TEST(BaseTest, TimerStopped)
+    TEST(AsyncTest, TimerStopped)
     {
         RootMockTimed root{std::chrono::milliseconds{500}};
         std::chrono::milliseconds timeout{100};
@@ -125,7 +125,7 @@ namespace kouta::tests::base
     ///
     /// @details
     /// The test succeeds if the timer ticks once.
-    TEST(BaseTest, TimerElapsedOnce)
+    TEST(AsyncTest, TimerElapsedOnce)
     {
         RootMockTimed root{std::chrono::milliseconds{500}};
         std::chrono::milliseconds timeout{100};
@@ -147,7 +147,7 @@ namespace kouta::tests::base
     ///
     /// @details
     /// The test succeeds if the timer ticks twice.
-    TEST(BaseTest, TimerRearmed)
+    TEST(AsyncTest, TimerRearmed)
     {
         RootMockTimed root{std::chrono::milliseconds{500}};
         std::chrono::milliseconds timeout{100};
@@ -180,7 +180,7 @@ namespace kouta::tests::base
     ///
     /// @details
     /// The test succeeds if the timer ticks twice.
-    TEST(BaseTest, TimerRearmedDifferentDuration)
+    TEST(AsyncTest, TimerRearmedDifferentDuration)
     {
         RootMockTimed root{std::chrono::milliseconds{1000}};
         std::chrono::milliseconds timeout{100};
@@ -218,4 +218,4 @@ namespace kouta::tests::base
         root.run();
         alarm(0);
     }
-}  // namespace kouta::tests::base
+}  // namespace kouta::tests::async

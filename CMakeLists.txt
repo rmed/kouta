@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.18)
 
 project(kouta
     VERSION 1.0.0
-    DESCRIPTION "A small framework with reusable elements and components for multiple projects."
+    DESCRIPTION "A small framework with reusable elements and components."
     HOMEPAGE_URL "https://github.com/rmed/kouta"
     LANGUAGES C CXX
 )
@@ -22,6 +22,7 @@ set(SOCI_MIN_VERSION "4.1")
 # Paths
 set(_kouta_include_dir "${PROJECT_SOURCE_DIR}/include")
 set(_kouta_src_dir "${PROJECT_SOURCE_DIR}/src")
+set(_kouta_third_party_dir "${PROJECT_SOURCE_DIR}/third-party")
 
 include_directories(${_kouta_include_dir})
 
@@ -35,111 +36,48 @@ add_library(kouta_callback
 )
 
 add_library("kouta::callback" ALIAS kouta_callback)
-target_include_directories(kouta_callback ${_kouta_include_dir})
+target_include_directories(kouta_callback
+    INTERFACE
+        ${_kouta_include_dir}
+)
 
 # Kouta utils library
 add_library(kouta_utils
     SHARED
-        "${_kouta_src_dir}/utils/logger-aware.hpp"
+        "${_kouta_src_dir}/utils/logger-aware.cpp"
 )
 
 add_library("kouta::utils" ALIAS kouta_utils)
-target_include_directories(kouta_utils, ${_kouta_include_dir})
+target_include_directories(kouta_utils
+    PUBLIC
+        ${_kouta_include_dir}
+)
 
 # Kouta async library
-
-
-kouta_add_library(
-    HEADERONLY
-    TARGET base
-    HEADERS
-        "base/callback/base-callback.hpp"
-        "base/callback/callback-list.hpp"
-        "base/callback/deferred-callback.hpp"
-        "base/callback/direct-callback.hpp"
-        "base/asio.hpp"
-        "base/branch.hpp"
-        "base/callback.hpp"
-        "base/component.hpp"
-        "base/root.hpp"
-        "base/timer.hpp"
-
-    SOURCES
-        "base.cpp"
-
-    LIBS
-        ${_KOUTA_BASE_ASIO_LIB}
+#
+# Requires:
+#
+# - asio
+add_library(kouta_async
+    SHARED
+        "${_kouta_src_dir}/async/component.cpp"
+        "${_kouta_src_dir}/async/context.cpp"
+        "${_kouta_src_dir}/async/root.cpp"
+        "${_kouta_src_dir}/async/timer.cpp"
 )
 
-# Kouta I/O module
+add_library("kouta::async" ALIAS kouta_async)
 
-# Assumes that Boost.endian headers are available/in path
-kouta_add_library(
-    HEADERONLY
-    TARGET io
+target_include_directories(kouta_async
+    PUBLIC
+        ${_kouta_include_dir}
 
-    HEADERS
-        "io/packer.hpp"
-        "io/parser.hpp"
-
-    SOURCES
-        "io.cpp"
+    PRIVATE
+        "${_kouta_third_party_dir}/asio/include"
 )
 
-# Kouta Utils module
-kouta_add_library(
-    HEADERONLY
-    TARGET utils
+target_link_libraries(kouta_async PUBLIC kouta_callback)
 
-    HEADERS
-        "utils/enum-set.hpp"
-        "utils/ilogger.hpp"
-        "utils/logger-aware.hpp"
-
-    SOURCES
-        "utils.cpp"
-)
-
-# Kouta DB module
-
-# Requires SOCI.
-find_package(SOCI ${SOCI_MIN_VERSION})
-
-if(SOCI_FOUND)
-    # SOCI may be compiled with Boost::date_time support.
-    find_package(Boost ${BOOST_MIN_VERSION}
-        COMPONENTS
-            date_time
-    )
-
-    kouta_add_library(
-        HEADERONLY
-        TARGET db
-        HEADERS
-            "db/migration/abstract-version.hpp"
-            "db/migration/migration-manager.hpp"
-            "db/params/sqlite-params.hpp"
-            "db/query/condition-group.hpp"
-            "db/query/query-builder.hpp"
-            "db/query/where-builder.hpp"
-            "db/abstract-adapter.hpp"
-            "db/client.hpp"
-            "db/page.hpp"
-            "db/result-code.hpp"
-            "db/result.hpp"
-
-        SOURCES
-            "db.cpp"
-
-        INTERNAL
-            "utils"
-
-        LIBS
-            SOCI::Core
-    )
-else()
-    message("SOCI was not found. kouta-db module will not be enabled")
-endif()
 
 # Tests
-add_subdirectory("tests")
+add_subdirectory(tests)

@@ -3,14 +3,21 @@
 #include <chrono>
 #include <functional>
 
-#include <kouta/base/component.hpp>
+#include "kouta/async/component.hpp"
 
-namespace kouta::base
+namespace kouta::async
 {
+    /// @brief Timer implementation that can be awaited asynchronously.
+    ///
+    /// @details
+    /// Once the timer expires, it will invoke the provided callback. Note, however, that this is a oneshot timer, so it
+    /// **must be manually rearmed** for periodic executions.
+    ///
+    /// The duration of the timer is specified relative to the current system time (e.g. "100ms from now").
     class Timer : public Component
     {
     public:
-        /// Signature of the function to be called when the timer expires or is cancelled.
+        /// @brief Signature of the function to be invoked when the timer expires or is cancelled.
         using OnExpired = std::function<void(Timer&)>;
 
         // Not default-constructible.
@@ -21,13 +28,7 @@ namespace kouta::base
         /// @param[in] parent           Parent component granting access to the event loop.
         /// @param[in] duration         Duration of the timer.
         /// @param[in] on_expired       Function to call when the timer expires.
-        Timer(Component* parent, std::chrono::milliseconds duration, OnExpired&& on_expired)
-            : Component{parent}
-            , m_timer{context()}
-            , m_duration{duration}
-            , m_on_expired(on_expired)
-        {
-        }
+        Timer(Component* parent, std::chrono::milliseconds duration, OnExpired&& on_expired);
 
         // Not copyable
         Timer(const Timer&) = delete;
@@ -37,7 +38,7 @@ namespace kouta::base
         Timer(Timer&&) = delete;
         Timer& operator=(Timer&&) = delete;
 
-        ~Timer() override = default;
+        ~Timer() override;
 
         /// @brief Start the timer and wait for it to complete asynchronously.
         ///
@@ -45,53 +46,32 @@ namespace kouta::base
         /// The timer will be automatically stopped if it was already running (which could be seen as restarting the
         /// timer). The duration used for awaiting the timer is the one already set inside this object.
         ///
+        /// If the timer expired normally, the internal callback will be invoked to notify the creator of the Timer.
+        /// Note that said callback will be executed within event loop in which the Timer resides (as a direct
+        /// invocation).
+        ///
         /// @note This is a one-shot waiting operation.
-        void start()
-        {
-            // Timer is stopped in case it was already running
-            stop();
-
-            m_timer.expires_after(m_duration);
-            m_timer.async_wait(std::bind_front(&Timer::handle_expiration, this));
-        }
+        void start();
 
         /// @brief Stop the timer if it was running/being waited for.
-        void stop()
-        {
-            m_timer.cancel();
-        }
+        void stop();
 
         /// @brief Set the duration of the timer in future waiting operations.
         ///
         /// @details
         /// The purpose of this method is to allow setting the timer duration without actually starting it, as opposed
         /// to @ref start(). However, this method will **not** affect any running timer awaits, meaning that @ref stop()
-        /// must be called explicitly if such abehaviour is required.
+        /// must be called explicitly if such behaviour is required.
         ///
         /// @param[in] duration         New duration for the timer.
-        void set_duration(std::chrono::milliseconds duration)
-        {
-            m_duration = duration;
-        }
+        void set_duration(const std::chrono::milliseconds& duration);
 
     private:
-        /// @brief Handle the expiration of the internal timer.
-        ///
-        /// @details
-        /// If the timer expired normally, the internal callback will be executed to notify the external world. Note
-        /// that said callback will be executed within the context of the event loop as a direct invocation.
-        ///
-        /// @param[in] ec       Error code of the asynchronous wait operation.
-        void handle_expiration(const asio::error_code& ec)
-        {
-            if (ec != asio::error::operation_aborted)
-            {
-                m_on_expired(*this);
-            }
-        }
+        /// @brief Private implementation of the timer.
+        struct Impl;
 
-        asio::steady_timer m_timer;
+        std::unique_ptr<Impl> m_impl;
         std::chrono::milliseconds m_duration;
         OnExpired m_on_expired;
     };
-}  // namespace kouta::base
+}  // namespace kouta::async
