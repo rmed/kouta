@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include <kouta/utils/enum-set.hpp>
+#include "kouta/utils/enum-set.hpp"
 
 namespace kouta::tests::utils
 {

@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include <kouta/utils/logger-aware.hpp>
+#include "kouta/utils/logger-aware.hpp"
 
 namespace kouta::tests::utils
 {

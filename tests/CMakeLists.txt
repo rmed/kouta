@@ -20,6 +20,8 @@ if(KOUTA_BUILD_TESTS)
             "async/dummy-component.cpp"
             "async/test-async.cpp"
             "async/test-timer.cpp"
+            "utils/test-enum-set.cpp"
+            "utils/test-logger-aware.cpp"
         )
 
         target_link_libraries(kouta-tests
@@ -29,6 +31,7 @@ if(KOUTA_BUILD_TESTS)
                 gtest
                 ${_pthread}
                 kouta_async
+                kouta_utils
         )
 
         gtest_discover_tests(kouta-tests)

@@ -11,7 +11,6 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(GNUInstallDirs)
-include(cmake/helper.cmake)
 
 # Options
 option(KOUTA_BUILD_TESTS "Enable compilation of tests" OFF)
