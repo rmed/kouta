@@ -20,6 +20,8 @@ if(KOUTA_BUILD_TESTS)
             "async/dummy-component.cpp"
             "async/test-async.cpp"
             "async/test-timer.cpp"
+            "parsing/test-packer.cpp"
+            "parsing/test-parser.cpp"
             "utils/test-enum-set.cpp"
             "utils/test-logger-aware.cpp"
         )
@@ -31,6 +33,7 @@ if(KOUTA_BUILD_TESTS)
                 gtest
                 ${_pthread}
                 kouta_async
+                kouta_parsing
                 kouta_utils
         )
 

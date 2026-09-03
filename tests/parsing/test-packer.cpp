@@ -4,11 +4,11 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include <kouta/io/packer.hpp>
+#include <kouta/parsing/packer.hpp>
 
-namespace kouta::tests::io
+namespace kouta::tests::parsing
 {
-    using namespace kouta::io;
+    using namespace kouta::parsing;
 
     namespace
     {
@@ -47,20 +47,20 @@ namespace kouta::tests::io
                 // clang-format on
             };
 
-            packer.insert_integral(std::uint8_t{254});
-            packer.insert_integral(std::int8_t{-124});
-            packer.insert_integral(std::uint16_t{7465});
-            packer.insert_integral(std::int16_t{-9827});
-            packer.insert_integral<std::uint32_t, 3>(std::uint32_t{1025});
-            packer.insert_integral<std::int32_t, 3>(std::int32_t{-10098});
-            packer.insert_string("Hello World!");
-            packer.insert_integral(std::uint32_t{3685852310});
-            packer.insert_integral(std::int32_t{-2147483648});
-            packer.insert_integral(std::uint64_t{99999999999999});
-            packer.insert_integral(std::int64_t{-92843749392737493});
-            packer.insert_bytes({0x82, 0x18, 0x48, 0x19, 0x18, 0x84, 0xAF, 0xFE, 0xAD});
-            packer.insert_floating_point(float{42.2847});
-            packer.insert_floating_point(double{28374.9999283});
+            packer.append_uint8(std::uint8_t{254});
+            packer.append_int8(std::int8_t{-124});
+            packer.append_uint16(std::endian::big, std::uint16_t{7465});
+            packer.append_int16(std::endian::big, std::int16_t{-9827});
+            packer.append_uint24(std::endian::big, std::uint32_t{1025});
+            packer.append_int24(std::endian::big, std::int32_t{-10098});
+            packer.append_string("Hello World!");
+            packer.append_uint32(std::endian::big, std::uint32_t{3685852310});
+            packer.append_int32(std::endian::big, std::int32_t{-2147483648});
+            packer.append_uint64(std::endian::big, std::uint64_t{99999999999999});
+            packer.append_int64(std::endian::big, std::int64_t{-92843749392737493});
+            packer.append_bytes({0x82, 0x18, 0x48, 0x19, 0x18, 0x84, 0xAF, 0xFE, 0xAD});
+            packer.append_float(std::endian::big, float{42.2847});
+            packer.append_double(std::endian::big, double{28374.9999283});
 
             ASSERT_EQ(packer.size(), buf.size());
             ASSERT_TRUE(std::equal(packer.data().cbegin(), packer.data().cend(), buf.cbegin()));
@@ -101,24 +101,20 @@ namespace kouta::tests::io
                 // clang-format on
             };
 
-            packer.insert_integral<std::uint8_t, sizeof(std::uint8_t), Packer::Order::little>(std::uint8_t{254});
-            packer.insert_integral<std::int8_t, sizeof(std::int8_t), Packer::Order::little>(std::int8_t{-124});
-            packer.insert_integral<std::uint16_t, sizeof(std::uint16_t), Packer::Order::little>(std::uint16_t{7465});
-            packer.insert_integral<std::int16_t, sizeof(std::int16_t), Packer::Order::little>(std::int16_t{-9827});
-            packer.insert_integral<std::uint32_t, 3, Packer::Order::little>(std::uint32_t{1025});
-            packer.insert_integral<std::int32_t, 3, Packer::Order::little>(std::int32_t{-10098});
-            packer.insert_string("Hello World!");
-            packer.insert_integral<std::uint32_t, sizeof(std::uint32_t), Packer::Order::little>(
-                std::uint32_t{3685852310});
-            packer.insert_integral<std::int32_t, sizeof(std::int32_t), Packer::Order::little>(
-                std::int32_t{-2147483648});
-            packer.insert_integral<std::uint64_t, sizeof(std::uint64_t), Packer::Order::little>(
-                std::uint64_t{99999999999999});
-            packer.insert_integral<std::int64_t, sizeof(std::int64_t), Packer::Order::little>(
-                std::int64_t{-92843749392737493});
-            packer.insert_bytes({0x82, 0x18, 0x48, 0x19, 0x18, 0x84, 0xAF, 0xFE, 0xAD});
-            packer.insert_floating_point<float, Packer::Order::little>(float{42.2847});
-            packer.insert_floating_point<double, Packer::Order::little>(double{28374.9999283});
+            packer.append_uint8(std::uint8_t{254});
+            packer.append_int8(std::int8_t{-124});
+            packer.append_uint16(std::endian::little, std::uint16_t{7465});
+            packer.append_int16(std::endian::little, std::int16_t{-9827});
+            packer.append_uint24(std::endian::little, std::uint32_t{1025});
+            packer.append_int24(std::endian::little, std::int32_t{-10098});
+            packer.append_string("Hello World!");
+            packer.append_uint32(std::endian::little, std::uint32_t{3685852310});
+            packer.append_int32(std::endian::little, std::int32_t{-2147483648});
+            packer.append_uint64(std::endian::little, std::uint64_t{99999999999999});
+            packer.append_int64(std::endian::little, std::int64_t{-92843749392737493});
+            packer.append_bytes({0x82, 0x18, 0x48, 0x19, 0x18, 0x84, 0xAF, 0xFE, 0xAD});
+            packer.append_float(std::endian::little, float{42.2847});
+            packer.append_double(std::endian::little, double{28374.9999283});
 
             ASSERT_EQ(packer.size(), buf.size());
             ASSERT_TRUE(std::equal(packer.data().cbegin(), packer.data().cend(), buf.cbegin()));
@@ -129,7 +125,7 @@ namespace kouta::tests::io
     ///
     /// @details
     /// The test succeeds if all values are correctly added to the packer.
-    TEST(IoTest, PackerBe)
+    TEST(ParsingTest, PackerBe)
     {
         Packer packer{};
         test_packer_be(packer);
@@ -139,7 +135,7 @@ namespace kouta::tests::io
     ///
     /// @details
     /// The test succeeds if all values are correctly added to the packer.
-    TEST(IoTest, PackerBePreallocated)
+    TEST(ParsingTest, PackerBePreallocated)
     {
         Packer packer{69};
         test_packer_be(packer);
@@ -149,7 +145,7 @@ namespace kouta::tests::io
     ///
     /// @details
     /// The test succeeds if all values are correctly added to the packer.
-    TEST(IoTest, PackerLe)
+    TEST(ParsingTest, PackerLe)
     {
         Packer packer{};
         test_packer_le(packer);
@@ -159,7 +155,7 @@ namespace kouta::tests::io
     ///
     /// @details
     /// The test succeeds if all values are correctly added to the packer.
-    TEST(IoTest, PackerLePreallocated)
+    TEST(ParsingTest, PackerLePreallocated)
     {
         Packer packer{69};
         test_packer_le(packer);
@@ -168,14 +164,14 @@ namespace kouta::tests::io
     /// @brief Test the insertion of a bytes from a range.
     ///
     /// @details The test succeeds if the specified range is added to the packer.
-    TEST(IoTest, PackerBytesRange)
+    TEST(ParsingTest, PackerBytesRange)
     {
         std::vector<std::uint8_t> buf{0x01, 0x02, 0x03, 0x04};
 
         Packer packer{};
-        packer.insert_byte(0x08);
+        packer.append_byte(0x08);
 
-        packer.insert_bytes(buf.cbegin(), buf.cend());
+        packer.append_bytes(buf.cbegin(), buf.cend());
 
         ASSERT_TRUE(std::equal(buf.begin(), buf.end(), packer.data().begin() + 1));
     }
@@ -183,16 +179,16 @@ namespace kouta::tests::io
     /// @brief Test the insertion of a bytes from a span.
     ///
     /// @details The test succeeds if the specified range is added to the packer.
-    TEST(IoTest, PackerBytesSpan)
+    TEST(ParsingTest, PackerBytesSpan)
     {
         std::vector<std::uint8_t> buf{0x01, 0x02, 0x03, 0x04};
         std::span<const std::uint8_t> view{buf.cbegin() + 2, buf.cend()};
 
         Packer packer{1};
-        packer.insert_byte(0x08);
+        packer.append_byte(0x08);
 
-        packer.insert_bytes(view);
+        packer.append_bytes(view);
 
         ASSERT_TRUE(std::equal(view.begin(), view.end(), packer.data().begin() + 1));
     }
-}  // namespace kouta::tests::io
+}  // namespace kouta::tests::parsing

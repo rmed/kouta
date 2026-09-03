@@ -4,17 +4,17 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include <kouta/io/parser.hpp>
+#include "kouta/parsing/parser.hpp"
 
-namespace kouta::tests::io
+namespace kouta::tests::parsing
 {
-    using namespace kouta::io;
+    using namespace kouta::parsing;
 
     /// @brief Test the behaviour of the parser (Big Endian).
     ///
     /// @details
     /// The test succeeds if all values can be extracted from the buffer.
-    TEST(IoTest, ParserBe)
+    TEST(ParsingTest, ParserBe)
     {
         std::vector<std::uint8_t> buf{
             // clang-format off
@@ -53,26 +53,26 @@ namespace kouta::tests::io
 
         ASSERT_EQ(parser.size(), buf.size());
         ASSERT_TRUE(std::equal(parser.view().begin(), parser.view().end(), buf.cbegin()));
-        ASSERT_EQ(parser.extract_integral<std::uint8_t>(0), std::uint8_t{254});
-        ASSERT_EQ(parser.extract_integral<std::int8_t>(1), std::int8_t{-124});
-        ASSERT_EQ(parser.extract_integral<std::uint16_t>(2), std::uint16_t{7465});
-        ASSERT_EQ(parser.extract_integral<std::int16_t>(4), std::int16_t{-9827});
-        ASSERT_EQ((parser.extract_integral<std::uint32_t, 3>(6)), std::uint32_t{1025});
-        ASSERT_EQ((parser.extract_integral<std::int32_t, 3>(9)), std::int32_t{-10098});
+        ASSERT_EQ(parser.extract_uint8(0), std::uint8_t{254});
+        ASSERT_EQ(parser.extract_int8(1), std::int8_t{-124});
+        ASSERT_EQ(parser.extract_uint16(std::endian::big, 2), std::uint16_t{7465});
+        ASSERT_EQ(parser.extract_int16(std::endian::big, 4), std::int16_t{-9827});
+        ASSERT_EQ((parser.extract_uint24(std::endian::big, 6)), std::uint32_t{1025});
+        ASSERT_EQ((parser.extract_int24(std::endian::big, 9)), std::int32_t{-10098});
         ASSERT_EQ(parser.extract_string(12, 12), "Hello World!");
-        ASSERT_EQ(parser.extract_integral<std::uint32_t>(24), std::uint32_t{3685852310});
-        ASSERT_EQ(parser.extract_integral<std::int32_t>(28), std::int32_t{-2147483648});
-        ASSERT_EQ(parser.extract_integral<std::uint64_t>(32), std::uint64_t{99999999999999});
-        ASSERT_EQ(parser.extract_integral<std::int64_t>(40), std::int64_t{-92843749392737493});
-        ASSERT_FLOAT_EQ(parser.extract_floating_point<float>(57), float{42.2847});
-        ASSERT_DOUBLE_EQ(parser.extract_floating_point<double>(61), double{28374.9999283});
+        ASSERT_EQ(parser.extract_uint32(std::endian::big, 24), std::uint32_t{3685852310});
+        ASSERT_EQ(parser.extract_int32(std::endian::big, 28), std::int32_t{-2147483648});
+        ASSERT_EQ(parser.extract_uint64(std::endian::big, 32), std::uint64_t{99999999999999});
+        ASSERT_EQ(parser.extract_int64(std::endian::big, 40), std::int64_t{-92843749392737493});
+        ASSERT_FLOAT_EQ(parser.extract_float(std::endian::big, 57), float{42.2847});
+        ASSERT_DOUBLE_EQ(parser.extract_double(std::endian::big, 61), double{28374.9999283});
     }
 
     /// @brief Test the behaviour of the parser (Little Endian).
     ///
     /// @details
     /// The test succeeds if all values can be extracted from the buffer.
-    TEST(IoTest, ParserLe)
+    TEST(ParsingTest, ParserLe)
     {
         std::vector<std::uint8_t> buf{
             // clang-format off
@@ -111,40 +111,26 @@ namespace kouta::tests::io
 
         ASSERT_EQ(parser.size(), buf.size());
         ASSERT_TRUE(std::equal(parser.view().begin(), parser.view().end(), buf.cbegin()));
-        ASSERT_EQ(
-            (parser.extract_integral<std::uint8_t, sizeof(std::uint8_t), Parser::Order::little>(0)), std::uint8_t{254});
-        ASSERT_EQ(
-            (parser.extract_integral<std::int8_t, sizeof(std::int8_t), Parser::Order::little>(1)), std::int8_t{-124});
-        ASSERT_EQ(
-            (parser.extract_integral<std::uint16_t, sizeof(std::uint16_t), Parser::Order::little>(2)),
-            std::uint16_t{7465});
-        ASSERT_EQ(
-            (parser.extract_integral<std::int16_t, sizeof(std::int16_t), Parser::Order::little>(4)),
-            std::int16_t{-9827});
-        ASSERT_EQ((parser.extract_integral<std::uint32_t, 3, Parser::Order::little>(6)), std::uint32_t{1025});
-        ASSERT_EQ((parser.extract_integral<std::int32_t, 3, Parser::Order::little>(9)), std::int32_t{-10098});
+        ASSERT_EQ((parser.extract_uint8(0)), std::uint8_t{254});
+        ASSERT_EQ((parser.extract_int8(1)), std::int8_t{-124});
+        ASSERT_EQ((parser.extract_uint16(std::endian::little, 2)), std::uint16_t{7465});
+        ASSERT_EQ((parser.extract_int16(std::endian::little, 4)), std::int16_t{-9827});
+        ASSERT_EQ((parser.extract_uint24(std::endian::little, 6)), std::uint32_t{1025});
+        ASSERT_EQ((parser.extract_int24(std::endian::little, 9)), std::int32_t{-10098});
         ASSERT_EQ(parser.extract_string(12, 12), "Hello World!");
-        ASSERT_EQ(
-            (parser.extract_integral<std::uint32_t, sizeof(std::uint32_t), Parser::Order::little>(24)),
-            std::uint32_t{3685852310});
-        ASSERT_EQ(
-            (parser.extract_integral<std::int32_t, sizeof(std::int32_t), Parser::Order::little>(28)),
-            std::int32_t{-2147483648});
-        ASSERT_EQ(
-            (parser.extract_integral<std::uint64_t, sizeof(std::uint64_t), Parser::Order::little>(32)),
-            std::uint64_t{99999999999999});
-        ASSERT_EQ(
-            (parser.extract_integral<std::int64_t, sizeof(std::int64_t), Parser::Order::little>(40)),
-            std::int64_t{-92843749392737493});
-        ASSERT_FLOAT_EQ((parser.extract_floating_point<float, Parser::Order::little>(57)), float{42.2847});
-        ASSERT_DOUBLE_EQ((parser.extract_floating_point<double, Parser::Order::little>(61)), double{28374.9999283});
+        ASSERT_EQ((parser.extract_uint32(std::endian::little, 24)), std::uint32_t{3685852310});
+        ASSERT_EQ((parser.extract_int32(std::endian::little, 28)), std::int32_t{-2147483648});
+        ASSERT_EQ((parser.extract_uint64(std::endian::little, 32)), std::uint64_t{99999999999999});
+        ASSERT_EQ((parser.extract_int64(std::endian::little, 40)), std::int64_t{-92843749392737493});
+        ASSERT_FLOAT_EQ((parser.extract_float(std::endian::little, 57)), float{42.2847});
+        ASSERT_DOUBLE_EQ((parser.extract_double(std::endian::little, 61)), double{28374.9999283});
     }
 
     /// @brief Test the behaviour of the parser when attempting to extract a value out of bounds.
     ///
     /// @details
     /// The test succeeds if an exception is thrown.
-    TEST(IoTest, ParserBoundCheck)
+    TEST(ParsingTest, ParserBoundCheck)
     {
         std::vector<std::uint8_t> buf{
             // clang-format off
@@ -156,6 +142,6 @@ namespace kouta::tests::io
 
         Parser parser{buf};
 
-        ASSERT_THROW(parser.extract_integral<std::uint64_t>(2), std::out_of_range);
+        ASSERT_THROW(parser.extract_uint64(std::endian::big, 2), std::out_of_range);
     }
-}  // namespace kouta::tests::io
+}  // namespace kouta::tests::parsing

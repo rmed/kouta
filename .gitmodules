@@ -1,3 +1,9 @@
 [submodule "third-party/asio"]
 	path = third-party/asio
 	url = git@github.com:chriskohlhoff/asio.git
+[submodule "third-party/boost-endian"]
+	path = third-party/boost-endian
+	url = git@github.com:boostorg/endian.git
+[submodule "third-party/boost-config"]
+	path = third-party/boost-config
+	url = git@github.com:boostorg/config.git

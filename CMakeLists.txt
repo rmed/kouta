@@ -77,6 +77,29 @@ target_include_directories(kouta_async
 
 target_link_libraries(kouta_async PUBLIC kouta_callback)
 
+# Kouta binary parsing library
+#
+# Requires:
+#
+# - boost/endian
+# - boost/config (required by endian)
+add_library(kouta_parsing
+    SHARED
+        "${_kouta_src_dir}/parsing/packer.cpp"
+        "${_kouta_src_dir}/parsing/parser.cpp"
+)
+
+add_library("kouta::parsing" ALIAS kouta_parsing)
+
+target_include_directories(kouta_parsing
+    PUBLIC
+        ${_kouta_include_dir}
+
+    PRIVATE
+        "${_kouta_third_party_dir}/boost-endian/include"
+        "${_kouta_third_party_dir}/boost-config/include"
+)
+
 
 # Tests
 add_subdirectory(tests)
